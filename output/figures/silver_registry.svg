@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520">
+<title>silver_line keepsake registry</title>
+<text x="16" y="24" font-family="monospace" font-size="14">silver_line keepsake registry</text>
+<text x="24" y="52" font-family="monospace" font-size="12">entrusted-to-named-custodian | ENTRUSTMENT | evidence=2 | may_lapse=False</text>
+<text x="24" y="92" font-family="monospace" font-size="12">inspectable-handoff | TRANSMISSION | evidence=2 | may_lapse=False</text>
+<text x="24" y="132" font-family="monospace" font-size="12">lapse-named | LAPSE | evidence=1 | may_lapse=True</text>
+<text x="24" y="172" font-family="monospace" font-size="12">negative-space-kept | LAPSE | evidence=1 | may_lapse=True</text>
+<text x="24" y="212" font-family="monospace" font-size="12">no-infallible-archive | RESTRAINT | evidence=1 | may_lapse=True</text>
+<text x="24" y="252" font-family="monospace" font-size="12">origin-recorded | RETENTION | evidence=1 | may_lapse=False</text>
+<text x="24" y="292" font-family="monospace" font-size="12">question-first-succession | RETENTION | evidence=1 | may_lapse=False</text>
+<text x="24" y="332" font-family="monospace" font-size="12">renewal-cadence | ENTRUSTMENT | evidence=2 | may_lapse=False</text>
+<text x="24" y="372" font-family="monospace" font-size="12">review-before-entrustment | ENTRUSTMENT | evidence=1 | may_lapse=False</text>
+<text x="24" y="412" font-family="monospace" font-size="12">succession-rehearsed | TRANSMISSION | evidence=1 | may_lapse=False</text>
+<text x="24" y="452" font-family="monospace" font-size="12">versioned-keepsake | RETENTION | evidence=1 | may_lapse=False</text>
+</svg>

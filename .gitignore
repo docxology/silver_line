@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+output/pdf/
+output/web/
+output/reports/
+uv.lock
+.DS_Store

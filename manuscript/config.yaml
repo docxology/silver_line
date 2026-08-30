@@ -1,0 +1,19 @@
+paper:
+  title: "The Silver Line: A Memory-and-Succession Instrument"
+  subtitle: "What is preserved, what is entrusted to whom, what is allowed to lapse"
+  version: "1.0"
+authors:
+  - name: "Daniel Ari Friedman"
+    orcid: "0000-0001-6232-9096"
+    email: "daniel@activeinference.institute"
+    affiliation: "Active Inference Institute"
+    corresponding: true
+publication:
+  doi: ""
+keywords:
+  - "memory"
+  - "succession"
+  - "active inference"
+metadata:
+  license: "MIT"
+  language: "en"

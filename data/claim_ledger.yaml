@@ -1,0 +1,28 @@
+# Silver Line claim ledger — the register of record for what this instrument
+# claims and refuses to claim. docs/claim_boundaries.md carries the prose.
+schema_version: "1.0"
+line_id: silver_line
+claims:
+  - id: succession-reading
+    statement: >
+      Given a declared scan set, read_succession returns a verdict describing
+      declared provision of the required evidence labels at the review date.
+    tier: executable
+    evidence: tests/test_evaluator.py
+  - id: fail-closed-empty
+    statement: >
+      An empty or wholly malformed scan set produces OUTSIDE_SCOPE or
+      NEEDS_REWORK with intake notes, never a favourable default.
+    tier: executable
+    evidence: tests/test_intake.py, tests/test_evaluator.py
+  - id: registry-digest
+    statement: >
+      registry_digest pins the exact keepsake content that produced a verdict;
+      an unexpected change is drift, not safety information.
+    tier: executable
+    evidence: tests/test_serialization.py
+non_claims:
+  - No guarantee of persistence: a KEPT verdict describes declared custody.
+  - Not an immortality project; nothing here outlives its custodians by promise.
+  - Not an infallible archive; drift is expected and named, not prevented.
+  - Not permission; no verdict authorizes any action or release.

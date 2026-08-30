@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520">
+<title>silver_line required evidence labels</title>
+<text x="16" y="24" font-family="monospace" font-size="14">silver_line required evidence labels</text>
+<text x="24" y="52" font-family="monospace" font-size="12">entrusted-to-named-custodian: custodian_acknowledgement, custodian_name</text>
+<text x="24" y="92" font-family="monospace" font-size="12">inspectable-handoff: handoff_note, location_pointer</text>
+<text x="24" y="132" font-family="monospace" font-size="12">lapse-named: lapse_declaration</text>
+<text x="24" y="172" font-family="monospace" font-size="12">negative-space-kept: release_log</text>
+<text x="24" y="212" font-family="monospace" font-size="12">no-infallible-archive: drift_acknowledgement</text>
+<text x="24" y="252" font-family="monospace" font-size="12">origin-recorded: origin_note</text>
+<text x="24" y="292" font-family="monospace" font-size="12">question-first-succession: succession_statement</text>
+<text x="24" y="332" font-family="monospace" font-size="12">renewal-cadence: last_reviewed, review_cadence</text>
+<text x="24" y="372" font-family="monospace" font-size="12">review-before-entrustment: review_note</text>
+<text x="24" y="412" font-family="monospace" font-size="12">succession-rehearsed: rehearsal_record</text>
+<text x="24" y="452" font-family="monospace" font-size="12">versioned-keepsake: version_log</text>
+</svg>

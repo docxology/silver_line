@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: silver_line
+authors:
+  - family-names: Friedman
+    given-names: Daniel Ari
+    orcid: "https://orcid.org/0000-0001-6232-9096"
+version: 0.1.0
+date-released: "2026-08-29"
+license: MIT
+abstract: "A memory-and-succession line: what is preserved, what is entrusted to whom, what is allowed to lapse."
