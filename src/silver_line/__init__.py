@@ -43,7 +43,6 @@ __all__ = [
     "JOB",
     "KeepKind",
     "KEEPSAKE_TAG_VOCABULARY",
-    "KEEPSAKES",
     "MUST_NOT_BECOME",
     "ProvisionFinding",
     "ProvisionStatus",
