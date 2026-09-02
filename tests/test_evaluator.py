@@ -103,6 +103,75 @@ def test_empty_custom_registry_fails_closed() -> None:
     assert verdict.status is VerdictStatus.NEEDS_REWORK
 
 
+def test_non_keepsake_registry_entry_fails_closed() -> None:
+    verdict = read_succession(
+        SuccessionItem(description="x", tags=frozenset({"record"})),
+        ("not a keepsake",),  # type: ignore[list-item]
+    )
+    assert verdict.status is VerdictStatus.NEEDS_REWORK
+    assert verdict.findings == ()
+    assert verdict.registry_digest == ""
+    assert any(
+        "not a Keepsake record" in note.note for note in verdict.intake_notes
+    )
+
+
+def test_blank_text_field_registry_entry_fails_closed() -> None:
+    broken = (Keepsake(" ", "t", "w", frozenset({"record"}), ("a",)),)
+    verdict = read_succession(
+        SuccessionItem(description="x", tags=frozenset({"record"})), broken
+    )
+    assert verdict.status is VerdictStatus.NEEDS_REWORK
+    assert any("blank or non-text" in note.note for note in verdict.intake_notes)
+
+
+def test_malformed_tag_registry_entry_fails_closed() -> None:
+    broken = (Keepsake("k1", "t", "w", frozenset({"record", " "}), ("a",)),)
+    verdict = read_succession(
+        SuccessionItem(description="x", tags=frozenset({"record"})), broken
+    )
+    assert verdict.status is VerdictStatus.NEEDS_REWORK
+    assert any("malformed tags" in note.note for note in verdict.intake_notes)
+
+
+def test_malformed_required_evidence_registry_entry_fails_closed() -> None:
+    broken = (Keepsake("k1", "t", "w", frozenset({"record"}), ("a", "")),)
+    verdict = read_succession(
+        SuccessionItem(description="x", tags=frozenset({"record"})), broken
+    )
+    assert verdict.status is VerdictStatus.NEEDS_REWORK
+    assert any(
+        "malformed required evidence" in note.note for note in verdict.intake_notes
+    )
+
+
+def test_non_boolean_lapse_flag_registry_entry_fails_closed() -> None:
+    broken = (
+        Keepsake("k1", "t", "w", frozenset({"record"}), ("a",), may_lapse=None),  # type: ignore[arg-type]
+    )
+    verdict = read_succession(
+        SuccessionItem(description="x", tags=frozenset({"record"})), broken
+    )
+    assert verdict.status is VerdictStatus.NEEDS_REWORK
+    assert any("non-boolean lapse" in note.note for note in verdict.intake_notes)
+
+
+def test_partially_present_evidence_names_what_is_present() -> None:
+    item = SuccessionItem(
+        description="partial handoff", custodian="M. Lennon",
+        tags=frozenset({"artifact", "record"}),
+        evidence=frozenset({"handoff_note"}),
+    )
+    verdict, findings = read_succession_with_findings(item)
+    inspectable = next(
+        f for f in findings if f.keepsake_id == "inspectable-handoff"
+    )
+    assert inspectable.status is ProvisionStatus.NEEDS_REWORK
+    assert any(
+        "already present: handoff_note" in r for r in inspectable.reasons
+    )
+
+
 def test_verdict_digest_differs_across_verdicts() -> None:
     from silver_line.serialization import verdict_digest
     empty = read_succession([])
