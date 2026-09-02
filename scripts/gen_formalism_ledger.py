@@ -55,8 +55,8 @@ def main() -> int:
                 "claim_id": "def_" + label.split(":", 1)[1].replace("-", "_"),
                 "kind": "citation",
                 "value": label,
-                "source": "manuscript/03b_formalism.md: definition block declared with this label",
-                "source_path": "manuscript/03b_formalism.md",
+                "source": "docs/manuscript/03b_formalism.md: definition block declared with this label",
+                "source_path": "docs/manuscript/03b_formalism.md",
                 "source_tier": "manuscript_formalism_block",
                 "freshness": "active",
             }

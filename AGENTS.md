@@ -30,4 +30,4 @@ uv run pytest tests/test_formalism_claim_ledger.py
 `src/silver_line/` — version, enums, records, registry, intake, evaluator,
 serialization, invariants, figures/. `tests/` — suite incl. no-mocks gate
 and envelope field-set parity. `data/` — ledgers, envelopes, binding.
-`manuscript/` — the line's own manuscript with `:::` formalism blocks.
+`docs/manuscript/` — the line's own manuscript with `:::` formalism blocks.
