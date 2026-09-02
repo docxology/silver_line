@@ -15,7 +15,7 @@ from silver_line.registry import SILVER_KEEPSAKES
 from silver_line.serialization import registry_digest
 
 ROOT = Path(__file__).resolve().parent.parent
-MANUSCRIPT = ROOT / "manuscript"
+MANUSCRIPT = ROOT / "docs" / "manuscript"
 FORMALISM = MANUSCRIPT / "03b_formalism.md"
 LEDGER = ROOT / "data" / "formalism_claim_ledger.json"
 

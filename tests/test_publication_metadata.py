@@ -14,7 +14,7 @@ def test_citation_cff_names_version_and_license() -> None:
 
 
 def test_config_yaml_declares_the_paper() -> None:
-    text = (ROOT / "manuscript" / "config.yaml").read_text(encoding="utf-8")
+    text = (ROOT / "docs" / "manuscript" / "config.yaml").read_text(encoding="utf-8")
     assert "Silver Line" in text
     assert "Daniel Ari Friedman" in text
 
