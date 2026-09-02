@@ -1,6 +1,6 @@
 # silver_line
 
-A memory-and-succession line: the fifth colour in the docxology line set.
+A memory-and-succession line in the docxology line set (admitted 2026-09-01).
 
 ## What it is
 
