@@ -2,6 +2,9 @@ paper:
   title: "The Silver Line: A Memory-and-Succession Instrument"
   subtitle: "What is preserved, what is entrusted to whom, what is allowed to lapse"
   version: "1.0"
+  cover:
+    image: "../../output/figures/silver_line_cover.png"
+    alt: "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end."
 authors:
   - name: "Daniel Ari Friedman"
     orcid: "0000-0001-6232-9096"

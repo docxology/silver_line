@@ -1,6 +1,7 @@
 {
   "silver_evidence_labels": "build_evidence_figure",
   "silver_family_balance": "build_family_figure",
+  "silver_line_cover": "build_line_cover_figure",
   "silver_registry": "build_registry_figure",
   "silver_tag_vocabulary": "build_vocabulary_figure"
 }

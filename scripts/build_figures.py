@@ -10,12 +10,16 @@ for entry in (str(ROOT), str(ROOT / "src")):
     if entry not in sys.path:
         sys.path.insert(0, entry)
 
-from silver_line.figures.build import build_all, figure_registry  # noqa: E402
+from silver_line.figures.build import (  # noqa: E402
+    build_all,
+    figure_registry,
+    rasterize_cover,
+)
 
 
 def main() -> int:
     output_dir = ROOT / "output" / "figures"
-    written = build_all(output_dir)
+    written = build_all(output_dir) + [rasterize_cover(output_dir)]
     registry = figure_registry()
     (output_dir / "figure_registry.json").write_text(
         __import__("json").dumps(registry, indent=2, sort_keys=True) + "\n",

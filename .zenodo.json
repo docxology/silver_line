@@ -1,0 +1,41 @@
+{
+  "title": "The Silver Line: A Memory-and-Succession Instrument",
+  "description": "<p>A memory-and-succession instrument in the docxology line set. It reads a declared succession picture — what is preserved, what is entrusted to whom, what is allowed to lapse — and returns a verdict about declared provision and review gaps, pinned to a registry digest. A KEPT verdict describes declared custody at a review date; it is never permission and never a promise that anything survives.</p><p><strong>Subtitle:</strong> What is preserved, what is entrusted to whom, what is allowed to lapse</p><p>Code is MIT licensed; see LICENSE in the repository.</p>",
+  "upload_type": "publication",
+  "publication_type": "workingpaper",
+  "creators": [
+    {
+      "name": "Friedman, Daniel Ari",
+      "affiliation": "Active Inference Institute",
+      "orcid": "0000-0001-6232-9096"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "version": "0.1.0",
+  "keywords": [
+    "memory",
+    "succession",
+    "active inference",
+    "declared custody",
+    "review gaps"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/docxology/silver_line",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/docxology/line_set",
+      "relation": "isPartOf",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/docxology/witness_register",
+      "relation": "references",
+      "scheme": "url"
+    }
+  ],
+  "notes": "One of ten related works (the Line Set family: eight instruments, their cross-line reader, and the witness register). This work has no minted DOI; no DOI is claimed here or cited for siblings."
+}
