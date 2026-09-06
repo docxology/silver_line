@@ -7,6 +7,7 @@ __pycache__/
 output/pdf/
 output/web/
 output/reports/
+output/slides/
 uv.lock
 .DS_Store
 .coverage

@@ -27,7 +27,9 @@ def main() -> int:
     )
     for path in sorted(written):
         print(f"built {path.relative_to(ROOT)}")
-    print(f"built output/figures/figure_registry.json ({len(registry)} figures)")
+    print(
+        f"built output/figures/figure_registry.json ({len(registry['figures'])} figures)"
+    )
     return 0
 
 

@@ -40,14 +40,24 @@ def test_build_figure_unknown_name_raises() -> None:
         raise AssertionError("expected KeyError")
 
 
-def test_figure_registry_names_builders() -> None:
+def test_figure_registry_entries_are_accessibility_objects() -> None:
     registry = figure_registry()
-    assert registry
-    for name, builder in registry.items():
-        assert name in FIGURES
-        assert builder.endswith("build_" + name.split("_", 1)[-1]) or callable(
-            FIGURES[name]
-        )
+    figures = registry["figures"]
+    assert figures
+    labels = []
+    for entry in figures:
+        label = entry["label"]
+        assert label.startswith("fig:") and label[4:]
+        assert entry["caption"] and entry["alt"]
+        assert Path(entry["filename"]).stem in FIGURES
+        labels.append(label)
+    assert labels == sorted(labels)
+
+
+def test_figure_registry_covers_every_registered_figure() -> None:
+    registry = figure_registry()
+    names = {Path(entry["filename"]).stem for entry in registry["figures"]}
+    assert names == set(FIGURES)
 
 
 def test_figures_derive_from_the_declaration(tmp_path: Path) -> None:
@@ -59,7 +69,7 @@ def test_figures_derive_from_the_declaration(tmp_path: Path) -> None:
 
 def test_cover_figure_is_registered() -> None:
     assert COVER_FIGURE in FIGURES
-    assert COVER_FIGURE in figure_registry()
+    assert figure_registry()["cover"]["filename"] == f"{COVER_FIGURE}.png"
 
 
 def test_cover_carries_only_title_and_tagline(tmp_path: Path) -> None:

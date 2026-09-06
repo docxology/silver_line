@@ -11,8 +11,9 @@ import subprocess
 from pathlib import Path
 
 from ..enums import KeepKind
-from ..registry import KEEPSAKE_TAG_VOCABULARY, SILVER_KEEPSAKES
 from ..records import Keepsake
+from ..registry import KEEPSAKE_TAG_VOCABULARY, SILVER_KEEPSAKES
+from ..version import __version__
 
 
 
@@ -257,13 +258,96 @@ FIGURES: dict[str, object] = {
 }
 
 
-def figure_registry() -> dict[str, str]:
-    """Return the figure registry as a JSON-able mapping of name to builder name."""
+#: Per-figure accessibility metadata for the registry's ``fig:`` entries.
+#: Captions and alt text are drawn from the builders' own contracts above
+#: and from the manuscript's cover configuration; a figure is a reading aid,
+#: not evidence, and no entry here restates a count.
+FIGURE_ACCESSIBILITY: dict[str, dict[str, str]] = {
+    "silver_registry": {
+        "caption": "The keepsake roster, one sorted row per entry.",
+        "alt": (
+            "silver_line keepsake registry: one sorted row per keepsake "
+            "naming its kind, evidence count, and may-lapse flag."
+        ),
+    },
+    "silver_family_balance": {
+        "caption": (
+            "Keep-kind balance: the registry reviewed for succession-family "
+            "coverage."
+        ),
+        "alt": (
+            "silver_line keep-kind balance: one row per keep kind with its "
+            "keepsake count."
+        ),
+    },
+    "silver_evidence_labels": {
+        "caption": (
+            "The evidence-label surface a successor could inspect, per "
+            "keepsake."
+        ),
+        "alt": (
+            "silver_line required evidence labels: one sorted row per "
+            "keepsake listing its required evidence labels."
+        ),
+    },
+    "silver_tag_vocabulary": {
+        "caption": (
+            "The reviewed tag vocabulary next to what the declaration "
+            "actually uses."
+        ),
+        "alt": (
+            "silver_line tag vocabulary: one row per reviewed tag marked "
+            "used or unused by the declaration."
+        ),
+    },
+    COVER_FIGURE: {
+        "caption": (
+            "The cover plate: memory and succession in three silver strokes "
+            "across the cream field — one preserved whole, one entrusting "
+            "itself down at a node, one dissolving before the row's end. No "
+            "row is labelled; the tagline is the only legend, and the cover "
+            "carries no date and no version."
+        ),
+        "alt": (
+            "Three silver strokes across a cream field: one preserved "
+            "whole, one entrusting itself downward at a node, one "
+            "dissolving into dashes before its end."
+        ),
+    },
+}
 
+
+def _registry_entry(name: str) -> dict[str, str]:
+    """One ``fig:`` accessibility entry for a registered figure."""
+
+    is_cover = name == COVER_FIGURE
     return {
-        name: getattr(builder, "__name__", str(builder))
-        for name, builder in sorted(FIGURES.items())
+        "label": "fig:" + name.replace("_", "-"),
+        "filename": f"{name}.png" if is_cover else f"{name}.svg",
+        "caption": FIGURE_ACCESSIBILITY[name]["caption"],
+        "alt": FIGURE_ACCESSIBILITY[name]["alt"],
+        "source": "silver_line keepsake registry, intake, and manuscript protocol",
+        "generated_by": "silver_line.figures.figure_registry",
+        "format": (
+            "PNG rasterized from deterministic SVG"
+            if is_cover
+            else "SVG from the deterministic builder"
+        ),
     }
+
+
+def figure_registry() -> dict[str, object]:
+    """Return the figure registry in the family's ``fig:`` accessibility format."""
+
+    registry: dict[str, object] = {
+        "schema_version": "1.5",
+        "package_version": __version__,
+        "figures": [_registry_entry(name) for name in sorted(FIGURES)],
+    }
+    # The title-page pointer repeats the cover's registered contract so the
+    # renderer's `paper.cover.image` key has something to be bound to.
+    registry["cover"] = _registry_entry(COVER_FIGURE)
+    return registry
 
 
 def build_figure(name: str, output_dir: Path) -> Path:
