@@ -1,7 +1,8 @@
 paper:
   title: "The Silver Line: A Memory-and-Succession Instrument"
   subtitle: "What is preserved, what is entrusted to whom, what is allowed to lapse"
-  version: "1.0"
+  version: "0.1.0"
+  date: "2026-08-29"
   cover:
     image: "../../output/figures/silver_line_cover.png"
     alt: "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end."
@@ -17,6 +18,16 @@ keywords:
   - "memory"
   - "succession"
   - "active inference"
+render:
+  formats:
+    pdf: true
+    html: true
+    slides: false
+    docx: false
+    epub: false
+
 metadata:
-  license: "MIT"
+  license: "CC-BY-4.0 (prose); MIT (code)"
+  status: "living document — versioned and revisable"
+  geometry: "left=0.33in,right=0.33in,top=0.55in,bottom=0.55in"
   language: "en"
