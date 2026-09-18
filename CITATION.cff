@@ -6,6 +6,9 @@ authors:
     given-names: Daniel Ari
     orcid: "https://orcid.org/0000-0001-6232-9096"
 version: 0.1.0
-date-released: "2026-08-29"
+date-released: "2026-09-18"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22833486"
 license: MIT
 abstract: "A memory-and-succession line: what is preserved, what is entrusted to whom, what is allowed to lapse."
