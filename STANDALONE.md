@@ -14,12 +14,16 @@ uv run python scripts/build_figures.py
 
 ## Rendering
 
-Rendering uses the external template checkout, not this repo. In the
-template workspace, the project renders as `working/silver_line`:
+Rendering uses the template engine as a build tool. Use an isolated detached
+worktree of its origin/main, and link this repository at
+`projects/working/silver_line` in that worktree. Select the project by its
+basename so the renderer and validator agree on its combined output name:
 
 ```
-uv run python scripts/pipeline/stage_03_render.py --project working/silver_line
+uv run python scripts/pipeline/stage_03_render.py --project silver_line
+uv run python scripts/pipeline/stage_04_validate.py --project silver_line
 ```
 
-Nothing under `/Volumes/external_drive/Git/template/projects/` is modified
-by this repository.
+The engine's active checkout is not modified. The source worktree and its
+Git metadata are required for the engine's provenance checks; a plain archive
+can render but cannot satisfy those checks. See docs/publication.md.

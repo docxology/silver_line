@@ -13,3 +13,7 @@ accepted items only, and an UNDATED reading makes no dated custody claim.
 Original and normalized snapshots bind declarations without proving them.
 Digests are not a confidentiality mechanism. The supported input boundary is
 finite ordinary containers; arbitrary hostile Python objects are not covered.
+
+The displayed DOI is retained from the prior archived version. It is not an
+assigned identifier for this source revision; the next deposit follows the
+reserve-first publication procedure.

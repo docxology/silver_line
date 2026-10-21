@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "access_right": "open",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keywords": [
     "memory",
     "succession",
@@ -37,5 +37,5 @@
       "scheme": "url"
     }
   ],
-  "notes": "One of ten related works (the Line Set family: eight instruments, their cross-line reader, and the witness register). This work's version DOI is 10.5281/zenodo.22833486; the line-set works cross-cite one another's Zenodo version DOIs."
+  "notes": "One of ten related works (the Line Set family: eight instruments, their cross-line reader, and the witness register). Last verified DOI, retained as a historical identifier: 10.5281/zenodo.22833486. A new version DOI for 0.2.0 awaits Daniel's reserve-first publication step; no new DOI has been assigned here."
 }

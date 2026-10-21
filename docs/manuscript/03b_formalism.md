@@ -13,9 +13,9 @@ item ID, declarer, declaration date and source reference.
 :::
 
 ::: {.definition #def:verdict title="Verdict"}
-A **verdict** $v$ maps a scan set to a status in
-$\{KEPT, DECLARED\_RELEASE, NEEDS\_PROVISION, NEEDS\_REWORK, OUTSIDE\_SCOPE\}$
-with item-linked findings and notes, subject identity, review date or explicit
+A **verdict** maps a scan set to one of KEPT, DECLARED_RELEASE,
+NEEDS_PROVISION, NEEDS_REWORK or OUTSIDE_SCOPE, with item-linked findings
+and notes, subject identity, review date or explicit
 undated mode, registry digest/version, evaluator version, original and
 normalized declaration digests, and qualified scope counts.
 :::

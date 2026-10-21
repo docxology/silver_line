@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "silver_line"
-version = "0.1.0"
+version = "0.2.0"
 description = "A memory-and-succession line: what is preserved, what is entrusted to whom, what is allowed to lapse"
 authors = [{name = "Daniel Ari Friedman", email = "daniel@activeinference.institute"}]
 requires-python = ">=3.10"

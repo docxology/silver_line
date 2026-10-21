@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -26,3 +27,10 @@ def test_registry_version_in_envelopes_matches() -> None:
 def test_changelog_names_current_version() -> None:
     from silver_line.version import __version__
     assert f"## {__version__}" in (ROOT / "CHANGELOG.md").read_text()
+
+
+def test_all_active_publication_versions_agree() -> None:
+    from silver_line.version import __version__
+    assert json.loads((ROOT / ".zenodo.json").read_text())["version"] == __version__
+    config = (ROOT / "docs/manuscript/config.yaml").read_text()
+    assert re.search(r'^  version: "([^"]+)"$', config, re.M).group(1) == __version__

@@ -8,8 +8,9 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def test_citation_cff_names_version_and_license() -> None:
+    from silver_line.version import __version__
     text = (ROOT / "CITATION.cff").read_text(encoding="utf-8")
-    assert "version: 0.1.0" in text
+    assert f"version: {__version__}" in text
     assert "license: MIT" in text
 
 

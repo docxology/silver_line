@@ -1,0 +1,95 @@
+{
+  "consumed_manuscript": [
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/00_abstract.md",
+      "source_sha256": "f602da40c85730a081085444e5c8e06fc9e66d535ba66a4397ee832bb9f2bf87"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/01_introduction.md",
+      "source_sha256": "8253c71b57f483e37dc89bea258d2900a70bf9314d6485287e841025d1471e9b"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/02_method.md",
+      "source_sha256": "edde258d56dee8e63f45d211ae1a15e53f584d9055d40830b838a72ed96aa61c"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/03b_formalism.md",
+      "source_sha256": "e6a7966980814b7ff82203bc34cfb30a519cbbaab433229dd401975bcc8d8ccd"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/04_examples.md",
+      "source_sha256": "4d14db3ed13462534862367b00cf91dc9b970b0540c5cb0d648a6c04727d135c"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/05_limits.md",
+      "source_sha256": "bcf4543fe1f7ff6e09dc1d763e4bfb236d7b7087410b03d75ef67a2ad87b5a6b"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/06_conclusion.md",
+      "source_sha256": "ef33a84e773d463eaa97fbd52f178c6ea578e0b6d396dbe00f5e0021e3e862e3"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "source_path": "docs/manuscript/99_references.md",
+      "source_sha256": "fec3c74377339ae7da444bce547dce6a7ba5a5c255e4bcecda165c034980c94d"
+    }
+  ],
+  "evidence_files": {
+    "artifact_manifest": {
+      "path": "output/reports/artifact_manifest.json",
+      "sha256": "348d4072e1203e4b128c427cebebd45f5db0b271fcf1aeedb0036d5104bfcdf0",
+      "size_bytes": 7445
+    },
+    "combined_manuscript": {
+      "path": "output/web/_combined_manuscript.md",
+      "sha256": "70cbef6ebd42e562c053cc41880167a30a07d5441b05508358217c4cce2cdcae",
+      "size_bytes": 6659
+    },
+    "composition_manifest": {
+      "path": "output/reports/manuscript_composition.json",
+      "sha256": "5cc0d5ef4df7b51f82ffb029df2f76de37cbb76fd7d71dbdba205b22c78dbf6d",
+      "size_bytes": 2068
+    },
+    "validation_report": {
+      "path": "output/reports/validation_report.json",
+      "sha256": "dfd44ab942fb65b37bef8fcec3164dee313786db3ca77683257ff3f240acfce5",
+      "size_bytes": 10550
+    }
+  },
+  "evidence_mode": "validated-co-snapshot-fingerprint-bridge",
+  "fingerprints": {
+    "config": {
+      "file_count": 9,
+      "sha256": "814a7aee155d4d8e56bb520431d89d916bfa70abdfe6129bdcdda4e5650497d9"
+    },
+    "output": {
+      "file_count": 23,
+      "sha256": "ea32c02666a9c513d778bbdc25bfa55a7ef796167dee559bcb353694d0b87925"
+    },
+    "source": {
+      "file_count": 47,
+      "sha256": "85d0a2974b96e1e398cc1fd72bf197772d75bacd0cd084a490e02d015772a7ee"
+    },
+    "stage": {
+      "file_count": 1777,
+      "sha256": "8298039c05a65459b97e545c35b19f6a4831848652349638b0a6c17ca3fbf5e3"
+    }
+  },
+  "project": "silver_line",
+  "schema_version": "template-rendered-provenance-v2"
+}

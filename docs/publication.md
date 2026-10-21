@@ -8,10 +8,12 @@ Behavior changes require at least a minor version increment. Synchronize
 pyproject.toml, the package version, CITATION.cff, .zenodo.json and the manuscript
 configuration. Regenerate version-bearing artifacts, update CHANGELOG.md and
 write a dated release packet with current gate results and artifact hashes.
+Commit the final combined PDF, HTML pages and their local assets. Ignore
+TeX intermediates, hydrated markdown, logs and transient validation reports.
 Keep historical release packets and archived metadata at their original versions.
 
 Render PDF and HTML with the template origin/main engine in an isolated export
-on GitVault. Copy this project's manuscript to the engine's project layout;
+on GitVault. Link this repository into the engine's working project layout;
 never write into the active template checkout. Record the engine commit, all
 commands, output checksums and visual inspection. Engine failures block release;
 report them without patching the engine. An engine export is a build tool,
