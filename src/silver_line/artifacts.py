@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 from .evaluator import _prepare, read_succession
@@ -36,12 +37,19 @@ def build_envelope(verdict: SuccessionVerdict, source_refs: tuple[str, ...]) -> 
         raise ValueError("published envelopes require an explicit subject and review date")
     if not verdict.registry_digest or not source_refs:
         raise ValueError("published envelopes require a valid registry and immutable source references")
+    pattern = re.compile(r"sha256:([0-9a-f]{64}):data/snapshots/\1\.json")
+    matches = [pattern.fullmatch(ref) for ref in source_refs]
+    if not all(matches):
+        raise ValueError("source references must be immutable SHA-256 snapshot paths")
+    digests = {ref.split(":", 2)[1] for ref in source_refs}
+    if not {verdict.registry_digest, verdict.source_digest, verdict.declaration_digest} <= digests:
+        raise ValueError("source references must bind registry, source and normalized declarations")
     return {
         "line_id": "silver_line", "native_status": verdict.status.value,
         "registry_digest": verdict.registry_digest, "registry_version": verdict.registry_version,
         "report_ref": verdict_digest(verdict), "review_date": verdict.evaluated_as_of,
         "schema_version": "line.report-envelope/1.0", "subject_id": verdict.subject_id,
-        "source_snapshot_refs": sorted(source_refs),
+        "source_snapshot_refs": sorted(set(source_refs)),
         "scope_and_nonclaims": list(NONCLAIMS) + [
             f"reading_scope={verdict.reading_scope}; accepted={verdict.accepted_count}; "
             f"rejected={verdict.rejected_count}; unmatched={verdict.unmatched_count}"],

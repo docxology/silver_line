@@ -95,6 +95,27 @@ def test_duplicate_ids_reject_entire_scan_and_counts_qualify_scope():
     assert any(f.item_id == item.item_id and "custodian" in f.missing_fields for f in gap.findings)
 
 
+def test_rejected_declaration_keeps_its_declared_id_and_blocks_duplicates():
+    item = complete()
+    broken = replace(item, description="")
+    for items in ([item, broken], [broken, item]):
+        verdict = read_succession(items)
+        assert verdict.status is VerdictStatus.NEEDS_REWORK
+        assert not verdict.findings
+        assert (verdict.accepted_count, verdict.rejected_count) == (0, 2)
+        assert all(n.item_id == item.item_id for n in verdict.intake_notes if n.item_id)
+        assert any(n.item_id == item.item_id and "description" in n.note for n in verdict.intake_notes)
+
+
+def test_conflicting_duplicate_declarations_have_order_independent_rejection():
+    alpha = replace(complete(), item_id="duplicate", description="alpha")
+    beta = replace(alpha, description="beta")
+    verdicts = [read_succession(items) for items in ([alpha, beta], [beta, alpha], {alpha, beta})]
+    assert all(v.status is VerdictStatus.NEEDS_REWORK and not v.findings for v in verdicts)
+    assert len({canonical_verdict(v) for v in verdicts}) == 1
+    assert len({v.declaration_digest for v in verdicts}) == 1
+
+
 def test_finite_container_boundary_and_normalization():
     assert read_succession(iter([complete()])).status is VerdictStatus.OUTSIDE_SCOPE
     assert read_succession(None).status is VerdictStatus.OUTSIDE_SCOPE
@@ -141,6 +162,16 @@ def test_every_envelope_field_has_a_negative_control():
         report = files["data/reports/" + envelope["report_ref"] + ".json"]
         assert sha256(report.encode()).hexdigest() == envelope["report_ref"]
         assert json.loads(report)["subject_id"] == fixture["subject_id"]
+        payload = json.loads(report)
+        from silver_line.registry import SILVER_KEEPSAKES
+        from silver_line.serialization import registry_digest
+        from silver_line.version import __version__
+        assert payload["evaluated_as_of"] == envelope["review_date"] == fixture["review_date"]
+        assert payload["registry_digest"] == envelope["registry_digest"] == registry_digest(SILVER_KEEPSAKES)
+        assert payload["registry_version"] == payload["evaluator_version"] == envelope["registry_version"] == __version__
+        assert payload["status"] == envelope["native_status"]
+        snapshot_hashes = {ref.split(":", 2)[1] for ref in refs}
+        assert {payload["source_digest"], payload["declaration_digest"], payload["registry_digest"]} <= snapshot_hashes
         for ref in refs:
             scheme, digest, name = ref.split(":", 2)
             assert scheme == "sha256"
@@ -178,6 +209,11 @@ def test_publishing_requires_date_subject_registry_and_sources():
                           (read_succession([], evaluated_as_of="2026-10-20", subject_id="s"), ())):
         with pytest.raises(ValueError):
             build_envelope(verdict, refs)
+    valid = read_succession(complete(), evaluated_as_of="2026-10-20", subject_id="s")
+    with pytest.raises(ValueError, match="immutable SHA-256"):
+        build_envelope(valid, ("mutable:path",))
+    with pytest.raises(ValueError, match="bind registry"):
+        build_envelope(valid, ("sha256:" + "a" * 64 + ":data/snapshots/" + "a" * 64 + ".json",))
 
 
 def test_artifact_module_cli_checks_actual_store():

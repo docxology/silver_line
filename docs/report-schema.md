@@ -26,6 +26,12 @@ digests, and the registry snapshot hash equals the report registry digest.
 The fixture loader uses explicit IDs; the public API retains content-derived
 IDs and UNSPECIFIED/UNDATED defaults only for compatibility.
 
+Duplicate IDs are checked across the original SuccessionItem declarations,
+including those whose descriptions are unusable. The whole scan is rejected
+and valid declared IDs remain in rejection notes. Canonical content breaks
+ID ties before digesting, so conflicting duplicate declarations have the
+same rejection identity under list reversal or set input.
+
 An item's release is scoped to its exact item ID and requires a nonblank
 declarer, canonical declaration date and source reference. Its date cannot be
 after a supplied review date. An applicable LAPSE requirement must permit

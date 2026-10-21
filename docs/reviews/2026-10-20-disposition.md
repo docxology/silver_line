@@ -33,6 +33,13 @@ report identity, fixtures, generated envelopes and manuscript claims must
 agree before commit. The versioned release metadata is a subsequent commit.
 The release packet identifies both commits and records final-tree gates.
 
+Rendering adaptation: the archive attempt rendered but could not bind the
+engine's Git-backed provenance. The release uses the permitted detached
+origin/main worktree instead. The validator then correctly rejected final
+outputs hidden by per-format ignore rules. Final PDF/HTML and local web
+assets are now published; intermediates remain ignored. Engine code was
+not changed, no check was skipped, and no threshold was lowered.
+
 Cross-repository finding: consumers of native statuses must recognize
 DECLARED_RELEASE and inspect the schema-2 report and qualified reading scope.
 The envelope field set remains unchanged. Sibling same-subject examples may
@@ -42,3 +49,14 @@ they were audited. No sibling repository was changed.
 Scientific boundary: all examples are synthetic declaration checks. No new
 empirical result, verified acceptance, succession right, consent, persistence,
 permission or cross-line compensation is claimed.
+
+## Independent audit corrections
+
+The first independent audit requested changes to SL-04, SL-06 and SL-08.
+An unusable declaration could disappear before duplicate-ID enforcement,
+and conflicting duplicate declarations retained input order in the normalized
+digest. New regressions first failed with **2 failed, 22 deselected**.
+The correction checks IDs before discarding unusable records, preserves valid
+declared IDs in rejection notes, and sorts content as the tie-breaker for
+duplicate IDs. Reversed lists and real set inputs now agree. The release
+packet records the correction commit and the second independent audit.

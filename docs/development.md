@@ -35,7 +35,10 @@ the supplied valid review date.
 
 Use explicit opaque item IDs for ongoing custody records. Omitted IDs receive
 source-content IDs for compatibility, so changing the source changes that ID.
-Duplicate IDs (even identical declarations) reject the entire scan; input
+Duplicate IDs (even on unusable declarations) reject the entire scan before
+records are discarded. Rejected item notes preserve valid supplied IDs.
+Conflicting declarations sort by ID and canonical content, so rejection
+reports are deterministic too. Input
 containers otherwise have scan-set semantics. Findings sort by item and
 keepsake ID, notes by item/disposition/text, labels as sets. Required-evidence
 tuples preserve their declared sequence, which is included in registry identity.

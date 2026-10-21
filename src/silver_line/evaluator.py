@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from collections import Counter
 
 from .enums import IntakeDisposition, KeepKind, ProvisionStatus, VerdictStatus
 from .intake import clean_labels, intake, normalize_item, vocabulary_check
@@ -12,6 +13,13 @@ from .validation import registry_shape_error, validate_review_date
 from .version import __version__
 
 
+def _item_id(raw: object) -> str:
+    if (isinstance(raw, SuccessionItem) and isinstance(raw.item_id, str)
+            and raw.item_id and raw.item_id == raw.item_id.strip()):
+        return raw.item_id
+    return "input-" + digest_text(canonical_source(raw))
+
+
 def _prepare(raw_items: object):
     if isinstance(raw_items, SuccessionItem):
         raw_items = (raw_items,)
@@ -21,7 +29,7 @@ def _prepare(raw_items: object):
     items = []
     notes = []
     for raw in raw_items:
-        fallback_id = "input-" + digest_text(canonical_source(raw))
+        fallback_id = _item_id(raw)
         if isinstance(raw, SuccessionItem) and raw.item_id == "":
             raw = replace(raw, item_id=fallback_id)
         item, item_notes = normalize_item(raw)
@@ -35,7 +43,7 @@ def _prepare(raw_items: object):
             items.append(replace(item, tags=tags & KEEPSAKE_TAG_VOCABULARY, evidence=evidence))
     if not items:
         notes.append(IntakeNote(IntakeDisposition.SET_ASIDE, "scan set contained no usable declarations; the reading fails closed"))
-    return tuple(sorted(items, key=lambda i: i.item_id)), notes, len(raw_items) - len(items)
+    return tuple(sorted(items, key=lambda i: (i.item_id, canonical_json(item_snapshot(i))))), notes, len(raw_items) - len(items)
 
 
 def _release_error(item: SuccessionItem, matched: tuple[Keepsake, ...], review_date: str) -> str | None:
@@ -101,7 +109,9 @@ def _read(raw_items: object, keepsakes: tuple[Keepsake, ...], evaluated_as_of: s
     declaration_digest = digest_text(canonical_json([item_snapshot(i) for i in items]))
     error = registry_shape_error(keepsakes)
     digest = "" if error else registry_digest(keepsakes)
-    duplicate_ids = sorted({i.item_id for i in items if sum(j.item_id == i.item_id for j in items) > 1})
+    scan = (raw_items,) if isinstance(raw_items, SuccessionItem) else raw_items
+    id_counts = Counter(_item_id(raw) for raw in scan if isinstance(raw, SuccessionItem)) if isinstance(scan, (list, tuple, set, frozenset)) else Counter()
+    duplicate_ids = sorted(item_id for item_id, count in id_counts.items() if count > 1)
     if duplicate_ids:
         notes.extend(IntakeNote(IntakeDisposition.SET_ASIDE, "duplicate item_id; entire scan set rejected", i)
                      for i in duplicate_ids)

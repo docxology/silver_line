@@ -23,3 +23,6 @@ and version, evaluator version, normalized declaration digest and original
 source digest. Accepted, rejected and unmatched counts qualify the scope.
 I sort scan sets before emission; required-evidence tuples retain their
 declared sequence. Content-addressed reports and snapshots support exact replay.
+A duplicate item identity rejects the whole scan before unusable declarations
+are discarded. Rejection notes preserve valid supplied IDs, and conflicting
+declarations use canonical content to break identity ties before digesting.
