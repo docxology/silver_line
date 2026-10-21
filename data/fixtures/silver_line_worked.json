@@ -1,0 +1,12 @@
+{
+  "fixture_kind": "synthetic declaration, not verified custody",
+  "subject_id": "silver-line-worked-lab-archive",
+  "review_date": "2026-10-20",
+  "items": [{
+    "item_id": "lab-notebooks",
+    "description": "Synthetic lab archive with unresolved lapse provision",
+    "custodian": "declared successor role",
+    "tags": ["record"],
+    "evidence": ["succession_statement", "custodian_name", "custodian_acknowledgement", "handoff_note", "location_pointer", "origin_note", "drift_acknowledgement", "version_log"]
+  }]
+}

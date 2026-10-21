@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from .enums import KeepKind
 from .records import Keepsake
 from .registry import KEEPSAKE_TAG_VOCABULARY
+from .validation import registry_shape_error
 
 
 @dataclass(frozen=True)
@@ -82,6 +83,7 @@ def all_invariants(
     """Run the whole offline battery over a keepsake registry."""
 
     return (
+        _result("runtime_registry_shape", [error] if (error := registry_shape_error(keepsakes)) else []),
         check_nonempty_registry(keepsakes),
         check_unique_keepsake_ids(keepsakes),
         check_tags_in_vocabulary(keepsakes),

@@ -23,11 +23,14 @@ from silver_line import SuccessionItem, read_succession
 
 verdict = read_succession(
     SuccessionItem(
+        item_id="lab-notebooks",
         description="lab notebooks 2024-2026",
         custodian="a named successor",
         tags=frozenset({"record"}),
         evidence=frozenset({"succession_statement", "handoff_note"}),
-    )
+    ),
+    subject_id="lab-archive",
+    evaluated_as_of="2026-10-20",
 )
 print(verdict.status)            # VerdictStatus.NEEDS_REWORK
 print(verdict.registry_digest)   # pins the keepsake set used
@@ -37,6 +40,12 @@ An empty scan set reads `OUTSIDE_SCOPE` with intake notes; a registry that
 cannot be scored fails closed as `NEEDS_REWORK`. Malformed input is set
 aside with notes, never repaired into a fabricated value.
 
+Findings identify their item and missing fields. Registry lapse eligibility
+does not imply a release decision; an explicit scoped ReleaseDeclaration is
+required for DECLARED_RELEASE. Restraint requirements still apply. Read
+`reading_scope` and the accepted/rejected/unmatched counts alongside status.
+See [report identity and migration](docs/report-schema.md).
+
 ## Verify
 
 ```
@@ -44,6 +53,9 @@ uv sync
 uv run pytest tests/ --cov=src --cov-report=term
 uv run ruff check src tests scripts
 uv run python scripts/build_figures.py
+uv run python scripts/gen_formalism_ledger.py
+uv run python -m silver_line.artifacts --check
+uv tool run ty==0.0.90 check src
 ```
 
 Renders via the external template checkout as `working/silver_line` (see

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from dataclasses import asdict
 
 from .records import Keepsake, SuccessionVerdict
 
@@ -32,7 +33,7 @@ def registry_digest(keepsakes: tuple[Keepsake, ...]) -> str:
     return hashlib.sha256(canonical_registry(keepsakes).encode("utf-8")).hexdigest()
 
 
-def canonical_verdict(verdict: SuccessionVerdict) -> str:
+def canonical_verdict_v1(verdict: SuccessionVerdict) -> str:
     """Serialize a verdict into stable JSON so results can be archived.
 
     Two identical readings of the same subject produce byte-identical output,
@@ -60,6 +61,17 @@ def canonical_verdict(verdict: SuccessionVerdict) -> str:
     return json.dumps(
         payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")
     )
+
+
+def canonical_verdict(verdict: SuccessionVerdict) -> str:
+    payload = asdict(verdict)
+    payload["schema_version"] = "silver.verdict/2.0"
+    payload["date_mode"] = "DATED" if verdict.evaluated_as_of else "UNDATED"
+    payload["intake_notes"] = [asdict(n) for n in sorted(
+        verdict.intake_notes, key=lambda n: (n.item_id, n.disposition.value, n.note))]
+    payload["findings"] = [asdict(f) for f in sorted(
+        verdict.findings, key=lambda f: (f.item_id, f.keepsake_id))]
+    return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
 def verdict_digest(verdict: SuccessionVerdict) -> str:

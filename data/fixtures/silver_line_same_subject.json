@@ -1,0 +1,12 @@
+{
+  "fixture_kind": "synthetic declaration about a witness register, not a sibling evaluation",
+  "subject_id": "witness-register-synthetic-succession",
+  "review_date": "2026-10-20",
+  "items": [{
+    "item_id": "register-handoff",
+    "description": "Synthetic complete label declaration for a witness register handoff",
+    "custodian": "declared register successor role",
+    "tags": ["record"],
+    "evidence": ["succession_statement", "custodian_name", "custodian_acknowledgement", "handoff_note", "location_pointer", "lapse_declaration", "release_log", "origin_note", "drift_acknowledgement", "version_log"]
+  }]
+}

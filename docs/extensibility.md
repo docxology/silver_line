@@ -13,6 +13,20 @@ Constraints, each enforced by the invariant battery or the evaluator:
 | `kind` | A `KeepKind` member. | evaluator shape check |
 | `may_lapse` | Boolean. | evaluator shape check |
 
+The shared runtime validator in `silver_line.validation` enforces this table
+before evaluation. Required labels must be unique, stripped lowercase strings;
+they are rejected rather than silently rewritten. `kind` must be an actual
+KeepKind member, including when another enum has an identical value.
+Only LAPSE requirements may set may_lapse. This flag permits an unresolved
+lapse state; it is never an item's release declaration.
+
+Small custom registries use the same reviewed vocabulary as the built-in
+registry. Unknown tags fail the registry closed and are actually filtered from
+item matching. Arbitrary extended vocabularies are intentionally unsupported:
+a vocabulary extension requires a reviewed package revision, new evaluator
+version and regenerated reports. Family balance is a separate full-registry
+profile; a small valid custom registry need not cover all families.
+
 After any registry edit, regenerate the formalism ledger and re-derive both
 envelope digests — tests fail until the derived artifacts follow.
 

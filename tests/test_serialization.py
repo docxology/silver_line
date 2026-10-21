@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
+
 from silver_line.enums import IntakeDisposition, ProvisionStatus, VerdictStatus
 from silver_line.records import IntakeNote, ProvisionFinding, SuccessionVerdict
 from silver_line.serialization import (
@@ -28,10 +30,11 @@ def test_registry_digest_changes_when_content_changes() -> None:
 def test_canonical_verdict_is_deterministic() -> None:
     verdict = SuccessionVerdict(
         VerdictStatus.NEEDS_REWORK,
-        (ProvisionFinding("a", ProvisionStatus.NEEDS_REWORK, ("missing: x",)),),
+        (ProvisionFinding("a", ProvisionStatus.NEEDS_REWORK, ("missing: x",)),
+         ProvisionFinding("b", ProvisionStatus.KEPT, ("present: y",))),
         (IntakeNote(IntakeDisposition.SET_ASIDE, "set aside"),),
         "2026-08-29",
         "abc",
     )
-    assert canonical_verdict(verdict) == canonical_verdict(verdict)
+    assert canonical_verdict(verdict) == canonical_verdict(replace(verdict, findings=tuple(reversed(verdict.findings))))
     assert len(verdict_digest(verdict)) == 64

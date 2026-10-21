@@ -16,6 +16,7 @@ from .intake import intake, normalize_item
 from .records import (
     IntakeNote,
     ProvisionFinding,
+    ReleaseDeclaration,
     SuccessionItem,
     SuccessionVerdict,
 )
@@ -46,6 +47,7 @@ __all__ = [
     "MUST_NOT_BECOME",
     "ProvisionFinding",
     "ProvisionStatus",
+    "ReleaseDeclaration",
     "QUESTION",
     "SILVER_KEEPSAKES",
     "SuccessionItem",

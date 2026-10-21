@@ -1,7 +1,7 @@
 {
  "schema_version": "1.0",
- "purpose": "Declares the manuscript's formalism-block labels and the package constants the formalism section states, so the render engine's evidence registry can resolve the cross-references.",
- "boundary": "A row here records that a label is declared and that a constant exists. It is not evidence that the proposition it names is true.",
+ "purpose": "Declares formalism-block labels and package constants for cross-reference resolution.",
+ "boundary": "A row records a declared label or constant, not evidence that a proposition is true.",
  "claims": [
   {
    "claim_id": "def_keepsake",
@@ -51,7 +51,7 @@
   {
    "claim_id": "const_registry_digest",
    "kind": "constant",
-   "value": "3d4f90f50de380657fdd16c1b1626b065d455497ca0dc1b8f3cbe95bc23f9efd",
+   "value": "30711e134eec17166275097b066c195c04e37f4bbd17db1a1115c64c3237af16",
    "source": "derived at generation time from silver_line.registry.SILVER_KEEPSAKES",
    "source_path": "src/silver_line/registry.py",
    "source_tier": "package_constant",

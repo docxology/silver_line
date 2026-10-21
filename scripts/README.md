@@ -10,7 +10,7 @@ contract for this directory is stated in `AGENTS.md`.
 | Script | Purpose | Delegates to | Run command |
 |---|---|---|---|
 | `build_figures.py` | Build every registered figure (SVG plus cover PNG) into `output/figures/` and write `figure_registry.json` | `silver_line.figures.build`: `build_all`, `figure_registry`, `rasterize_cover` | `uv run python scripts/build_figures.py` |
-| `gen_formalism_ledger.py` | Derive `data/formalism_claim_ledger.json` from the manuscript's `:::` formalism blocks and the live package constants | `silver_line.registry`: `SILVER_KEEPSAKES`; `silver_line.serialization`: `registry_digest` | `uv run python scripts/gen_formalism_ledger.py` |
+| `gen_formalism_ledger.py` | Derive `data/formalism_claim_ledger.json` from the manuscript's `:::` formalism blocks and the live package constants | `silver_line.formalism`: `generate` | `uv run python scripts/gen_formalism_ledger.py` |
 
 ## Outputs
 

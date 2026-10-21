@@ -12,9 +12,7 @@ class Keepsake:
     """A declared item of kept work: what it is, who it is entrusted to,
     and the evidence labels a successor could inspect.
 
-    ``kind`` groups the keepsake into a succession family so registry balance
-    can be reviewed. ``may_lapse`` records that the declarer has explicitly
-    accepted this item's possible lapse; a lapse-accepted item is not a defect.
+    ``may_lapse`` is registry policy eligibility, never a subject's decision.
     """
 
     id: str
@@ -38,6 +36,14 @@ class Keepsake:
 
 
 @dataclass(frozen=True)
+class ReleaseDeclaration:
+    item_id: str
+    declared_by: str
+    declared_on: str
+    source_ref: str
+
+
+@dataclass(frozen=True)
 class SuccessionItem:
     """A self-declared item of kept work assessed against the Silver registry.
 
@@ -49,6 +55,8 @@ class SuccessionItem:
     custodian: str = ""
     tags: frozenset[str] = frozenset()
     evidence: frozenset[str] = frozenset()
+    item_id: str = ""
+    release: ReleaseDeclaration | None = None
 
 
 @dataclass(frozen=True)
@@ -57,6 +65,7 @@ class IntakeNote:
 
     disposition: IntakeDisposition
     note: str
+    item_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -66,6 +75,8 @@ class ProvisionFinding:
     keepsake_id: str
     status: ProvisionStatus
     reasons: tuple[str, ...]
+    item_id: str = ""
+    missing_fields: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -83,3 +94,12 @@ class SuccessionVerdict:
     intake_notes: tuple[IntakeNote, ...] = field(default_factory=tuple)
     evaluated_as_of: str = ""
     registry_digest: str = ""
+    subject_id: str = "UNSPECIFIED"
+    declaration_digest: str = ""
+    source_digest: str = ""
+    evaluator_version: str = ""
+    registry_version: str = ""
+    accepted_count: int = 0
+    rejected_count: int = 0
+    unmatched_count: int = 0
+    reading_scope: str = "EMPTY"

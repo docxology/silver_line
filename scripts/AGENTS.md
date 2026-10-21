@@ -18,7 +18,7 @@ user-facing inventory and must match this directory.
 | Script | Delegates to | Writes |
 |---|---|---|
 | `build_figures.py` | `silver_line.figures.build`: `build_all`, `figure_registry`, `rasterize_cover` | `output/figures/*.svg`, `output/figures/silver_line_cover.png`, `output/figures/figure_registry.json` |
-| `gen_formalism_ledger.py` | `silver_line.registry`: `SILVER_KEEPSAKES`; `silver_line.serialization`: `registry_digest` | `data/formalism_claim_ledger.json` |
+| `gen_formalism_ledger.py` | `silver_line.formalism`: `generate` | `data/formalism_claim_ledger.json` |
 
 `tests/test_standalone_contract.py` pins both filenames; renaming a script
 means updating that test and both inventory tables together.

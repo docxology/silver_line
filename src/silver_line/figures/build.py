@@ -8,6 +8,7 @@ does not show.
 
 import os
 import subprocess
+from collections.abc import Callable
 from pathlib import Path
 
 from ..enums import KeepKind
@@ -249,7 +250,7 @@ def build_vocabulary_figure(
 
 
 #: The figure registry. Emission is sorted by name.
-FIGURES: dict[str, object] = {
+FIGURES: dict[str, Callable[[], str]] = {
     "silver_registry": build_registry_figure,
     "silver_family_balance": build_family_figure,
     "silver_evidence_labels": build_evidence_figure,

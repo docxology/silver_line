@@ -14,6 +14,7 @@ class ProvisionStatus(str, Enum):
     """Outcome for a single keepsake that applies to a succession reading."""
 
     KEPT = "KEPT"
+    DECLARED_RELEASE = "DECLARED_RELEASE"
     NEEDS_PROVISION = "NEEDS_PROVISION"
     NEEDS_REWORK = "NEEDS_REWORK"
 
@@ -22,6 +23,7 @@ class VerdictStatus(str, Enum):
     """Overall verdict for a succession reading."""
 
     KEPT = "KEPT"
+    DECLARED_RELEASE = "DECLARED_RELEASE"
     NEEDS_PROVISION = "NEEDS_PROVISION"
     NEEDS_REWORK = "NEEDS_REWORK"
     OUTSIDE_SCOPE = "OUTSIDE_SCOPE"

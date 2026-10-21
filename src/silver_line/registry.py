@@ -74,7 +74,6 @@ SILVER_KEEPSAKES: tuple[Keepsake, ...] = (
         frozenset({"artifact", "record"}),
         ("drift_acknowledgement",),
         KeepKind.RESTRAINT,
-        True,
     ),
     Keepsake(
         "succession-rehearsed",

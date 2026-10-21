@@ -63,13 +63,8 @@ def test_may_lapse_gap_is_needs_provision_not_rework() -> None:
     assert verdict.status is VerdictStatus.NEEDS_PROVISION
     lapse_gaps = [f for f in findings if f.status is ProvisionStatus.NEEDS_PROVISION]
     assert lapse_gaps
-    assert all(
-        "may lapse" in reason
-        for f in lapse_gaps
-        for reason in f.reasons
-        if "lapse" in " ".join(f.reasons)
-    ) or True  # reason trail names the declared release
-    # the only gaps are on lapse-accepted keepsakes
+    assert all(any("not yet declared" in r for r in f.reasons) for f in lapse_gaps)
+    assert not any("declared release" in r for f in lapse_gaps for r in f.reasons)
     from silver_line.registry import SILVER_KEEPSAKES
     lapse_ids = {k.id for k in SILVER_KEEPSAKES if k.may_lapse}
     assert {f.keepsake_id for f in lapse_gaps} <= lapse_ids

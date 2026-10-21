@@ -6,7 +6,8 @@ claims:
   - id: succession-reading
     statement: >
       Given a declared scan set, read_succession returns a verdict describing
-      declared provision of the required evidence labels at the review date.
+      declared provision and custody consistency at an explicitly supplied
+      review date, or an explicitly undated reading when no date is supplied.
     tier: executable
     evidence: tests/test_evaluator.py
   - id: fail-closed-empty
@@ -21,6 +22,39 @@ claims:
       an unexpected change is drift, not safety information.
     tier: executable
     evidence: tests/test_serialization.py
+  - id: custody-consistency
+    statement: >
+      Missing named custody on applicable entrustment requirements prevents
+      KEPT and is linked to the source item; unrelated items cannot compensate.
+    tier: executable
+    evidence: tests/test_review_boundaries.py, tests/test_review_acceptance.py
+  - id: reviewed-vocabulary
+    statement: >
+      Unknown item tags are actually excluded and unknown custom-registry
+      tags fail closed under the reviewed package vocabulary.
+    tier: executable
+    evidence: tests/test_review_boundaries.py, tests/test_review_mutation_controls.py
+  - id: lapse-is-not-silence
+    statement: >
+      Eligibility with missing labels is not yet declared. An explicit
+      scoped release is represented without a retention penalty, with
+      restraint independent and no action permission implied.
+    tier: executable
+    evidence: tests/test_review_boundaries.py, tests/test_review_acceptance.py, tests/test_review_mutation_controls.py
+  - id: replay-identity
+    statement: >
+      Reports bind subject, original source and normalized declaration,
+      item findings, date, versions and qualified scope. Scan and registry
+      permutations preserve identity under set semantics.
+    tier: executable
+    evidence: tests/test_review_identity.py, tests/test_review_acceptance.py
+  - id: envelope-replay
+    statement: >
+      Both synthetic envelopes regenerate from distinct fixtures and
+      content-addressed reports and snapshots; every envelope field has a
+      negative control. Formalism label parity alone is not semantic proof.
+    tier: executable
+    evidence: tests/test_review_acceptance.py, tests/test_review_mutation_controls.py
 non_claims:
   - No guarantee of persistence: a KEPT verdict describes declared custody.
   - Not an immortality project; nothing here outlives its custodians by promise.
