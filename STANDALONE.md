@@ -17,7 +17,8 @@ uv run python scripts/build_figures.py
 Rendering uses the template engine as a build tool. Use an isolated detached
 worktree of its origin/main, and link this repository at
 `projects/working/silver_line` in that worktree. Select the project by its
-basename so the renderer and validator agree on its combined output name:
+basename so the renderer and validator agree on its combined output name;
+these commands run in that worktree, not in this repository:
 
 ```
 uv run python scripts/pipeline/stage_03_render.py --project silver_line
