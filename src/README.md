@@ -1,4 +1,6 @@
 # src
 
-> Status: SKELETON (auto-generated 2026-08-30, fleet pass in progress).
-> Describe what this folder contains and how to use it, then remove this note.
+`silver_line/` — the package, and the whole product surface. Pure standard
+library at runtime; no sibling checkout is read. `pyproject.toml` puts `src`
+on pytest's `pythonpath`, so the suite imports the package without an install
+step.

@@ -1,4 +1,8 @@
 # manuscript
 
-> Status: SKELETON (auto-generated 2026-08-30, fleet pass in progress).
-> Describe what this folder contains and how to use it, then remove this note.
+The Silver Line's own manuscript: `00_abstract.md` through `99_references.md`,
+with `preamble.md`, `references.bib` and `config.yaml` (its `version` must
+match the package). The `:::` formalism blocks in these files are the source
+of `data/formalism_claim_ledger.json`; regenerate with
+`scripts/gen_formalism_ledger.py`. `MANUSCRIPT_STATUS.md` tracks publication
+readiness.

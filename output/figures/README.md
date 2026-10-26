@@ -1,4 +1,5 @@
 # figures
 
-> Status: SKELETON (auto-generated 2026-08-30, fleet pass in progress).
-> Describe what this folder contains and how to use it, then remove this note.
+Generated figure output: one SVG per registered figure, the cover plate with
+its PNG raster, and `figure_registry.json`. Rebuild with
+`uv run python scripts/build_figures.py`; never hand-edit.

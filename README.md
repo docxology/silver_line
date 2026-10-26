@@ -58,9 +58,9 @@ uv run python -m silver_line.artifacts --check
 uv tool run ty==0.0.90 check src
 ```
 
-Renders via the external template checkout as `working/silver_line` (see
-`STANDALONE.md`). Pure standard library at runtime; dev deps are pytest,
-pytest-cov, and ruff.
+Renders via the external template checkout, linked in it at
+`projects/working/silver_line` (see `STANDALONE.md`). Pure standard library at
+runtime; dev deps are pytest, pytest-cov, and ruff.
 
 ## The Line Set
 

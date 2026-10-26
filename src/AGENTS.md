@@ -1,16 +1,17 @@
 # AGENTS.md — `silver_line/src`
 
-> Status: SKELETON (auto-generated 2026-08-30, fleet pass in progress).
-> Contents below must be verified and expanded by a lane agent before this
-> stub is considered accurate.
-
-## Scope
-- Local-only path under `projects/ongoing/` — matched by the root
-  `.gitignore` rule `projects/*` and never committed.
-- Parent standard: see `/Volumes/external_drive/Git/template/projects/ongoing/AGENTS.md`.
-
-## Layout
-- (to be filled: list child folders/files and their roles)
+Working standard for this directory. The repo-wide contract in the root
+`AGENTS.md` applies in full; this file only narrows it.
 
 ## Gotchas
-- (to be filled)
+
+- Standard library only at runtime. `tests/test_standalone_contract.py` fails
+  if `src/` names a sibling line package.
+- Logic lives here. `scripts/` are thin orchestrators and `tests/` are the
+  gate; neither is a place to put behavior.
+- Emission order is a contract: findings, notes and envelope fields sort
+  before they reach a reading or digest, and registry identity includes the
+  declared required-evidence sequence.
+- The version appears in several places (this package, `pyproject.toml`,
+  `CITATION.cff`, `.zenodo.json`, `CHANGELOG.md`, `docs/manuscript/config.yaml`
+  and the envelopes). `tests/test_version_sync.py` gates the ones it reads.

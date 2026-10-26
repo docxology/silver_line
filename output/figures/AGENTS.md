@@ -1,16 +1,12 @@
 # AGENTS.md — `silver_line/output/figures`
 
-> Status: SKELETON (auto-generated 2026-08-30, fleet pass in progress).
-> Contents below must be verified and expanded by a lane agent before this
-> stub is considered accurate.
-
-## Scope
-- Local-only path under `projects/ongoing/` — matched by the root
-  `.gitignore` rule `projects/*` and never committed.
-- Parent standard: see `/Volumes/external_drive/Git/template/projects/ongoing/AGENTS.md`.
-
-## Layout
-- (to be filled: list child folders/files and their roles)
+Working standard for this directory.
 
 ## Gotchas
-- (to be filled)
+
+- Every file here is written by `scripts/build_figures.py` from
+  `src/silver_line/figures/build.py`; hand-edits are lost on the next build.
+- The cover PNG needs `rsvg-convert` on PATH (`SILVER_LINE_RSVG_CONVERT`
+  overrides it); the SVGs do not.
+- `figure_registry.json` is the generated index of those figures, and
+  `tests/test_figures.py` gates its shape.
