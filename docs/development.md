@@ -2,6 +2,10 @@
 
 ## Verify commands
 
+`scripts/build_figures.py` rasterizes the cover through `rsvg-convert`, which is
+not a Python dependency: install librsvg (`apt-get install librsvg2-bin` on
+Debian/Ubuntu, `brew install librsvg` on macOS) so that it is on `PATH`.
+
 ```
 uv sync
 uv run pytest tests/ --cov=src --cov-report=term   # all green, cov >= 90
