@@ -2,6 +2,9 @@
 
 ## 0.3.0 — 2026-11-06
 
+- Emit figure registry 2.0 with canonical `alt_text`, including cover metadata.
+  Preserve authored descriptions and historical artifacts; this figure metadata
+  cutover does not change native verdict, evaluator, or registry revision 3.0.
 - Require release declarations to name an explicit subject matching the reading
   as well as the exact item; independent restraint and lapse eligibility retain
   their native meanings. Authority and source references remain declarations.

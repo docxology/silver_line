@@ -5,8 +5,8 @@ hand-edit a file under `output/`, and never edit one to make a check pass.
 
 ## Gotchas
 
-- Only the rendered web files and `pdf/silver_line_combined.pdf` are tracked;
-  the rest of `output/` is ignored by the root `.gitignore`.
+- Current figures, rendered web files, and `pdf/silver_line_combined.pdf` are
+  tracked. Preserve tracked outputs when regenerating current figures.
 - `figures/` is reproducible from `scripts/build_figures.py`. `web/` and
   `pdf/` come from the external render pipeline (`STANDALONE.md`), not from
   this repo's scripts.

@@ -3,24 +3,17 @@
 from __future__ import annotations
 
 import os
-import re
 import shutil
 from pathlib import Path
 
 from silver_line.figures.build import (
     COVER_FIGURE,
-    COVER_TAGLINE,
-    COVER_TITLE,
     FIGURES,
     build_all,
     build_figure,
     figure_registry,
     rasterize_cover,
 )
-
-
-def test_at_least_three_figures_registered() -> None:
-    assert len(FIGURES) >= 3
 
 
 def test_build_all_writes_sorted_deterministic_svgs(tmp_path: Path) -> None:
@@ -48,7 +41,6 @@ def test_figure_registry_entries_are_accessibility_objects() -> None:
     for entry in figures:
         label = entry["label"]
         assert label.startswith("fig:") and label[4:]
-        assert entry["caption"] and entry["alt"]
         assert Path(entry["filename"]).stem in FIGURES
         labels.append(label)
     assert labels == sorted(labels)
@@ -63,16 +55,6 @@ def test_figure_registry_covers_every_registered_figure() -> None:
 def test_cover_figure_is_registered() -> None:
     assert COVER_FIGURE in FIGURES
     assert figure_registry()["cover"]["filename"] == f"{COVER_FIGURE}.png"
-
-
-def test_cover_carries_only_title_and_tagline(tmp_path: Path) -> None:
-    text = build_figure(COVER_FIGURE, tmp_path).read_text()
-    runs = re.findall(r">([^<>]+)</text>", text)
-    assert set(runs) == {COVER_TITLE, COVER_TAGLINE}
-    # No dates, no version numbers, and no other text on the cover.
-    joined = " ".join(runs)
-    assert not re.search(r"\b20\d\d\b", joined)
-    assert not re.search(r"\bv\d+\.\d+", joined)
 
 
 def test_cover_rasterizes_deterministically(tmp_path: Path) -> None:

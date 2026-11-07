@@ -318,7 +318,7 @@ def _registry_entry(name: str) -> dict[str, str]:
         "label": "fig:" + name.replace("_", "-"),
         "filename": f"{name}.png" if is_cover else f"{name}.svg",
         "caption": FIGURE_ACCESSIBILITY[name]["caption"],
-        "alt": FIGURE_ACCESSIBILITY[name]["alt"],
+        "alt_text": FIGURE_ACCESSIBILITY[name]["alt"],
         "source": "silver_line keepsake registry, intake, and manuscript protocol",
         "generated_by": "silver_line.figures.figure_registry",
         "format": (
@@ -333,7 +333,7 @@ def figure_registry() -> dict[str, object]:
     """Return the figure registry in the family's ``fig:`` accessibility format."""
 
     registry: dict[str, object] = {
-        "schema_version": "1.5",
+        "schema_version": "2.0",
         "package_version": __version__,
         "figures": [_registry_entry(name) for name in sorted(FIGURES)],
     }

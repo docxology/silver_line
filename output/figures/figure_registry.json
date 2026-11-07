@@ -1,6 +1,6 @@
 {
   "cover": {
-    "alt": "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end.",
+    "alt_text": "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end.",
     "caption": "The cover plate: memory and succession in three silver strokes across the cream field \u2014 one preserved whole, one entrusting itself down at a node, one dissolving before the row's end. No row is labeled; the tagline is the only legend, and the cover carries no date and no version.",
     "filename": "silver_line_cover.png",
     "format": "PNG rasterized from deterministic SVG",
@@ -10,7 +10,7 @@
   },
   "figures": [
     {
-      "alt": "silver_line required evidence labels: one sorted row per keepsake listing its required evidence labels.",
+      "alt_text": "silver_line required evidence labels: one sorted row per keepsake listing its required evidence labels.",
       "caption": "The evidence-label surface a successor could inspect, per keepsake.",
       "filename": "silver_evidence_labels.svg",
       "format": "SVG from the deterministic builder",
@@ -19,7 +19,7 @@
       "source": "silver_line keepsake registry, intake, and manuscript protocol"
     },
     {
-      "alt": "silver_line keep-kind balance: one row per keep kind with its keepsake count.",
+      "alt_text": "silver_line keep-kind balance: one row per keep kind with its keepsake count.",
       "caption": "Keep-kind balance: the registry reviewed for succession-family coverage.",
       "filename": "silver_family_balance.svg",
       "format": "SVG from the deterministic builder",
@@ -28,7 +28,7 @@
       "source": "silver_line keepsake registry, intake, and manuscript protocol"
     },
     {
-      "alt": "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end.",
+      "alt_text": "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end.",
       "caption": "The cover plate: memory and succession in three silver strokes across the cream field \u2014 one preserved whole, one entrusting itself down at a node, one dissolving before the row's end. No row is labeled; the tagline is the only legend, and the cover carries no date and no version.",
       "filename": "silver_line_cover.png",
       "format": "PNG rasterized from deterministic SVG",
@@ -37,7 +37,7 @@
       "source": "silver_line keepsake registry, intake, and manuscript protocol"
     },
     {
-      "alt": "silver_line keepsake registry: one sorted row per keepsake naming its kind, evidence count, and may-lapse flag.",
+      "alt_text": "silver_line keepsake registry: one sorted row per keepsake naming its kind, evidence count, and may-lapse flag.",
       "caption": "The keepsake roster, one sorted row per entry.",
       "filename": "silver_registry.svg",
       "format": "SVG from the deterministic builder",
@@ -46,7 +46,7 @@
       "source": "silver_line keepsake registry, intake, and manuscript protocol"
     },
     {
-      "alt": "silver_line tag vocabulary: one row per reviewed tag marked used or unused by the declaration.",
+      "alt_text": "silver_line tag vocabulary: one row per reviewed tag marked used or unused by the declaration.",
       "caption": "The reviewed tag vocabulary next to what the declaration actually uses.",
       "filename": "silver_tag_vocabulary.svg",
       "format": "SVG from the deterministic builder",
@@ -56,5 +56,5 @@
     }
   ],
   "package_version": "0.3.0",
-  "schema_version": "1.5"
+  "schema_version": "2.0"
 }
