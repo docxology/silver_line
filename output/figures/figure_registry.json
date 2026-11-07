@@ -1,7 +1,7 @@
 {
   "cover": {
     "alt": "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end.",
-    "caption": "The cover plate: memory and succession in three silver strokes across the cream field \u2014 one preserved whole, one entrusting itself down at a node, one dissolving before the row's end. No row is labelled; the tagline is the only legend, and the cover carries no date and no version.",
+    "caption": "The cover plate: memory and succession in three silver strokes across the cream field \u2014 one preserved whole, one entrusting itself down at a node, one dissolving before the row's end. No row is labeled; the tagline is the only legend, and the cover carries no date and no version.",
     "filename": "silver_line_cover.png",
     "format": "PNG rasterized from deterministic SVG",
     "generated_by": "silver_line.figures.figure_registry",
@@ -29,7 +29,7 @@
     },
     {
       "alt": "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end.",
-      "caption": "The cover plate: memory and succession in three silver strokes across the cream field \u2014 one preserved whole, one entrusting itself down at a node, one dissolving before the row's end. No row is labelled; the tagline is the only legend, and the cover carries no date and no version.",
+      "caption": "The cover plate: memory and succession in three silver strokes across the cream field \u2014 one preserved whole, one entrusting itself down at a node, one dissolving before the row's end. No row is labeled; the tagline is the only legend, and the cover carries no date and no version.",
       "filename": "silver_line_cover.png",
       "format": "PNG rasterized from deterministic SVG",
       "generated_by": "silver_line.figures.figure_registry",
@@ -55,6 +55,6 @@
       "source": "silver_line keepsake registry, intake, and manuscript protocol"
     }
   ],
-  "package_version": "0.2.0",
+  "package_version": "0.3.0",
   "schema_version": "1.5"
 }

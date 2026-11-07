@@ -31,7 +31,7 @@ SILVER_KEEPSAKES: tuple[Keepsake, ...] = (
         "Entrust each kept thing to a named custodian",
         "A keepsake without a custodian is a wish; name the person or role that carries it.",
         frozenset({"relationship", "institution", "record"}),
-        ("custodian_name", "custodian_acknowledgement"),
+        ("custodian_name", "custodian_acknowledgment"),
         KeepKind.ENTRUSTMENT,
     ),
     Keepsake(
@@ -72,13 +72,13 @@ SILVER_KEEPSAKES: tuple[Keepsake, ...] = (
         "Refuse the infallible-archive claim",
         "Preservation describes intent and custody, never a guarantee of persistence.",
         frozenset({"artifact", "record"}),
-        ("drift_acknowledgement",),
+        ("drift_acknowledgment",),
         KeepKind.RESTRAINT,
     ),
     Keepsake(
         "succession-rehearsed",
         "Rehearse the succession at least once",
-        "A handoff that has never been practised is a plan, not a proven route.",
+        "A handoff that has never been practiced is a plan, not a proven route.",
         frozenset({"practice", "relationship"}),
         ("rehearsal_record",),
         KeepKind.TRANSMISSION,
@@ -86,7 +86,7 @@ SILVER_KEEPSAKES: tuple[Keepsake, ...] = (
     Keepsake(
         "negative-space-kept",
         "Record what was deliberately not kept",
-        "A documented release narrows the successor's search space and honours the choice.",
+        "A documented release narrows the successor's search space and honors the choice.",
         frozenset({"record", "practice"}),
         ("release_log",),
         KeepKind.LAPSE,

@@ -20,8 +20,7 @@ user-facing inventory and must match this directory.
 | `build_figures.py` | `silver_line.figures.build`: `build_all`, `figure_registry`, `rasterize_cover` | `output/figures/*.svg`, `output/figures/silver_line_cover.png`, `output/figures/figure_registry.json` |
 | `gen_formalism_ledger.py` | `silver_line.formalism`: `generate` | `data/formalism_claim_ledger.json` |
 
-`tests/test_standalone_contract.py` pins both filenames; renaming a script
-means updating that test and both inventory tables together.
+Keep both inventory tables and documented commands current when a script changes.
 
 ## Gotchas
 

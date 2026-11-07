@@ -41,9 +41,33 @@ cannot be scored fails closed as `NEEDS_REWORK`. Malformed input is set
 aside with notes, never repaired into a fabricated value.
 
 Findings identify their item and missing fields. Registry lapse eligibility
-does not imply a release decision; an explicit scoped ReleaseDeclaration is
-required for DECLARED_RELEASE. Restraint requirements still apply. Read
-`reading_scope` and the accepted/rejected/unmatched counts alongside status.
+does not imply a release decision; DECLARED_RELEASE requires a declaration
+matching both the explicit reading subject and the exact item ID. Restraint
+requirements still apply. For example:
+
+```python
+from silver_line import ReleaseDeclaration, SuccessionItem, read_succession
+
+item = SuccessionItem(
+    item_id="retired-index",
+    description="Synthetic retired index",
+    tags=frozenset({"record"}),
+    evidence=frozenset({"drift_acknowledgment"}),
+    release=ReleaseDeclaration(
+        subject_id="archive-a", item_id="retired-index",
+        declared_by="declared successor role", declared_on="2026-10-19",
+        source_ref="synthetic:release-record",
+    ),
+)
+matching = read_succession(item, subject_id="archive-a", evaluated_as_of="2026-10-20")
+mismatched = read_succession(item, subject_id="archive-b", evaluated_as_of="2026-10-20")
+assert matching.status.value == "DECLARED_RELEASE"
+assert mismatched.status.value == "NEEDS_REWORK"
+```
+
+These fields are declarations, not authentication of authority, source
+contents, acceptance or consent. Release authorizes no action.
+Read `reading_scope` and the accepted/rejected/unmatched counts alongside status.
 See [report identity and migration](docs/report-schema.md).
 
 ## Verify
@@ -77,3 +101,6 @@ envelopes without aggregation:
 - [Green Line](https://github.com/docxology/green_line) — the capacity-under-development instrument
 - [The Line Set](https://github.com/docxology/line_set) — the cross-line set reader holding instruments apart
 - [The Witness Register](https://github.com/docxology/witness_register) — co-registration without aggregation
+
+Source availability is separate from family membership: implementations may
+be optional or access-controlled. A missing source is not a native verdict.

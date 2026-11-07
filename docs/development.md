@@ -25,7 +25,8 @@ uv tool run ty==0.0.90 check src
 4. Fail closed: empty scan sets and unscorable registries are named outcomes.
 5. Sort before emit: no dict/set iteration order reaches a reading or digest.
 6. Sibling line projects are never modified from here.
-7. Underclaim, first person; `docs/claim_boundaries.md` is the register.
+7. Underclaim, first person; `data/claim_ledger.yaml` is the register and
+   `docs/claim_boundaries.md` its prose companion.
 
 ## Input and replay contract
 
@@ -59,4 +60,5 @@ See [schema migration](report-schema.md) and [publication](publication.md).
 
 The project has no declared type-check dependency. The pinned external ty
 command above checks source without adding runtime or development dependencies.
-Mutation controls run only on disposable copies under pytest's temporary root.
+Regression controls exercise public readings and real artifact records, not
+implementation text, prose or disposable source mutations.

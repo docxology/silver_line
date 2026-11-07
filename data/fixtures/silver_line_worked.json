@@ -7,6 +7,6 @@
     "description": "Synthetic lab archive with unresolved lapse provision",
     "custodian": "declared successor role",
     "tags": ["record"],
-    "evidence": ["succession_statement", "custodian_name", "custodian_acknowledgement", "handoff_note", "location_pointer", "origin_note", "drift_acknowledgement", "version_log"]
+    "evidence": ["succession_statement", "custodian_name", "custodian_acknowledgment", "handoff_note", "location_pointer", "origin_note", "drift_acknowledgment", "version_log"]
   }]
 }

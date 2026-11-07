@@ -10,9 +10,10 @@ declared custodian. A lapse-eligible requirement with missing labels reads
 NEEDS_PROVISION: eligible but not yet declared, not a retention defect.
 Silence is never narrated as a decision.
 
-An explicit release supplies the item's ID, declarer, declaration date and
-source reference. When applicable lapse policy permits it, the item reads
-DECLARED_RELEASE for non-restraint requirements. Restraint acknowledgements
+An explicit release supplies the subject ID, exact item ID, declarer,
+declaration date and source reference. Its subject must match the explicit
+reading subject. When applicable lapse policy permits it, the item reads
+DECLARED_RELEASE for non-restraint requirements. Restraint acknowledgments
 remain required. I check that the declaration is internally scoped and dated;
 I do not verify authority, acceptance or consent. Nothing here authorizes
 disclosure, destruction or transfer.

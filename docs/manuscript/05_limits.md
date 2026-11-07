@@ -6,7 +6,7 @@ quality of what is kept, and does not guarantee that anything survives its
 custodians. Digests make silent registry edits visible, not impossible, and
 say nothing about whether the content is good.
 
-A nonblank custodian and acknowledgement label establish neither acceptance
+A nonblank custodian and acknowledgment label establish neither acceptance
 nor legal succession. Registry eligibility is weaker than a scoped release
 declaration; neither authorizes action. A PARTIAL reading covers matched
 accepted items only, and an UNDATED reading makes no dated custody claim.

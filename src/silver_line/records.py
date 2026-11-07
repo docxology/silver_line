@@ -37,6 +37,9 @@ class Keepsake:
 
 @dataclass(frozen=True)
 class ReleaseDeclaration:
+    """A declared release for one explicit subject and item, not verified authority."""
+
+    subject_id: str
     item_id: str
     declared_by: str
     declared_on: str

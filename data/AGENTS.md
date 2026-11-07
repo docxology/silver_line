@@ -1,7 +1,9 @@
 # data/AGENTS.md
 
-Everything in this directory is either derived (formalism_claim_ledger.json —
-regenerate with scripts/gen_formalism_ledger.py) or a prepared integration
-input (binding_declaration.json, envelopes/). Envelope digests must be
-re-derived from the live registry after any registry edit; a stale digest is
-drift, and tests/test_binding_and_envelopes.py fails on it.
+`fixtures/` contains maintained synthetic declarations; `envelopes/` contains
+current prepared integration inputs. Regenerate that entire cohort with
+`python -m silver_line.artifacts` after registry, evaluator or schema changes.
+`reports/` and `snapshots/` are immutable content-addressed stores: create new
+addresses, never alter or delete historical bytes. `claim_ledger.yaml` is the
+claim register of record, and `formalism_claim_ledger.json` is derived with
+`scripts/gen_formalism_ledger.py`. `binding_declaration.json` is prepared input.

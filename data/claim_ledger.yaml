@@ -13,7 +13,7 @@ claims:
   - id: fail-closed-empty
     statement: >
       An empty or wholly malformed scan set produces OUTSIDE_SCOPE or
-      NEEDS_REWORK with intake notes, never a favourable default.
+      NEEDS_REWORK with intake notes, never a favorable default.
     tier: executable
     evidence: tests/test_intake.py, tests/test_evaluator.py
   - id: registry-digest
@@ -33,14 +33,15 @@ claims:
       Unknown item tags are actually excluded and unknown custom-registry
       tags fail closed under the reviewed package vocabulary.
     tier: executable
-    evidence: tests/test_review_boundaries.py, tests/test_review_mutation_controls.py
+    evidence: tests/test_review_boundaries.py
   - id: lapse-is-not-silence
     statement: >
       Eligibility with missing labels is not yet declared. An explicit
-      scoped release is represented without a retention penalty, with
-      restraint independent and no action permission implied.
+      release matching both the reading subject and exact item is represented
+      without a retention penalty, with restraint independent and no action
+      permission implied. Subject and source references are declarations only.
     tier: executable
-    evidence: tests/test_review_boundaries.py, tests/test_review_acceptance.py, tests/test_review_mutation_controls.py
+    evidence: tests/test_review_boundaries.py, tests/test_review_acceptance.py
   - id: replay-identity
     statement: >
       Reports bind subject, original source and normalized declaration,
@@ -54,7 +55,14 @@ claims:
       content-addressed reports and snapshots; every envelope field has a
       negative control. Formalism label parity alone is not semantic proof.
     tier: executable
-    evidence: tests/test_review_acceptance.py, tests/test_review_mutation_controls.py
+    evidence: tests/test_review_acceptance.py
+  - id: explicit-fixture-release
+    statement: >
+      Only absent or null fixture releases mean no release. Malformed supplied
+      releases are rejected before artifact publication; complete inconsistent
+      declarations remain native item-linked gaps.
+    tier: executable
+    evidence: tests/test_review_acceptance.py
 non_claims:
   - No guarantee of persistence: a KEPT verdict describes declared custody.
   - Not an immortality project; nothing here outlives its custodians by promise.

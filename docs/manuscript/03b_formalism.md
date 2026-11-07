@@ -8,8 +8,9 @@ $\ell$ the registry lapse-eligibility flag, permitted only for LAPSE requirement
 
 ::: {.definition #def:succession-item title="Succession item"}
 A **succession item** has an item ID, description, custodian, tag set,
-declared label set and optional scoped release. A release names that exact
-item ID, declarer, declaration date and source reference.
+declared label set and optional scoped release. A release names the explicit
+reading subject and that exact item ID, declarer, declaration date and source
+reference. Subject and item identities must both match.
 :::
 
 ::: {.definition #def:verdict title="Verdict"}

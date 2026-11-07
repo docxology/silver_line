@@ -1,6 +1,6 @@
 # STANDALONE — silver_line
 
-This repo is standalone. Every gate below passes with zero sibling line
+This repo is standalone. Run the gates below with zero sibling line
 checkouts present; siblings are optional and their absence never fabricates
 a value — a test that needs a sibling envelope falls back to a frozen copy
 of the schema (see `tests/test_binding_and_envelopes.py`).
@@ -10,6 +10,8 @@ uv sync
 uv run pytest tests/ --cov=src --cov-report=term
 uv run ruff check src tests scripts
 uv run python scripts/build_figures.py
+uv run python scripts/gen_formalism_ledger.py
+uv run python -m silver_line.artifacts --check
 ```
 
 ## Rendering

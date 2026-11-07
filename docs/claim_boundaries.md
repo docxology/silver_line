@@ -14,18 +14,19 @@ reviewable because the registry is pinned and the intake is staged.
 I distinguish registry permission to lapse from an item's explicit release
 declaration. Missing lapse labels read NEEDS_PROVISION: eligible but not yet
 declared, not a retention defect. A valid scoped `ReleaseDeclaration` supplies
-the item ID, declarer, declaration date and source reference. It reads
-DECLARED_RELEASE for the item, including in a mixed reading; restraint
-requirements still apply. I check internal declaration consistency only.
+the explicit subject ID, exact item ID, declarer, declaration date and source
+reference. Its subject must match the reading, and UNSPECIFIED cannot release.
+It reads DECLARED_RELEASE for that item, including in a mixed reading;
+restraint requirements still apply. I check internal declaration consistency only.
 I do not verify the declarer's authority or the referenced record.
 
 For applicable ENTRUSTMENT requirements I require a nonblank declared custodian
-as well as the required labels. A name and acknowledgement label describe
+as well as the required labels. A name and acknowledgment label describe
 declared provision; neither establishes actual acceptance or succession.
 
 Every finding and item note carries an item ID. Report schema
-`silver.verdict/2.0` binds the subject, original-source and normalized-declaration
-digests, evaluator and registry versions, review date and qualified scope.
+`silver.verdict/3.0` binds the subject, original-source and normalized-declaration
+digests, evaluator and registry revisions, review date and qualified scope.
 An omitted date is explicitly UNDATED, and an omitted subject is UNSPECIFIED;
 neither may be published in an envelope. I report accepted, rejected and
 unmatched item counts. KEPT on a PARTIAL reading describes only its matched

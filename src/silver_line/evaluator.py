@@ -5,17 +5,28 @@ from collections import Counter
 
 from .enums import IntakeDisposition, KeepKind, ProvisionStatus, VerdictStatus
 from .intake import clean_labels, intake, normalize_item, vocabulary_check
-from .records import IntakeNote, Keepsake, ProvisionFinding, ReleaseDeclaration, SuccessionItem, SuccessionVerdict
+from .records import (
+    IntakeNote,
+    Keepsake,
+    ProvisionFinding,
+    ReleaseDeclaration,
+    SuccessionItem,
+    SuccessionVerdict,
+)
 from .registry import KEEPSAKE_TAG_VOCABULARY, SILVER_KEEPSAKES
 from .serialization import registry_digest
 from .snapshots import canonical_json, canonical_source, digest_text, item_snapshot
 from .validation import registry_shape_error, validate_review_date
-from .version import __version__
+from .version import EVALUATOR_REVISION, REGISTRY_REVISION
 
 
 def _item_id(raw: object) -> str:
-    if (isinstance(raw, SuccessionItem) and isinstance(raw.item_id, str)
-            and raw.item_id and raw.item_id == raw.item_id.strip()):
+    if (
+        isinstance(raw, SuccessionItem)
+        and isinstance(raw.item_id, str)
+        and raw.item_id
+        and raw.item_id == raw.item_id.strip()
+    ):
         return raw.item_id
     return "input-" + digest_text(canonical_source(raw))
 
@@ -38,21 +49,51 @@ def _prepare(raw_items: object):
         if item is not None:
             tags, tag_notes = clean_labels(item.tags, "tag")
             evidence, evidence_notes = clean_labels(item.evidence, "evidence")
-            notes.extend(replace(n, item_id=item_id)
-                         for n in tag_notes + evidence_notes + vocabulary_check(tags))
-            items.append(replace(item, tags=tags & KEEPSAKE_TAG_VOCABULARY, evidence=evidence))
+            notes.extend(
+                replace(n, item_id=item_id)
+                for n in tag_notes + evidence_notes + vocabulary_check(tags)
+            )
+            items.append(
+                replace(item, tags=tags & KEEPSAKE_TAG_VOCABULARY, evidence=evidence)
+            )
     if not items:
-        notes.append(IntakeNote(IntakeDisposition.SET_ASIDE, "scan set contained no usable declarations; the reading fails closed"))
-    return tuple(sorted(items, key=lambda i: (i.item_id, canonical_json(item_snapshot(i))))), notes, len(raw_items) - len(items)
+        notes.append(
+            IntakeNote(
+                IntakeDisposition.SET_ASIDE,
+                "scan set contained no usable declarations; the reading fails closed",
+            )
+        )
+    return (
+        tuple(
+            sorted(items, key=lambda i: (i.item_id, canonical_json(item_snapshot(i))))
+        ),
+        notes,
+        len(raw_items) - len(items),
+    )
 
 
-def _release_error(item: SuccessionItem, matched: tuple[Keepsake, ...], review_date: str) -> str | None:
+def _release_error(
+    item: SuccessionItem,
+    matched: tuple[Keepsake, ...],
+    review_date: str,
+    subject_id: str,
+) -> str | None:
     release = item.release
     if not isinstance(release, ReleaseDeclaration):
         return "release must be a ReleaseDeclaration"
-    if any(not isinstance(v, str) or not v.strip() or v != v.strip()
-           for v in (release.item_id, release.declared_by, release.declared_on, release.source_ref)):
-        return "release requires canonical item_id, declared_by, declared_on and source_ref"
+    if any(
+        not isinstance(v, str) or not v.strip() or v != v.strip()
+        for v in (
+            release.subject_id,
+            release.item_id,
+            release.declared_by,
+            release.declared_on,
+            release.source_ref,
+        )
+    ):
+        return "release requires canonical subject_id, item_id, declared_by, declared_on and source_ref"
+    if release.subject_id == "UNSPECIFIED" or release.subject_id != subject_id:
+        return "release subject_id does not match an explicit reading subject"
     if release.item_id != item.item_id:
         return "release item_id does not match this item"
     try:
@@ -66,43 +107,89 @@ def _release_error(item: SuccessionItem, matched: tuple[Keepsake, ...], review_d
     return None
 
 
-def _finding(item: SuccessionItem, keepsake: Keepsake, released: bool) -> ProvisionFinding:
+def _finding(
+    item: SuccessionItem, keepsake: Keepsake, released: bool
+) -> ProvisionFinding:
     if released and keepsake.kind is not KeepKind.RESTRAINT:
-        return ProvisionFinding(keepsake.id, ProvisionStatus.DECLARED_RELEASE,
-                                ("explicit scoped release declared; no retention failure inferred",
-                                 "no permission for disclosure, destruction or transfer"), item.item_id)
+        return ProvisionFinding(
+            keepsake.id,
+            ProvisionStatus.DECLARED_RELEASE,
+            (
+                "explicit scoped release declared; no retention failure inferred",
+                "no permission for disclosure, destruction or transfer",
+            ),
+            item.item_id,
+        )
     present = tuple(v for v in keepsake.required_evidence if v in item.evidence)
     missing = tuple(v for v in keepsake.required_evidence if v not in item.evidence)
-    fields = ("custodian",) if keepsake.kind is KeepKind.ENTRUSTMENT and not item.custodian else ()
+    fields = (
+        ("custodian",)
+        if keepsake.kind is KeepKind.ENTRUSTMENT and not item.custodian
+        else ()
+    )
     if fields:
-        return ProvisionFinding(keepsake.id, ProvisionStatus.NEEDS_REWORK,
-                                ("missing declared field: custodian",) +
-                                (("required evidence is missing: " + ", ".join(missing),) if missing else ()),
-                                item.item_id, fields + missing)
+        return ProvisionFinding(
+            keepsake.id,
+            ProvisionStatus.NEEDS_REWORK,
+            ("missing declared field: custodian",)
+            + (
+                ("required evidence is missing: " + ", ".join(missing),)
+                if missing
+                else ()
+            ),
+            item.item_id,
+            fields + missing,
+        )
     if not missing:
-        return ProvisionFinding(keepsake.id, ProvisionStatus.KEPT,
-                                ("required evidence is present: " + ", ".join(present),), item.item_id)
+        return ProvisionFinding(
+            keepsake.id,
+            ProvisionStatus.KEPT,
+            ("required evidence is present: " + ", ".join(present),),
+            item.item_id,
+        )
     reasons = ("required evidence is missing: " + ", ".join(missing),)
     if keepsake.may_lapse:
-        return ProvisionFinding(keepsake.id, ProvisionStatus.NEEDS_PROVISION,
-                                reasons + ("lapse eligible but not yet declared; unresolved, not a retention defect",),
-                                item.item_id, missing)
+        return ProvisionFinding(
+            keepsake.id,
+            ProvisionStatus.NEEDS_PROVISION,
+            reasons
+            + (
+                "lapse eligible but not yet declared; unresolved, not a retention defect",
+            ),
+            item.item_id,
+            missing,
+        )
     if present:
         reasons += ("evidence already present: " + ", ".join(present),)
-    return ProvisionFinding(keepsake.id, ProvisionStatus.NEEDS_REWORK, reasons, item.item_id, missing)
+    return ProvisionFinding(
+        keepsake.id, ProvisionStatus.NEEDS_REWORK, reasons, item.item_id, missing
+    )
 
 
 def _overall(findings: tuple[ProvisionFinding, ...]) -> VerdictStatus:
     statuses = {f.status for f in findings}
-    for status in (ProvisionStatus.NEEDS_REWORK, ProvisionStatus.NEEDS_PROVISION, ProvisionStatus.DECLARED_RELEASE):
+    for status in (
+        ProvisionStatus.NEEDS_REWORK,
+        ProvisionStatus.NEEDS_PROVISION,
+        ProvisionStatus.DECLARED_RELEASE,
+    ):
         if status in statuses:
             return VerdictStatus(status.value)
     return VerdictStatus.KEPT if findings else VerdictStatus.OUTSIDE_SCOPE
 
 
-def _read(raw_items: object, keepsakes: tuple[Keepsake, ...], evaluated_as_of: str, subject_id: str):
+def _read(
+    raw_items: object,
+    keepsakes: tuple[Keepsake, ...],
+    evaluated_as_of: str,
+    subject_id: str,
+):
     validate_review_date(evaluated_as_of)
-    if not isinstance(subject_id, str) or not subject_id.strip() or subject_id != subject_id.strip():
+    if (
+        not isinstance(subject_id, str)
+        or not subject_id.strip()
+        or subject_id != subject_id.strip()
+    ):
         raise ValueError("subject_id must be nonblank canonical text")
     source_digest = digest_text(canonical_source(raw_items))
     items, notes, rejected = _prepare(raw_items)
@@ -110,30 +197,61 @@ def _read(raw_items: object, keepsakes: tuple[Keepsake, ...], evaluated_as_of: s
     error = registry_shape_error(keepsakes)
     digest = "" if error else registry_digest(keepsakes)
     scan = (raw_items,) if isinstance(raw_items, SuccessionItem) else raw_items
-    id_counts = Counter(_item_id(raw) for raw in scan if isinstance(raw, SuccessionItem)) if isinstance(scan, (list, tuple, set, frozenset)) else Counter()
+    id_counts = (
+        Counter(_item_id(raw) for raw in scan if isinstance(raw, SuccessionItem))
+        if isinstance(scan, (list, tuple, set, frozenset))
+        else Counter()
+    )
     duplicate_ids = sorted(item_id for item_id, count in id_counts.items() if count > 1)
     if duplicate_ids:
-        notes.extend(IntakeNote(IntakeDisposition.SET_ASIDE, "duplicate item_id; entire scan set rejected", i)
-                     for i in duplicate_ids)
+        notes.extend(
+            IntakeNote(
+                IntakeDisposition.SET_ASIDE,
+                "duplicate item_id; entire scan set rejected",
+                i,
+            )
+            for i in duplicate_ids
+        )
         rejected += len(items)
         items = ()
     if error:
-        notes.append(IntakeNote(IntakeDisposition.SET_ASIDE,
-                                "keepsake registry is not safe to score and must be repaired: " + error))
+        notes.append(
+            IntakeNote(
+                IntakeDisposition.SET_ASIDE,
+                "keepsake registry is not safe to score and must be repaired: " + error,
+            )
+        )
     findings = []
     unmatched = 0
     if not error and not duplicate_ids:
         for item in items:
-            matched = tuple(sorted((k for k in keepsakes if k.tags & item.tags), key=lambda k: k.id))
+            matched = tuple(
+                sorted((k for k in keepsakes if k.tags & item.tags), key=lambda k: k.id)
+            )
             if not matched:
                 unmatched += 1
-                notes.append(IntakeNote(IntakeDisposition.SET_ASIDE, "no applicable reviewed keepsakes", item.item_id))
+                notes.append(
+                    IntakeNote(
+                        IntakeDisposition.SET_ASIDE,
+                        "no applicable reviewed keepsakes",
+                        item.item_id,
+                    )
+                )
             released = False
             if item.release is not None:
-                release_error = _release_error(item, matched, evaluated_as_of)
+                release_error = _release_error(
+                    item, matched, evaluated_as_of, subject_id
+                )
                 if release_error:
-                    findings.append(ProvisionFinding("release-declaration", ProvisionStatus.NEEDS_REWORK,
-                                                     (release_error,), item.item_id, ("release",)))
+                    findings.append(
+                        ProvisionFinding(
+                            "release-declaration",
+                            ProvisionStatus.NEEDS_REWORK,
+                            (release_error,),
+                            item.item_id,
+                            ("release",),
+                        )
+                    )
                 else:
                     released = True
             findings.extend(_finding(item, k, released) for k in matched)
@@ -142,25 +260,43 @@ def _read(raw_items: object, keepsakes: tuple[Keepsake, ...], evaluated_as_of: s
     if error:
         scope = "UNSCORABLE"
     verdict = SuccessionVerdict(
-        status=VerdictStatus.NEEDS_REWORK if error or duplicate_ids else _overall(findings),
-        findings=findings, intake_notes=tuple(sorted(notes, key=lambda n: (n.item_id, n.disposition.value, n.note))),
-        evaluated_as_of=evaluated_as_of, registry_digest=digest, subject_id=subject_id,
-        declaration_digest=declaration_digest, source_digest=source_digest,
-        evaluator_version=__version__, registry_version=__version__, accepted_count=len(items),
-        rejected_count=rejected, unmatched_count=unmatched, reading_scope=scope,
+        status=VerdictStatus.NEEDS_REWORK
+        if error or duplicate_ids
+        else _overall(findings),
+        findings=findings,
+        intake_notes=tuple(
+            sorted(notes, key=lambda n: (n.item_id, n.disposition.value, n.note))
+        ),
+        evaluated_as_of=evaluated_as_of,
+        registry_digest=digest,
+        subject_id=subject_id,
+        declaration_digest=declaration_digest,
+        source_digest=source_digest,
+        evaluator_version=EVALUATOR_REVISION,
+        registry_version=REGISTRY_REVISION,
+        accepted_count=len(items),
+        rejected_count=rejected,
+        unmatched_count=unmatched,
+        reading_scope=scope,
     )
     return verdict, verdict.findings
 
 
 def read_succession(
-    raw_items: object, keepsakes: tuple[Keepsake, ...] = SILVER_KEEPSAKES, *,
-    evaluated_as_of: str = "", subject_id: str = "UNSPECIFIED",
+    raw_items: object,
+    keepsakes: tuple[Keepsake, ...] = SILVER_KEEPSAKES,
+    *,
+    evaluated_as_of: str = "",
+    subject_id: str = "UNSPECIFIED",
 ) -> SuccessionVerdict:
     return _read(raw_items, keepsakes, evaluated_as_of, subject_id)[0]
 
 
 def read_succession_with_findings(
-    raw_items: object, keepsakes: tuple[Keepsake, ...] = SILVER_KEEPSAKES, *,
-    evaluated_as_of: str = "", subject_id: str = "UNSPECIFIED",
+    raw_items: object,
+    keepsakes: tuple[Keepsake, ...] = SILVER_KEEPSAKES,
+    *,
+    evaluated_as_of: str = "",
+    subject_id: str = "UNSPECIFIED",
 ) -> tuple[SuccessionVerdict, tuple[ProvisionFinding, ...]]:
     return _read(raw_items, keepsakes, evaluated_as_of, subject_id)

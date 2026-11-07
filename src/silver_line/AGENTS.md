@@ -13,5 +13,6 @@ file only narrows it.
   `figures/build.py` is the only module that shells out (to `rsvg-convert`,
   for the cover PNG) and the only one reading an environment variable
   (`SILVER_LINE_RSVG_CONVERT`).
-- `docs/claim_boundaries.md` is the register of record. A change to what the
-  code can produce must be reflected there before commit.
+- `data/claim_ledger.yaml` is the claim register of record;
+  `docs/claim_boundaries.md` is its prose companion. Reflect behavior changes
+  in both maintained surfaces.

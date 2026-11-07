@@ -11,8 +11,8 @@
 - Sort before emit; no iteration order reaches a reading or digest.
 - Never modify sibling line projects, line_set, or witness_register. This
   repo only PREPARES `data/binding_declaration.json` and `data/envelopes/`.
-- Underclaim, first person: `docs/claim_boundaries.md` is the register of
-  record. Never hardcode a number or digest the code can derive.
+- Underclaim, first person: `data/claim_ledger.yaml` is the register of record;
+  `docs/claim_boundaries.md` is its prose companion. Derive numbers and digests.
 
 ## Verify commands
 
@@ -23,6 +23,7 @@ uv run ruff check src tests scripts
 uv run python scripts/build_figures.py
 uv run python scripts/gen_formalism_ledger.py
 uv run pytest tests/test_formalism_claim_ledger.py
+uv run python -m silver_line.artifacts --check
 ```
 
 ## Layout

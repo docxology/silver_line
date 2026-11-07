@@ -17,10 +17,9 @@ from ..registry import KEEPSAKE_TAG_VOCABULARY, SILVER_KEEPSAKES
 from ..version import __version__
 
 
-
 #: The cover palette. silver_line keeps no palette module of its own, so the
 #: cover borrows the family's house ground (cream paper, dark ink, muted
-#: rule) and carries one muted silver as the work's stroke colour.
+#: rule) and carries one muted silver as the work's stroke color.
 COVER_PAPER = "#f5e6d3"
 COVER_INK = "#211c1b"
 COVER_MUTED = "#5a504a"
@@ -51,7 +50,7 @@ def _cover_text(
     weight: str,
     anchor: str,
 ) -> str:
-    """One cover text run, rendered small-caps by capitalising the source."""
+    """One cover text run, rendered small-caps by capitalizing the source."""
     return (
         f'<text x="{x:g}" y="{y:g}" font-family="Arial, sans-serif" '
         f'font-size="{size}px" font-weight="{weight}" fill="{fill}" '
@@ -67,7 +66,7 @@ def build_line_cover_figure() -> str:
     solid and heavy end to end. The entrusted stroke hands itself down: it
     descends at a node and continues on the lower level. The lapsing stroke
     dissolves — solid, then dashed and fading, then absent before the row's
-    end. No row is labelled; the tagline is the only legend, and the cover
+    end. No row is labeled; the tagline is the only legend, and the cover
     carries no date and no version.
     """
     # Stroke caps land exactly on the text margins: round caps add half a
@@ -83,19 +82,16 @@ def build_line_cover_figure() -> str:
         (
             '<title id="cover-title">silver_line cover</title>'
             '<desc id="cover-desc">Three silver strokes across a cream '
-            'field: one preserved whole, one entrusting itself downward '
-            'at a node, one dissolving into dashes before its end.</desc>'
+            "field: one preserved whole, one entrusting itself downward "
+            "at a node, one dissolving into dashes before its end.</desc>"
         ),
-        f'<rect width="{COVER_WIDTH}" height="{COVER_HEIGHT}" '
-        f'fill="{COVER_PAPER}"/>',
+        f'<rect width="{COVER_WIDTH}" height="{COVER_HEIGHT}" fill="{COVER_PAPER}"/>',
         (
             f'<rect x="60" y="60" width="{COVER_WIDTH - 120}" '
             f'height="{COVER_HEIGHT - 120}" fill="none" '
             f'stroke="{COVER_RULE}" stroke-width="2.5"/>'
         ),
-        _cover_text(
-            120, 168, COVER_TITLE, 44, COVER_INK, "700", "start"
-        ),
+        _cover_text(120, 168, COVER_TITLE, 44, COVER_INK, "700", "start"),
     ]
 
     # Preserved: one continuous, heavy stroke, end to end.
@@ -155,9 +151,7 @@ def rasterize_cover(output_dir: Path) -> Path:
     png_path = output_dir / f"{COVER_FIGURE}.png"
     executable = os.environ.get("SILVER_LINE_RSVG_CONVERT", RSVG_CONVERT)
     try:
-        subprocess.run(
-            [executable, "-o", str(png_path), str(svg_path)], check=True
-        )
+        subprocess.run([executable, "-o", str(png_path), str(svg_path)], check=True)
     except FileNotFoundError as error:
         raise RuntimeError(
             f"{executable!r} could not render {COVER_FIGURE}; install "
@@ -169,6 +163,7 @@ def rasterize_cover(output_dir: Path) -> Path:
             "install or repair librsvg and rerun the figure build."
         ) from error
     return png_path
+
 
 def _keepsake_rows(
     keepsakes: tuple[Keepsake, ...] = SILVER_KEEPSAKES,
@@ -273,8 +268,7 @@ FIGURE_ACCESSIBILITY: dict[str, dict[str, str]] = {
     },
     "silver_family_balance": {
         "caption": (
-            "Keep-kind balance: the registry reviewed for succession-family "
-            "coverage."
+            "Keep-kind balance: the registry reviewed for succession-family coverage."
         ),
         "alt": (
             "silver_line keep-kind balance: one row per keep kind with its "
@@ -283,8 +277,7 @@ FIGURE_ACCESSIBILITY: dict[str, dict[str, str]] = {
     },
     "silver_evidence_labels": {
         "caption": (
-            "The evidence-label surface a successor could inspect, per "
-            "keepsake."
+            "The evidence-label surface a successor could inspect, per keepsake."
         ),
         "alt": (
             "silver_line required evidence labels: one sorted row per "
@@ -293,8 +286,7 @@ FIGURE_ACCESSIBILITY: dict[str, dict[str, str]] = {
     },
     "silver_tag_vocabulary": {
         "caption": (
-            "The reviewed tag vocabulary next to what the declaration "
-            "actually uses."
+            "The reviewed tag vocabulary next to what the declaration actually uses."
         ),
         "alt": (
             "silver_line tag vocabulary: one row per reviewed tag marked "
@@ -306,7 +298,7 @@ FIGURE_ACCESSIBILITY: dict[str, dict[str, str]] = {
             "The cover plate: memory and succession in three silver strokes "
             "across the cream field — one preserved whole, one entrusting "
             "itself down at a node, one dissolving before the row's end. No "
-            "row is labelled; the tagline is the only legend, and the cover "
+            "row is labeled; the tagline is the only legend, and the cover "
             "carries no date and no version."
         ),
         "alt": (

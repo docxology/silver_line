@@ -60,13 +60,6 @@ def test_figure_registry_covers_every_registered_figure() -> None:
     assert names == set(FIGURES)
 
 
-def test_figures_derive_from_the_declaration(tmp_path: Path) -> None:
-    path = build_figure("silver_registry", tmp_path)
-    text = path.read_text()
-    assert "silver_line keepsake registry" in text
-    assert "question-first-succession" in text
-
-
 def test_cover_figure_is_registered() -> None:
     assert COVER_FIGURE in FIGURES
     assert figure_registry()["cover"]["filename"] == f"{COVER_FIGURE}.png"

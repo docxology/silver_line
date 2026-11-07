@@ -51,7 +51,7 @@
   {
    "claim_id": "const_registry_digest",
    "kind": "constant",
-   "value": "30711e134eec17166275097b066c195c04e37f4bbd17db1a1115c64c3237af16",
+   "value": "ce808709c7db5a60a7e6b06dac30d1a1326dff3c1973b44b5d36dd28a1e15c31",
    "source": "derived at generation time from silver_line.registry.SILVER_KEEPSAKES",
    "source_path": "src/silver_line/registry.py",
    "source_tier": "package_constant",

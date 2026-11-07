@@ -4,6 +4,8 @@ The package. `__init__` re-exports the public surface: records and enums,
 `intake`/`normalize_item`, `read_succession`, `read_succession_with_findings`,
 the registry (`SILVER_KEEPSAKES`, `KEEPSAKE_TAG_VOCABULARY`, `registry_ids`),
 canonical serialization and digests, and `__version__`.
+Native revisions live in `version.py` as `EVALUATOR_REVISION` and
+`REGISTRY_REVISION`, independently of the distribution version.
 
 | Module | Role |
 |---|---|

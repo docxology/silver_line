@@ -7,10 +7,6 @@ delete an assertion to make a change pass.
 
 - Standalone is the test condition. Siblings are absent by design; a test that
   needs one falls back to a frozen copy of the schema.
-- Controls must be able to fail. `test_review_mutation_controls.py` mutates
-  disposable copies under pytest's temporary root; keep new controls equally
-  falsifiable.
-- `test_standalone_contract.py` pins the two `scripts/` filenames, checks the
-  documented dev dependencies are declared in `pyproject.toml`, and fails if
-  `src/` names a sibling line package.
+- Controls must be falsifiable through public behavior, native schema identity
+  or real artifact validation. Do not pin implementation text or prose.
 - No mocking framework anywhere. `test_no_mocks.py` enforces it.
