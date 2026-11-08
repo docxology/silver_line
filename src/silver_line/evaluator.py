@@ -15,7 +15,13 @@ from .records import (
 )
 from .registry import KEEPSAKE_TAG_VOCABULARY, SILVER_KEEPSAKES
 from .serialization import registry_digest
-from .snapshots import canonical_json, canonical_source, digest_text, item_snapshot, scalar_text
+from .snapshots import (
+    canonical_json,
+    canonical_source,
+    digest_text,
+    item_snapshot,
+    scalar_text,
+)
 from .validation import registry_shape_error, validate_review_date
 from .version import EVALUATOR_REVISION, REGISTRY_REVISION
 

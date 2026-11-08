@@ -71,8 +71,11 @@ def break_boundary(source, boundary, bad):
     if boundary.startswith("release."):
         row["release"] = asdict(
             ReleaseDeclaration(
-                source["subject_id"], row["item_id"], "declared role",
-                "2026-10-19", "synthetic:release-record",
+                source["subject_id"],
+                row["item_id"],
+                "declared role",
+                "2026-10-19",
+                "synthetic:release-record",
             )
         )
         row["release"][boundary.split(".")[1]] = bad
@@ -106,11 +109,11 @@ def assert_artifact_custody(source):
         assert scheme == "sha256"
         assert sha256(files[name].encode("utf-8")).hexdigest() == digest
     assert {
-        verdict.source_digest, verdict.declaration_digest, verdict.registry_digest
+        verdict.source_digest,
+        verdict.declaration_digest,
+        verdict.registry_digest,
     } <= {ref.split(":", 2)[1] for ref in refs}
-    retained_source = json.loads(
-        files[f"data/snapshots/{verdict.source_digest}.json"]
-    )
+    retained_source = json.loads(files[f"data/snapshots/{verdict.source_digest}.json"])
     source_replay = read_succession(
         fixture_items({"items": retained_source}),
         subject_id=source["subject_id"],
@@ -151,9 +154,11 @@ def test_malformed_description_is_rejected_before_original_source_hashing(api, b
         assert result[1] == verdict.findings
     assert verdict.status is VerdictStatus.OUTSIDE_SCOPE
     assert not verdict.findings
-    assert (verdict.accepted_count, verdict.rejected_count, verdict.unmatched_count) == (
-        0, 1, 0
-    )
+    assert (
+        verdict.accepted_count,
+        verdict.rejected_count,
+        verdict.unmatched_count,
+    ) == (0, 1, 0)
     assert verdict.reading_scope == "PARTIAL"
     description_notes = [n for n in verdict.intake_notes if "description" in n.note]
     assert description_notes
@@ -187,7 +192,9 @@ def test_rejected_code_units_have_distinct_source_and_fallback_identities():
 
 
 @pytest.mark.parametrize("bad", BAD_TEXT)
-def test_rejected_unicode_counts_declarations_not_notes_and_preserves_good_findings(bad):
+def test_rejected_unicode_counts_declarations_not_notes_and_preserves_good_findings(
+    bad,
+):
     good = complete()
     rejected = replace(good, item_id="rejected-description", description=bad)
     invalid_id = replace(good, item_id=bad)
@@ -197,7 +204,9 @@ def test_rejected_unicode_counts_declarations_not_notes_and_preserves_good_findi
         assert verdict.status is VerdictStatus.KEPT
         assert verdict.reading_scope == "PARTIAL"
         assert (
-            verdict.accepted_count, verdict.rejected_count, verdict.unmatched_count
+            verdict.accepted_count,
+            verdict.rejected_count,
+            verdict.unmatched_count,
         ) == (1, 3, 0)
         assert verdict.findings == read(good).findings
         assert any(
@@ -215,14 +224,21 @@ def test_valid_duplicate_id_still_rejects_whole_finite_scan_with_bad_description
     broken = replace(good, description=bad)
     verdicts = [
         read(scan)
-        for scan in ([good, broken], [broken, good], {good, broken}, frozenset({good, broken}))
+        for scan in (
+            [good, broken],
+            [broken, good],
+            {good, broken},
+            frozenset({good, broken}),
+        )
     ]
     for verdict in verdicts:
         assert verdict.status is VerdictStatus.NEEDS_REWORK
         assert not verdict.findings
         assert verdict.reading_scope == "PARTIAL"
         assert (
-            verdict.accepted_count, verdict.rejected_count, verdict.unmatched_count
+            verdict.accepted_count,
+            verdict.rejected_count,
+            verdict.unmatched_count,
         ) == (0, 2, 0)
         assert all(n.item_id == good.item_id for n in verdict.intake_notes if n.item_id)
         assert any("duplicate item_id" in n.note for n in verdict.intake_notes)
@@ -246,9 +262,11 @@ def test_each_declared_text_boundary_has_safe_complete_artifact_replay(boundary,
         assert not verdict.findings
         assert any(n.disposition.value == "SET_ASIDE" for n in verdict.intake_notes)
     else:
-        assert (verdict.accepted_count, verdict.rejected_count, verdict.unmatched_count) == (
-            1, 0, 0
-        )
+        assert (
+            verdict.accepted_count,
+            verdict.rejected_count,
+            verdict.unmatched_count,
+        ) == (1, 0, 0)
         assert verdict.reading_scope == "COMPLETE"
         if boundary == "custodian":
             assert verdict.status is VerdictStatus.NEEDS_REWORK
@@ -256,15 +274,20 @@ def test_each_declared_text_boundary_has_safe_complete_artifact_replay(boundary,
             assert any("custodian" in f.missing_fields for f in verdict.findings)
         elif boundary in ("tags", "evidence"):
             assert verdict.status is VerdictStatus.KEPT
-            assert normalized[0][boundary] == sorted(set(fixture()["items"][0][boundary]))
+            assert normalized[0][boundary] == sorted(
+                set(fixture()["items"][0][boundary])
+            )
             assert any(n.disposition.value == "SET_ASIDE" for n in verdict.intake_notes)
         else:
             assert verdict.status is VerdictStatus.NEEDS_REWORK
             assert any(
-                f.keepsake_id == "release-declaration" and f.missing_fields == ("release",)
+                f.keepsake_id == "release-declaration"
+                and f.missing_fields == ("release",)
                 for f in verdict.findings
             )
-            assert not any(f.status.value == "DECLARED_RELEASE" for f in verdict.findings)
+            assert not any(
+                f.status.value == "DECLARED_RELEASE" for f in verdict.findings
+            )
     assert any(
         f"accepted={verdict.accepted_count}; rejected={verdict.rejected_count}; "
         f"unmatched={verdict.unmatched_count}" in note
@@ -278,9 +301,11 @@ def test_malformed_labels_cannot_supply_missing_tag_or_evidence(bad):
     tagless = read(replace(good, tags=frozenset({bad})))
     assert tagless.status is VerdictStatus.OUTSIDE_SCOPE
     assert not tagless.findings
-    assert (tagless.accepted_count, tagless.rejected_count, tagless.unmatched_count) == (
-        1, 0, 1
-    )
+    assert (
+        tagless.accepted_count,
+        tagless.rejected_count,
+        tagless.unmatched_count,
+    ) == (1, 0, 1)
     assert tagless.reading_scope == "PARTIAL"
     missing = read(
         replace(good, evidence=(good.evidence - {"custodian_acknowledgment"}) | {bad})
@@ -302,7 +327,9 @@ def test_valid_unicode_bytes_and_literal_escapes_remain_distinct():
         row["custodian"] = "successor " + text
         row["item_id"] = "item-" + text
         expected_row = {
-            **row, "tags": sorted(row["tags"]), "evidence": sorted(row["evidence"]),
+            **row,
+            "tags": sorted(row["tags"]),
+            "evidence": sorted(row["evidence"]),
             "release": None,
         }
         expected_source = canonical([expected_row]).encode("utf-8")
@@ -313,18 +340,25 @@ def test_valid_unicode_bytes_and_literal_escapes_remain_distinct():
         assert not verdict.intake_notes
         assert verdict.source_digest == sha256(expected_source).hexdigest()
         assert verdict.declaration_digest == verdict.source_digest
-        assert files[f"data/snapshots/{verdict.source_digest}.json"].encode("utf-8") == (
-            expected_source
-        )
-        assert files[f"data/snapshots/{sha256(expected_fixture).hexdigest()}.json"].encode(
+        assert files[f"data/snapshots/{verdict.source_digest}.json"].encode(
             "utf-8"
-        ) == expected_fixture
+        ) == (expected_source)
+        assert (
+            files[f"data/snapshots/{sha256(expected_fixture).hexdigest()}.json"].encode(
+                "utf-8"
+            )
+            == expected_fixture
+        )
         identities.append(verdict.source_digest)
-    malformed = [read(replace(complete(), description=text)).source_digest for text in BAD_TEXT]
+    malformed = [
+        read(replace(complete(), description=text)).source_digest for text in BAD_TEXT
+    ]
     assert len(set(identities + malformed)) == len(VALID_TEXT) + len(BAD_TEXT)
 
 
-def test_rejected_source_store_writes_utf8_and_replays_without_losing_rejections(tmp_path):
+def test_rejected_source_store_writes_utf8_and_replays_without_losing_rejections(
+    tmp_path,
+):
     source = fixture()
     good = dict(source["items"][0])
     source["items"].extend(
@@ -336,9 +370,11 @@ def test_rejected_source_store_writes_utf8_and_replays_without_losing_rejections
     )
     verdict, envelope, files = assert_artifact_custody(source)
     assert verdict.status is VerdictStatus.KEPT
-    assert (verdict.accepted_count, verdict.rejected_count, verdict.unmatched_count) == (
-        1, 3, 0
-    )
+    assert (
+        verdict.accepted_count,
+        verdict.rejected_count,
+        verdict.unmatched_count,
+    ) == (1, 3, 0)
     assert verdict.reading_scope == "PARTIAL"
     accepted = json.loads(files[f"data/snapshots/{verdict.declaration_digest}.json"])
     accepted_only = read(fixture_items({"items": accepted}))
@@ -364,12 +400,16 @@ def test_rejected_source_store_writes_utf8_and_replays_without_losing_rejections
             assert json.loads(text) == envelope
 
 
-@pytest.mark.parametrize("name", ["silver_line_same_subject.json", "silver_line_worked.json"])
+@pytest.mark.parametrize(
+    "name", ["silver_line_same_subject.json", "silver_line_worked.json"]
+)
 def test_existing_fixture_and_source_snapshot_bytes_remain_unchanged(name):
     source = json.loads((ROOT / "data/fixtures" / name).read_text(encoding="utf-8"))
     rows = [
         {
-            **row, "tags": sorted(row["tags"]), "evidence": sorted(row["evidence"]),
+            **row,
+            "tags": sorted(row["tags"]),
+            "evidence": sorted(row["evidence"]),
             "release": None,
         }
         for row in source["items"]

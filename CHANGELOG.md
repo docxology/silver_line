@@ -14,6 +14,8 @@
 - Advance evaluator policy to `silver.evaluator/3.1`; retain verdict schema 3.0,
   registry revision 3.0 and unchanged registry content. Historical artifacts
   remain tied to their original producers.
+- Remove the incidental current-evaluator string pin from release replay
+  controls; retain exact report replay and subject-scoped release assertions.
 - Align current family orientation with the Line Set declaration, keeping
   Silver custody distinct from Green capacity, Copper allocation and Iron
   scenario recovery. Preserve the owner's current publication authority.

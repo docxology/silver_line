@@ -48,9 +48,14 @@ def restore_snapshot(value: object) -> object:
     return value
 
 
-
 def canonical_json(value: object) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
 
 
 def digest_text(value: str) -> str:
@@ -79,7 +84,10 @@ def canonical_source(raw: object) -> str:
 
 def item_snapshot(item: SuccessionItem) -> dict[str, object]:
     return {
-        "item_id": item.item_id, "description": item.description,
-        "custodian": item.custodian, "tags": sorted(item.tags),
-        "evidence": sorted(item.evidence), "release": source_value(item.release),
+        "item_id": item.item_id,
+        "description": item.description,
+        "custodian": item.custodian,
+        "tags": sorted(item.tags),
+        "evidence": sorted(item.evidence),
+        "release": source_value(item.release),
     }
