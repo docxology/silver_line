@@ -6,6 +6,7 @@ from dataclasses import replace
 from .enums import IntakeDisposition
 from .records import IntakeNote, SuccessionItem
 from .registry import KEEPSAKE_TAG_VOCABULARY
+from .snapshots import scalar_text
 
 
 def normalize_item(raw: object) -> tuple[SuccessionItem | None, list[IntakeNote]]:
@@ -13,14 +14,22 @@ def normalize_item(raw: object) -> tuple[SuccessionItem | None, list[IntakeNote]
     if not isinstance(raw, SuccessionItem):
         return None, [IntakeNote(IntakeDisposition.SET_ASIDE,
                                 "declaration is not a SuccessionItem record and was set aside")]
-    item_id = raw.item_id if isinstance(raw.item_id, str) else ""
+    item_id = raw.item_id if scalar_text(raw.item_id) else ""
+    if isinstance(raw.description, str) and not scalar_text(raw.description):
+        return None, [IntakeNote(IntakeDisposition.SET_ASIDE,
+                                "description contains surrogate code units; "
+                                "the item cannot be scored", item_id)]
     if not isinstance(raw.description, str) or not raw.description.strip():
         return None, [IntakeNote(IntakeDisposition.SET_ASIDE,
                                 "description is empty or not text; the item cannot be scored", item_id)]
-    if not isinstance(raw.item_id, str) or raw.item_id != raw.item_id.strip():
+    if not scalar_text(raw.item_id) or raw.item_id != raw.item_id.strip():
         return None, [IntakeNote(IntakeDisposition.SET_ASIDE,
                                 "item_id must be canonical text; item was set aside", item_id)]
-    if not isinstance(raw.custodian, str) or not raw.custodian.strip():
+    if isinstance(raw.custodian, str) and not scalar_text(raw.custodian):
+        notes.append(IntakeNote(IntakeDisposition.SET_ASIDE,
+                                "custodian contains surrogate code units; "
+                                "entrustment gaps will surface", item_id))
+    elif not isinstance(raw.custodian, str) or not raw.custodian.strip():
         notes.append(IntakeNote(IntakeDisposition.SET_ASIDE,
                                 "custodian is blank or not text; entrustment gaps will surface", item_id))
     tags = raw.tags if isinstance(raw.tags, frozenset) else frozenset()
@@ -29,7 +38,7 @@ def normalize_item(raw: object) -> tuple[SuccessionItem | None, list[IntakeNote]
         notes.append(IntakeNote(IntakeDisposition.SET_ASIDE,
                                 "tags or evidence is not a frozen label set and was dropped", item_id))
     return replace(raw, description=raw.description.strip(),
-                   custodian=raw.custodian.strip() if isinstance(raw.custodian, str) else "",
+                   custodian=raw.custodian.strip() if scalar_text(raw.custodian) else "",
                    tags=tags, evidence=evidence), notes
 
 
@@ -40,7 +49,7 @@ def clean_labels(raw: object, field_name: str) -> tuple[frozenset[str], list[Int
     kept: set[str] = set()
     notes: list[IntakeNote] = []
     for token in raw:
-        if not isinstance(token, str) or not token.strip():
+        if not scalar_text(token) or not token.strip():
             notes.append(IntakeNote(IntakeDisposition.SET_ASIDE,
                                     f"ignored a malformed {field_name} label"))
         else:

@@ -5,7 +5,7 @@ revisions identify the current subject-scoped release and evidence-label
 contracts independently; the registry digest pins exact keepsake content.
 """
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
-EVALUATOR_REVISION = "silver.evaluator/3.0"
+EVALUATOR_REVISION = "silver.evaluator/3.1"
 REGISTRY_REVISION = "silver.registry/3.0"

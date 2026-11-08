@@ -6,8 +6,11 @@
 DECLARED_RELEASE and read the report's schema and qualified scope. Reports
 bind original-source and normalized-declaration digests, subject and item IDs,
 review date or UNDATED, evaluator/registry revisions and coverage counts.
-The native markers are `silver.evaluator/3.0` and `silver.registry/3.0`;
-the distribution release is `0.3.0`, independently versioned from these contracts.
+The native markers are `silver.evaluator/3.1` and `silver.registry/3.0`;
+the distribution release is `0.4.0`, independently versioned from these contracts.
+Evaluator 3.1 adds the malformed-source policy below without changing registry
+content or the verdict field set. Evaluator 3.0 reports retain their original
+producer identity; current report bytes are not historical reproductions.
 
 ## Historical identities
 
@@ -63,11 +66,53 @@ incomplete objects and objects with extra keys raise ValueError before artifact
 publication. Complete declarations with inconsistent field values remain
 visible as native NEEDS_REWORK findings, never silently absent.
 
-Replay a current normalized-declaration snapshot by passing its decoded item
-array to `fixture_items({"items": snapshot})`, then calling `read_succession`
-with the report's subject and review date. Canonical native bytes and the report
-digest must match. Release-bearing snapshots retain all five declaration fields;
-cross-subject replay and missing restraint remain NEEDS_REWORK, not permission.
+Replay a complete current reading from the retained **original-source** snapshot:
+load `data/snapshots/<source_digest>.json` with `json.loads`, pass that item
+array to `fixture_items({"items": snapshot})`, and call `read_succession` with
+the report's subject, review date and exact registry. Alternatively, decode
+the retained original fixture snapshot and use its subject and review date.
+`fixture_items` decodes native malformed-text markers before constructing
+declarations. Both paths retain rejected declarations and reproduce original
+source identity, rejection counts, notes and complete canonical report bytes.
+Compare both `canonical_verdict` and `verdict_digest`, not only native status.
+
+Normalized accepted rows are a derivation snapshot, **not** a general replay
+source: they cannot restore rejected declarations or original source spelling.
+Even when an all-valid example replays from normalized rows, this is not proof
+of complete rejected-source custody. Release-bearing snapshots retain all five
+declaration fields; cross-subject replay and missing restraint remain
+NEEDS_REWORK, not permission.
+
+## Malformed-text custody policy
+
+Native `silver_line.text-code-units/1` is an additive snapshot text codec.
+Only a string containing a surrogate code point becomes an object of the form
+`{"silver_line.text-code-units/1":[55296]}`. The integer array contains `ord`
+values for **every** original Python character, in order, without stripping,
+replacement or surrogate-pair folding. The decoder validates its reserved
+single-key object, integer ranges and presence of a surrogate. This marker is
+reserved for text fields in native snapshots, not an arbitrary JSON-object
+interchange format. Unsupported Python producers remain outside the contract.
+Malformed snapshot markers raise ValueError; they are never silently repaired.
+
+Valid ASCII, accented text, non-BMP scalars, U+FFFD and literal backslash-u
+strings retain their existing canonical UTF-8 bytes. A two-surrogate Python
+string stays distinct from its corresponding non-BMP scalar after JSON decode.
+Source collection sorting remains unchanged; fixture arrays retain their order.
+Original fixture and declaration snapshots both use this encoding, and
+`fixture_items` is the existing decode/replay consumer for both. Digests bind
+the safe canonical representation; surrogatepass is not used as UTF-8 output.
+
+Malformed descriptions and IDs reject their declarations; valid declared IDs
+remain available for whole-scan duplicate checks even on rejected descriptions.
+Invalid IDs receive deterministic safe source-content diagnostic identities.
+Malformed custodians become explicit custody gaps, malformed labels are dropped
+with notes, and malformed release fields remain present and produce a
+release-declaration NEEDS_REWORK finding, never absence or a successful release.
+Subject configuration must be scalar canonical text; unsafe registries fail
+closed before hashing or diagnostic echo. Valid non-ASCII text remains allowed.
+Canonical reports, source/fixture/normalized snapshots and artifact files are
+strict UTF-8; this codec changes neither the family envelope format nor siblings.
 
 ## Current vocabulary and regeneration
 

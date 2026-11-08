@@ -39,6 +39,9 @@ print(verdict.registry_digest)   # pins the keepsake set used
 An empty scan set reads `OUTSIDE_SCOPE` with intake notes; a registry that
 cannot be scored fails closed as `NEEDS_REWORK`. Malformed input is set
 aside with notes, never repaired into a fabricated value.
+Malformed Unicode code units are retained in safe original-source snapshots,
+not counted as evidence or echoed into diagnostics. Complete replay uses those
+original snapshots, not only accepted normalized rows.
 
 Findings identify their item and missing fields. Registry lapse eligibility
 does not imply a release decision; DECLARED_RELEASE requires a declaration
@@ -88,9 +91,9 @@ runtime; dev deps are pytest, pytest-cov, and ruff.
 
 ## The Line Set
 
-This work is one of ten in the Line Set family — eight instruments, their
-cross-line reader, and the witness register that co-registers their report
-envelopes without aggregation:
+This instrument follows the [current Line Set declaration](https://github.com/docxology/line_set),
+whose colorless Main reader holds native instruments apart. Witness
+co-registers opaque envelopes without aggregation and remains outside `LINE_SET`:
 
 - [Black Line](https://github.com/docxology/black_line) — the practice registry of realized craft
 - [Golden Line](https://github.com/docxology/golden_line) — the aspiration and horizon registry
@@ -99,8 +102,15 @@ envelopes without aggregation:
 - [Violet Line](https://github.com/docxology/violet_line) — the consent ledger of affected parties
 - [Blue Line](https://github.com/docxology/blue_line) — the stewardship instrument for maintained commitments
 - [Green Line](https://github.com/docxology/green_line) — the capacity-under-development instrument
+- Copper Line (access-dependent) — allocation arithmetic, not custody or succession
+- Iron Line (access-dependent) — scenario-bound recorded recovery comparisons
 - [The Line Set](https://github.com/docxology/line_set) — the cross-line set reader holding instruments apart
 - [The Witness Register](https://github.com/docxology/witness_register) — co-registration without aggregation
 
 Source availability is separate from family membership: implementations may
 be optional or access-controlled. A missing source is not a native verdict.
+Silver concerns custody and succession, not Green's learner-owned capacity
+markers, Copper's allocation arithmetic (position 9), or Iron's recorded
+scenario recovery comparisons (position 10). Copper and Iron are stageless.
+Consult the current declaration for membership rather than treating this
+orientation as a separately versioned family count.

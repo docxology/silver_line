@@ -17,10 +17,14 @@ Native revisions live in `version.py` as `EVALUATOR_REVISION` and
 | `evaluator.py` | `read_succession`, `read_succession_with_findings` |
 | `validation.py` | review-date and registry-shape validation |
 | `serialization.py` | canonical registry and verdict bytes, plus digests |
-| `snapshots.py` | canonical JSON, source digests, item snapshots |
+| `snapshots.py` | canonical JSON/source digests, item snapshots, native malformed-text codec |
 | `invariants.py` | offline invariant battery over the line's own declaration |
-| `artifacts.py` | `python -m silver_line.artifacts [--check]` example builder |
+| `artifacts.py` | original fixture/source snapshot decode and `python -m silver_line.artifacts [--check]` builder |
 | `formalism.py` | derives `data/formalism_claim_ledger.json` |
 | `figures/` | deterministic SVG builders and the cover raster |
 
 Commands and invariants: `docs/development.md`.
+`silver_line.text-code-units/1` encodes only surrogate-containing strings;
+valid text bytes are unchanged. `fixture_items` restores retained rejected
+declarations before evaluation. Complete replay requires original source or
+fixture snapshots, not only accepted normalized rows; see `docs/report-schema.md`.

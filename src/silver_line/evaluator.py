@@ -15,7 +15,7 @@ from .records import (
 )
 from .registry import KEEPSAKE_TAG_VOCABULARY, SILVER_KEEPSAKES
 from .serialization import registry_digest
-from .snapshots import canonical_json, canonical_source, digest_text, item_snapshot
+from .snapshots import canonical_json, canonical_source, digest_text, item_snapshot, scalar_text
 from .validation import registry_shape_error, validate_review_date
 from .version import EVALUATOR_REVISION, REGISTRY_REVISION
 
@@ -23,7 +23,7 @@ from .version import EVALUATOR_REVISION, REGISTRY_REVISION
 def _item_id(raw: object) -> str:
     if (
         isinstance(raw, SuccessionItem)
-        and isinstance(raw.item_id, str)
+        and scalar_text(raw.item_id)
         and raw.item_id
         and raw.item_id == raw.item_id.strip()
     ):
@@ -82,7 +82,7 @@ def _release_error(
     if not isinstance(release, ReleaseDeclaration):
         return "release must be a ReleaseDeclaration"
     if any(
-        not isinstance(v, str) or not v.strip() or v != v.strip()
+        not scalar_text(v) or not v.strip() or v != v.strip()
         for v in (
             release.subject_id,
             release.item_id,
@@ -186,7 +186,7 @@ def _read(
 ):
     validate_review_date(evaluated_as_of)
     if (
-        not isinstance(subject_id, str)
+        not scalar_text(subject_id)
         or not subject_id.strip()
         or subject_id != subject_id.strip()
     ):

@@ -5,6 +5,7 @@ from datetime import date
 from .enums import KeepKind
 from .records import Keepsake
 from .registry import KEEPSAKE_TAG_VOCABULARY
+from .snapshots import scalar_text
 
 
 def validate_review_date(value: str) -> str:
@@ -30,7 +31,7 @@ def registry_shape_error(keepsakes: tuple[Keepsake, ...]) -> str | None:
         if not isinstance(keepsake, Keepsake):
             errors.append("keepsake registry entry is not a Keepsake record")
             continue
-        if any(not isinstance(v, str) or not v.strip() or v != v.strip()
+        if any(not scalar_text(v) or not v.strip() or v != v.strip()
                for v in (keepsake.id, keepsake.title, keepsake.wire)):
             errors.append("keepsake registry entry has blank or non-text or noncanonical fields")
             continue
@@ -38,12 +39,12 @@ def registry_shape_error(keepsakes: tuple[Keepsake, ...]) -> str | None:
             errors.append(f"keepsake registry contains duplicate id '{keepsake.id}'")
         seen_ids.add(keepsake.id)
         if (not isinstance(keepsake.tags, frozenset) or not keepsake.tags
-                or any(not isinstance(t, str) or not t.strip() for t in keepsake.tags)):
+                or any(not scalar_text(t) or not t.strip() for t in keepsake.tags)):
             errors.append(f"keepsake '{keepsake.id}' has malformed tags")
         elif not keepsake.tags <= KEEPSAKE_TAG_VOCABULARY:
             errors.append(f"keepsake '{keepsake.id}' has tags outside the reviewed vocabulary")
         if (not isinstance(keepsake.required_evidence, tuple) or not keepsake.required_evidence
-                or any(not isinstance(v, str) or not v or v != v.strip().lower()
+                or any(not scalar_text(v) or not v or v != v.strip().lower()
                        for v in keepsake.required_evidence)):
             errors.append(f"keepsake '{keepsake.id}' has malformed required evidence")
         elif len(set(keepsake.required_evidence)) != len(keepsake.required_evidence):
