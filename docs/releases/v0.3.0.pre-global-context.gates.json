@@ -1,0 +1,123 @@
+{
+  "artifacts_two_build_byte_identity": true,
+  "current_generated_hashes": {
+    "data/envelopes/silver_line_same_subject.json": "d6dd14a0baae2206d10737b9e1d66f768d9ac6a758ad95c382371079c7947312",
+    "data/envelopes/silver_line_worked.json": "db80d093babcb0d512f1058a24998ed9255c9e994f235323624b1db052d85b99",
+    "data/formalism_claim_ledger.json": "7a0acf0c0dde04b2d0f03a7e89bf01c026e5bb758fe42687f124e662f7894008",
+    "output/figures/figure_registry.json": "d207d6855bdd660a9e1306034213838e8da5fb4c7b99cf2ba97aca154818c33a",
+    "output/figures/silver_evidence_labels.svg": "b31f0c793642de461c64447a58c299568a77e39e2efa5d98f6e50f117293b4d5",
+    "output/figures/silver_family_balance.svg": "2c2c5474b9dd7a7ae2a49684cb3f62161d946d1cef87cfa454d8dd0d574a2183",
+    "output/figures/silver_line_cover.png": "713c2125d40d7afceba1e5b7249c4cbb0753795409b3ddba85a14c1ab0acb2db",
+    "output/figures/silver_line_cover.svg": "221ce26863c41e03fbda89c37a3c476d805a9aa2d9b4cc7a3e355446c8f80c70",
+    "output/figures/silver_registry.svg": "ec21be3d3f533eda137cbd19b500620640fdb2a38c48bb44b8322b4b651602d6",
+    "output/figures/silver_tag_vocabulary.svg": "b2ebff455176b909d558fe08f1d20adc86b7ee1751d26bcebd7103f5d11ebc80"
+  },
+  "date": "2026-11-06",
+  "doi": "10.5281/zenodo.22833486 remains historical; a new version DOI requires the author reserve-first step.",
+  "installed_wheel": {
+    "all_python_sources_equal_originals": true,
+    "filename": "silver_line-0.3.0-py3-none-any.whl",
+    "isolated_install_smoke": "passed; native schema 3.0 replay, subject/item negatives, false-like releases and independent restraint",
+    "sha256": "1ea8d5844d71ca722206100e956bcc2e5762a50b07fedaefc7a4d4f4e7853624"
+  },
+  "native_contracts": {
+    "envelope": "line.report-envelope/1.0",
+    "evaluator": "silver.evaluator/3.0",
+    "registry": "silver.registry/3.0",
+    "schema": "silver.verdict/3.0"
+  },
+  "native_gates": [
+    {
+      "argv": [
+        "/Users/friedman/Documents/Git/gitvault/Local/tmp/line-family-minor-release-54c7f9e1ce/stages/silver_line/.venv/bin/python",
+        "-B",
+        "-c",
+        "import runpy,sys; sys.path[:0]=[sys.argv[1],sys.argv[2]]; sys.argv=sys.argv[3:]; runpy.run_module('pytest',run_name='__main__')",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/src",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line",
+        "pytest",
+        "-c",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/pyproject.toml",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/tests",
+        "--cov=/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/src",
+        "--cov-report=term",
+        "--cov-report=json:/Users/friedman/Documents/Git/gitvault/Local/tmp/line-family-minor-release-54c7f9e1ce/stages/silver_line/minor-coverage.json"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/Users/friedman/Documents/Git/gitvault/Local/tmp/line-family-minor-release-54c7f9e1ce/stages/silver_line/.venv/bin/ruff",
+        "check",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/src",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/tests",
+        "/Users/friedman/Documents/Git/gitvault/Username/docxology/Public/silver_line/scripts"
+      ],
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/Users/friedman/Documents/Git/gitvault/Local/tmp/line-family-minor-release-54c7f9e1ce/stages/silver_line/.venv/bin/python",
+        "-B",
+        "-m",
+        "silver_line.artifacts",
+        "--check"
+      ],
+      "returncode": 0
+    }
+  ],
+  "python": "3.14.10",
+  "remaining_release_gates": [
+    "Independent final read-only audit of complete source and publication packet.",
+    "Parent-owned annotated tag, governed push and remote identity verification."
+  ],
+  "scope": "Original native preparation results are preserved below; the publication_render section records the separately exercised current publication evidence. Independent final audit, remote publication and reserve-first DOI steps remain separate.",
+  "suite": {
+    "coverage_percent": 97.96696315120711,
+    "failed": 0,
+    "passed": 184,
+    "required_coverage_percent": 90,
+    "skipped": 0
+  },
+  "uv_lock_sha256": "a4c7a579d158574ebd0f9d91af205027c6a758116ee07bf8e0177a7ccee9d662",
+  "version": "0.3.0",
+  "publication_render": {
+    "verified_utc_date": "2026-11-08",
+    "producer_input_commit": "96a7996fb6b50833bf4d50f7e5eddf45d74d5467",
+    "engine_commit": "2ecaba680b304a617bded87c0732b5009a76a21a",
+    "engine_tree": "cb97804009a7f46b2cd0a2f3137257dc7f9ba917",
+    "sdk_provider_version": "5.0.2",
+    "native_provider_version": "0.3.0",
+    "configured_formats": ["pdf", "html"],
+    "disabled_formats": ["slides", "docx", "epub"],
+    "producer_commands": [
+      "python -B scripts/pipeline/stage_03_render.py --project silver_line --skip-manuscript-hydration",
+      "python -B scripts/pipeline/stage_04_validate.py --project silver_line",
+      "python -B -m silver_line.artifacts --check"
+    ],
+    "producer_command_note": "Python denotes the observed SDK 5.0.2 interpreter for engine commands and native 0.3.0 prefix for the native artifact check; exact private argv and stdout/stderr are retained outside the repository.",
+    "stage03_exit": 0,
+    "integrated_stage04_exit": 0,
+    "integrated_native_artifact_check_exit": 0,
+    "integrated_current_provenance_valid": true,
+    "qpdf_check_exit": 0,
+    "pdf_pages_viewed": 10,
+    "dense_pdf_page_viewed": 6,
+    "html_pages_checked": 9,
+    "local_references_checked": 40,
+    "fragment_references_checked": 22,
+    "actual_chrome_destinations_clicked": 22,
+    "trusted_pointer_toc_clicks": 1,
+    "broken_assets_fragments_or_images": 0,
+    "horizontal_overflow_findings": 0,
+    "figure_registry_schema": "2.0",
+    "authored_alt_text_preserved": true,
+    "artifacts": "v0.3.0.artifacts.json",
+    "integrated_provenance": "v0.3.0.rendered-provenance.json",
+    "producer_input_provenance": "v0.3.0.producer-input-rendered-provenance.json",
+    "visual_inspection": "All ten PDF pages and the dense formalism page were viewed, along with actual Chrome title/TOC and split formalism screenshots. No clipping or overlap was observed. Sparse sections and the empty references page match the authored manuscript.",
+    "preserved_attempts": "The first derived render was refused by the selected-source seal when removing tracked HTML. The original failure is retained privately. The successful producer bound the complete frozen canonical input while rendering its independent derived view; no source guard or sandbox was weakened.",
+    "native_preparation_evidence": "Top-level native_gates, suite, installed_wheel and current_generated_hashes retain the original native preparation snapshot; no full suite, wheel setup or figure build was repeated for this publication integration.",
+    "nonclaims": "No native human custody, transfer permission, independent final audit, remote publication, affected-party approval or new DOI is granted."
+  }
+}
