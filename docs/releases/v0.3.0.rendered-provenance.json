@@ -1,0 +1,95 @@
+{
+  "consumed_manuscript": [
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/00_abstract.md",
+      "source_sha256": "f602da40c85730a081085444e5c8e06fc9e66d535ba66a4397ee832bb9f2bf87"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/01_introduction.md",
+      "source_sha256": "8253c71b57f483e37dc89bea258d2900a70bf9314d6485287e841025d1471e9b"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/02_method.md",
+      "source_sha256": "33eb1acdcc9c9509ccb6ab3bd81c2354405b30162eb2844ab475db9a6ef8c6fa"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/03b_formalism.md",
+      "source_sha256": "12d1bebd074a37b7ef54417284aa74858bb8bbc723a2b2fd832ec86984131574"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/04_examples.md",
+      "source_sha256": "4d14db3ed13462534862367b00cf91dc9b970b0540c5cb0d648a6c04727d135c"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/05_limits.md",
+      "source_sha256": "1b66be5480d7a0fa6e6284a3bc4577444911359ed489e18b4fd2441611220906"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/06_conclusion.md",
+      "source_sha256": "ef33a84e773d463eaa97fbd52f178c6ea578e0b6d396dbe00f5e0021e3e862e3"
+    },
+    {
+      "rendered_path": "output/web/_combined_manuscript.md",
+      "rendered_sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "source_path": "docs/manuscript/99_references.md",
+      "source_sha256": "fec3c74377339ae7da444bce547dce6a7ba5a5c255e4bcecda165c034980c94d"
+    }
+  ],
+  "evidence_files": {
+    "artifact_manifest": {
+      "path": "output/reports/artifact_manifest.json",
+      "sha256": "7393ef6c9cf746563fcfc65aefa9c4996f8be9aa5f30e18c28db25df699aed7d",
+      "size_bytes": 6870
+    },
+    "combined_manuscript": {
+      "path": "output/web/_combined_manuscript.md",
+      "sha256": "a39ba8e02d926b64dac0c140a4064193907191f4d698c960836dcb8e985d3518",
+      "size_bytes": 6804
+    },
+    "composition_manifest": {
+      "path": "output/reports/manuscript_composition.json",
+      "sha256": "32c6d771b0dac2f81cae4c9cf3e3428d3dbad3ea82777abfe1b3a16e06b8b97a",
+      "size_bytes": 2068
+    },
+    "validation_report": {
+      "path": "output/reports/validation_report.json",
+      "sha256": "0c8411c73f4124a2fdbe24e2730e6dd4e58bef7900aade3fb68fcd22b41a78a0",
+      "size_bytes": 10554
+    }
+  },
+  "evidence_mode": "validated-co-snapshot-fingerprint-bridge",
+  "fingerprints": {
+    "config": {
+      "file_count": 12,
+      "sha256": "0e7cbbd1f08f59af08c3ef930340f1f69866f79705b12ac46daff294f12a7cf8"
+    },
+    "output": {
+      "file_count": 23,
+      "sha256": "760fb41ee3f3b332b2e4664384b6eaaee81971a39525b7cc2ae605d883caaab0"
+    },
+    "source": {
+      "file_count": 54,
+      "sha256": "9b2e2f516c23f9335288a3c2e4412867dbf7a8091e9f4e25d2f256d3bed7e1bb"
+    },
+    "stage": {
+      "file_count": 1614,
+      "sha256": "4bbe01016d1bc1b4540d2bb466e56e9c6d657a91ef0843ba962360a7d3165ff6"
+    }
+  },
+  "project": "silver_line",
+  "schema_version": "template-rendered-provenance-v2"
+}

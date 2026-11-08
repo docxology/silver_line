@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.12.1" />
+  <meta name="generator" content="pandoc 3.13" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Daniel Ari Friedman" />
   <meta name="description" content="What is preserved, what is entrusted to whom, what is allowed to lapse" />
@@ -337,7 +337,7 @@ mjx-container[display="true"] { max-width: 100%; overflow: visible; }
   outline: 3px solid var(--brand-1);
   outline-offset: 3px;
 }
-.table-scroll > table { margin-block: 0; min-width: 100%; width: max-content; }
+.table-scroll > table { margin-block: 0; display: table; min-width: 100%; width: 100%; }
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -498,8 +498,9 @@ table {
 
 .table-scroll > table {
   margin-block: 0;
+  display: table;
   min-width: 100%;
-  width: max-content;
+  width: 100%;
 }
 
 figure {
@@ -516,6 +517,15 @@ th, td {
 th {
   background-color: #1f6f8b;
   color: white;
+}
+
+/* Preserve a complete inline-code header within the table's scroll region. */
+th code {
+  color: inherit;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 img {
@@ -722,10 +732,11 @@ missing. Applicable entrustment requirements also require a nonblank
 declared custodian. A lapse-eligible requirement with missing labels
 reads NEEDS_PROVISION: eligible but not yet declared, not a retention
 defect. Silence is never narrated as a decision.</p>
-<p>An explicit release supplies the item’s ID, declarer, declaration
-date and source reference. When applicable lapse policy permits it, the
+<p>An explicit release supplies the subject ID, exact item ID, declarer,
+declaration date and source reference. Its subject must match the
+explicit reading subject. When applicable lapse policy permits it, the
 item reads DECLARED_RELEASE for non-restraint requirements. Restraint
-acknowledgements remain required. I check that the declaration is
+acknowledgments remain required. I check that the declaration is
 internally scoped and dated; I do not verify authority, acceptance or
 consent. Nothing here authorizes disclosure, destruction or
 transfer.</p>
@@ -755,8 +766,9 @@ lapse-eligibility flag, permitted only for LAPSE requirements.</p>
 title="Succession item">
 <p><strong>Definition 2 (Succession item).</strong> A <strong>succession
 item</strong> has an item ID, description, custodian, tag set, declared
-label set and optional scoped release. A release names that exact item
-ID, declarer, declaration date and source reference.</p>
+label set and optional scoped release. A release names the explicit
+reading subject and that exact item ID, declarer, declaration date and
+source reference. Subject and item identities must both match.</p>
 </div>
 <div id="def:verdict" class="definition" title="Verdict">
 <p><strong>Definition 3 (Verdict).</strong> A <strong>verdict</strong>
@@ -812,7 +824,7 @@ does not verify that a declared label names something real, does not
 judge the quality of what is kept, and does not guarantee that anything
 survives its custodians. Digests make silent registry edits visible, not
 impossible, and say nothing about whether the content is good.</p>
-<p>A nonblank custodian and acknowledgement label establish neither
+<p>A nonblank custodian and acknowledgment label establish neither
 acceptance nor legal succession. Registry eligibility is weaker than a
 scoped release declaration; neither authorizes action. A PARTIAL reading
 covers matched accepted items only, and an UNDATED reading makes no

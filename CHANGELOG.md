@@ -21,6 +21,9 @@
   artifacts and diagrams while retaining historical release evidence.
 - Exercise complete malformed declaration fields and false-like native releases,
   and replay subject-scoped release snapshots through native schema 3.0.
+- Integrate the current PDF, HTML and local web assets rendered with template
+  `2ecaba680b304a617bded87c0732b5009a76a21a`, with current provenance and
+  artifact inventory; retain the original producer-input and historical receipts.
 
 ## 0.2.0 — 2026-10-21
 

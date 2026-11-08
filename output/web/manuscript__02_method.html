@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc 3.12.1" />
+  <meta name="generator" content="pandoc 3.13" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>02_method.md.web</title>
   <style>
@@ -251,7 +251,7 @@ mjx-container[display="true"] { max-width: 100%; overflow: visible; }
   outline: 3px solid var(--brand-1);
   outline-offset: 3px;
 }
-.table-scroll > table { margin-block: 0; min-width: 100%; width: max-content; }
+.table-scroll > table { margin-block: 0; display: table; min-width: 100%; width: 100%; }
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -412,8 +412,9 @@ table {
 
 .table-scroll > table {
   margin-block: 0;
+  display: table;
   min-width: 100%;
-  width: max-content;
+  width: 100%;
 }
 
 figure {
@@ -430,6 +431,15 @@ th, td {
 th {
   background-color: #1f6f8b;
   color: white;
+}
+
+/* Preserve a complete inline-code header within the table's scroll region. */
+th code {
+  color: inherit;
+  background-color: transparent;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 img {
@@ -587,10 +597,11 @@ missing. Applicable entrustment requirements also require a nonblank
 declared custodian. A lapse-eligible requirement with missing labels
 reads NEEDS_PROVISION: eligible but not yet declared, not a retention
 defect. Silence is never narrated as a decision.</p>
-<p>An explicit release supplies the item’s ID, declarer, declaration
-date and source reference. When applicable lapse policy permits it, the
+<p>An explicit release supplies the subject ID, exact item ID, declarer,
+declaration date and source reference. Its subject must match the
+explicit reading subject. When applicable lapse policy permits it, the
 item reads DECLARED_RELEASE for non-restraint requirements. Restraint
-acknowledgements remain required. I check that the declaration is
+acknowledgments remain required. I check that the declaration is
 internally scoped and dated; I do not verify authority, acceptance or
 consent. Nothing here authorizes disclosure, destruction or
 transfer.</p>
