@@ -1,0 +1,58 @@
+{
+  "schema": "line-elements-native-current-publication-artifacts/1",
+  "version": "0.4.0",
+  "date": "2026-11-09",
+  "producer_input_commit": "cbf1c3bae2161babaf77cc8b4b9809af54e42f92",
+  "engine_commit": "40b893b1c3d2741cded747a661a335ab03d4dd3b",
+  "artifacts": {
+    "output/pdf/silver_line_combined.pdf": {
+      "sha256": "29697f27025e0786c734e6c33d1d9f2f6531be91ee41745b0c793b21cfba5edd",
+      "bytes": 105166
+    },
+    "output/web/assets/source-web-fonts.js": {
+      "sha256": "59f21b7d4b8ea9ffc51dd583ad6af59e86b4d0224c2c417a6882585f7addcad7",
+      "bytes": 1974819
+    },
+    "output/web/favicon.ico": {
+      "sha256": "6ca6e9ffbb22550f6d94bf216e743cc7469a7fc50d8dcf0737b11bf800de7dad",
+      "bytes": 121
+    },
+    "output/web/index.html": {
+      "sha256": "9a0bdd1c2c61e07acd195ae33d392b45423ce32478ecfd6415257009fe5753b9",
+      "bytes": 26100
+    },
+    "output/web/manuscript__00_abstract.html": {
+      "sha256": "9a2c71d9d163368ae0666c9f0db553048d27e176097d2d40bbda055af581bd7a",
+      "bytes": 16158
+    },
+    "output/web/manuscript__01_introduction.html": {
+      "sha256": "bff272e412483b2e0290b1d80a6a700232defb7287408fa52b589c5e799a5228",
+      "bytes": 16227
+    },
+    "output/web/manuscript__02_method.html": {
+      "sha256": "9aba12eda553232807ce008dfe176ee8c9721c909935c70c3fb40ec1048c9f51",
+      "bytes": 18052
+    },
+    "output/web/manuscript__03b_formalism.html": {
+      "sha256": "71269a65357da9696e49a1172e6b9185c4e27840ad833119fff1dea8fdebfa4b",
+      "bytes": 18048
+    },
+    "output/web/manuscript__04_examples.html": {
+      "sha256": "34a9da06a46c75e04cb656df08e45deb55b31acbdfef4e2ea926ceae0aa426ad",
+      "bytes": 16896
+    },
+    "output/web/manuscript__05_limits.html": {
+      "sha256": "262e54bfe1265e405917283fd9d71e2cf70b209516245ad9e57850f4d0193a49",
+      "bytes": 17189
+    },
+    "output/web/manuscript__06_conclusion.html": {
+      "sha256": "8a09cefe26970a3616d14076c3b6c6c5ad5aa2767aae5a53633885c8cdc8010f",
+      "bytes": 15972
+    },
+    "output/web/manuscript__99_references.html": {
+      "sha256": "591b209f5907be16920bb0e3a0c79c4cfe141727f58cc0bfb090c8692389e956",
+      "bytes": 15737
+    }
+  },
+  "scope": "Complete final combined PDF, all current HTML pages, favicon, and local assets under the established native tracking policy. Transient hydrated Markdown, TeX, logs and reports are excluded. Old captures and historical release packets remain unchanged."
+}

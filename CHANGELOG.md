@@ -19,6 +19,9 @@
 - Align current family orientation with the Line Set declaration, keeping
   Silver custody distinct from Green capacity, Copper allocation and Iron
   scenario recovery. Preserve the owner's current publication authority.
+- Refresh the verified combined PDF, all HTML pages and their local assets from
+  the qualified 0.4.0 producer. Add current gate and artifact packets separately
+  from historical releases; publication integration does not relabel producers.
 
 ## 0.3.0 — 2026-11-06
 
