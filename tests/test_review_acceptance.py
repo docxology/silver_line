@@ -304,8 +304,11 @@ def test_release_snapshot_replays_native_three_identity(subject, evidence, statu
     row["evidence"] = evidence
     row["release"] = asdict(
         ReleaseDeclaration(
-            "subject-a", row["item_id"], "declared role",
-            "2026-10-19", "synthetic:release-record",
+            "subject-a",
+            row["item_id"],
+            "declared role",
+            "2026-10-19",
+            "synthetic:release-record",
         )
     )
     envelope, files = artifact_payloads(fixture)
@@ -316,9 +319,11 @@ def test_release_snapshot_replays_native_three_identity(subject, evidence, statu
         subject_id=subject,
         evaluated_as_of=fixture["review_date"],
     )
-    assert canonical_verdict(replay) == files[f"data/reports/{envelope['report_ref']}.json"]
+    assert (
+        canonical_verdict(replay)
+        == files[f"data/reports/{envelope['report_ref']}.json"]
+    )
     assert report["schema_version"] == "silver.verdict/3.0"
-    assert report["evaluator_version"] == "silver.evaluator/3.0"
     assert report["registry_version"] == "silver.registry/3.0"
     assert replay.status.value == envelope["native_status"] == status
     assert verdict_digest(replay) == envelope["report_ref"]

@@ -37,6 +37,11 @@ unbounded content are outside this contract. No universal never-raise promise
 is made. Invalid review dates and blank/noncanonical subject IDs raise
 ValueError before evaluation; invalid registries return NEEDS_REWORK and keep
 the supplied valid review date.
+Subject configuration and registry text must contain Unicode scalar values;
+valid non-ASCII text is allowed. Surrogate code units in declared content are
+classified before scoring or diagnostic echo. The original-source hash uses
+the native `silver_line.text-code-units/1` snapshot representation rather than
+changing valid canonical text bytes.
 
 Use explicit opaque item IDs for ongoing custody records. Omitted IDs receive
 source-content IDs for compatibility, so changing the source changes that ID.
@@ -56,6 +61,13 @@ SHA-256 under `data/reports/` and `data/snapshots/`. The builder refuses to
 overwrite different bytes at an existing content address. The check mode
 replays all fixtures and checks exact persisted bytes. Original and normalized
 declarations are distinct snapshots; neither establishes factual custody.
+For complete replay, decode retained original source or fixture snapshots with
+`fixture_items`, not only normalized accepted rows. Rejected declarations,
+duplicate identity, original-source digests, counts and notes are part of the
+comparison. The fixture consumer restores malformed code units exactly without
+coalescing a surrogate pair into a scalar. All emitted text must encode with
+strict UTF-8. See `tests/test_review_unicode.py` for valid byte controls,
+malformed field coverage, finite-scan duplicate ordering and full artifact replay.
 See [schema migration](report-schema.md) and [publication](publication.md).
 
 The project has no declared type-check dependency. The pinned external ty

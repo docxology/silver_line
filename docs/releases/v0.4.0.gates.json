@@ -1,0 +1,108 @@
+{
+  "schema": "line-elements-native-publication-gates/1",
+  "version": "0.4.0",
+  "date": "2026-11-09",
+  "producer_input_commit": "cbf1c3bae2161babaf77cc8b4b9809af54e42f92",
+  "engine_commit": "40b893b1c3d2741cded747a661a335ab03d4dd3b",
+  "engine_tree": "4bd0b902c30a13faf8bffa98e099af9d958a6f9c",
+  "python": "3.14.10",
+  "suite": {
+    "passed_tests": 247,
+    "coverage_floor": 90,
+    "branch_coverage_enabled": true,
+    "coverage": {
+      "covered_lines": 628,
+      "num_statements": 645,
+      "percent_covered": 97.18640093786635,
+      "percent_covered_display": "97.19",
+      "missing_lines": 17,
+      "excluded_lines": 0,
+      "percent_statements_covered": 97.36434108527132,
+      "percent_statements_covered_display": "97.36",
+      "num_branches": 208,
+      "num_partial_branches": 7,
+      "covered_branches": 201,
+      "missing_branches": 7,
+      "percent_branches_covered": 96.63461538461539,
+      "percent_branches_covered_display": "96.63"
+    }
+  },
+  "native_gates": [
+    {
+      "command": "python -m pytest tests/ --cov=src --cov-report=term --cov-report=json:/Users/friedman/Documents/Git/gitvault/Local/tmp/line-elements-gh-release-ebe58a174bde/native-qualification-custody-care/silver_line-coverage-qualified.json",
+      "returncode": 0
+    },
+    {
+      "command": "ruff check src tests scripts",
+      "returncode": 0
+    },
+    {
+      "command": "ruff format --check src/silver_line/artifacts.py src/silver_line/evaluator.py src/silver_line/intake.py src/silver_line/snapshots.py src/silver_line/validation.py src/silver_line/version.py tests/test_review_unicode.py tests/test_review_acceptance.py",
+      "returncode": 0
+    },
+    {
+      "command": "python -m silver_line.artifacts --check",
+      "returncode": 0
+    },
+    {
+      "command": "ty check src",
+      "returncode": 0
+    },
+    {
+      "command": "python -m build --no-isolation --outdir dist-qualified",
+      "returncode": 0
+    }
+  ],
+  "isolated_consumers": {
+    "python": "3.11.18",
+    "both_passed": true,
+    "no_source_checkout_or_siblings_on_sys_path": true
+  },
+  "qualified_packages": [
+    {
+      "kind": "wheel",
+      "sha256": "b33ab62ec44fbb49068e387e9162874e300de607befbd1eb0b0c20dd84351e08",
+      "bytes": 24617,
+      "all_packaged_runtime_python_matches_final_bound_source": true
+    },
+    {
+      "kind": "sdist",
+      "sha256": "5da7aecb509bbf25c28d67ff61d568e93bc5d18a5acee1b1fdead9393030f1f4",
+      "bytes": 36578,
+      "all_packaged_runtime_python_matches_final_bound_source": true
+    }
+  ],
+  "native_runtime_and_tests_exact_qualified_bytes": true,
+  "publication_render": {
+    "configured_formats": [
+      "pdf",
+      "html"
+    ],
+    "render_exit": 0,
+    "validation_exit": 0,
+    "provenance_valid": true,
+    "placeholder_findings": [],
+    "actual_pdf_pages_viewed": 10,
+    "desktop_and_narrow_browser_views": true,
+    "actual_narrow_math_locally_scrolls": true,
+    "complete_current_bundle": "v0.4.0.artifacts.json"
+  },
+  "custody": {
+    "original_qualified_source_unchanged": true,
+    "native_figures_and_raw_render_clone_index_unchanged": true,
+    "render_clone_tracked_generated_outputs_changed": true,
+    "changed_current_generated_paths": [
+      "output/pdf/silver_line_combined.pdf",
+      "output/web/index.html",
+      "output/web/manuscript__02_method.html",
+      "output/web/manuscript__05_limits.html"
+    ],
+    "all_historical_release_records_unchanged": true
+  },
+  "publication_authority": "The owner authorized GitHub and existing active Zenodo release hooks. This local packet does not claim a remote release or a newly assigned DOI. Historical DOI metadata remains historical; no tag amendment is authorized.",
+  "nonclaims": [
+    "No custody or transfer permission is granted by test, browser, or publication checks.",
+    "Native schema, evaluator and registry identities remain independent of package and publication versions.",
+    "Previously qualified package artifacts retain their actual hashes; publication-only integration does not relabel their producer."
+  ]
+}

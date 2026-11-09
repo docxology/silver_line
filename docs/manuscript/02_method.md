@@ -27,3 +27,11 @@ declared sequence. Content-addressed reports and snapshots support exact replay.
 A duplicate item identity rejects the whole scan before unusable declarations
 are discarded. Rejection notes preserve valid supplied IDs, and conflicting
 declarations use canonical content to break identity ties before digesting.
+
+Before original-source hashing, a native text codec represents surrogate code
+units as integer arrays. Valid Unicode scalar text keeps its canonical bytes.
+Intake rejects malformed descriptions and IDs, drops malformed labels, exposes
+malformed custodians as gaps, and keeps malformed release declarations visible
+as NEEDS_REWORK rather than treating them as absent. Safe original source and
+fixture snapshots retain rejected declarations for full replay; normalized
+accepted rows alone cannot reproduce rejection notes, counts or source identity.

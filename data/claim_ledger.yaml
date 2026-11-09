@@ -63,6 +63,26 @@ claims:
       declarations remain native item-linked gaps.
     tier: executable
     evidence: tests/test_review_acceptance.py
+  - id: malformed-text-custody
+    statement: >
+      Surrogate-containing descriptions and item IDs are set aside before
+      scoring; malformed labels are dropped and malformed custodians expose
+      custody gaps. Malformed release fields remain item-linked NEEDS_REWORK
+      findings, never absence or a successful release. Safe diagnostic IDs
+      preserve whole-scan duplicate checks for valid declared identities.
+    tier: executable
+    evidence: tests/test_review_unicode.py
+  - id: rejected-source-replay
+    statement: >
+      The native silver_line.text-code-units/1 codec retains original malformed
+      code units in source and fixture snapshots while preserving valid scalar
+      canonical bytes. The fixture consumer restores original rejected
+      declarations for complete report replay, including source identity,
+      counts and notes; normalized accepted rows alone are not a general
+      replay source. The codec does not validate evidence or serialize
+      arbitrary unsupported Python producers.
+    tier: executable
+    evidence: tests/test_review_unicode.py
 non_claims:
   - No guarantee of persistence: a KEPT verdict describes declared custody.
   - Not an immortality project; nothing here outlives its custodians by promise.

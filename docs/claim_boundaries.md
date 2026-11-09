@@ -32,6 +32,14 @@ neither may be published in an envelope. I report accepted, rejected and
 unmatched item counts. KEPT on a PARTIAL reading describes only its matched
 accepted declarations. Unsupported or unmatched items have not been cleared.
 
+Malformed text is not evidence: descriptions and IDs containing surrogate code
+units are set aside, malformed labels are dropped, and malformed custodians
+surface custody gaps. A malformed release remains a declared release defect,
+not absence or permission. Original source and fixture snapshots retain the
+rejected code units through the native safe text codec for exact replay.
+The codec preserves identity; it neither repairs text nor verifies its content.
+Normalized accepted rows alone do not reproduce rejected-source custody.
+
 ## What a Silver reading never claims
 
 - **Not persistence.** KEPT means declared custody was complete at the review

@@ -9,7 +9,14 @@ from .evaluator import _prepare, read_succession
 from .records import ReleaseDeclaration, SuccessionItem, SuccessionVerdict
 from .registry import SILVER_KEEPSAKES
 from .serialization import canonical_registry, canonical_verdict, verdict_digest
-from .snapshots import canonical_json, canonical_source, digest_text, item_snapshot
+from .snapshots import (
+    canonical_json,
+    canonical_source,
+    digest_text,
+    item_snapshot,
+    restore_snapshot,
+    snapshot_value,
+)
 
 NONCLAIMS = (
     "I report declared custody and provision within the qualified reading scope only.",
@@ -21,6 +28,11 @@ NONCLAIMS = (
 
 
 def fixture_items(fixture: dict) -> tuple[SuccessionItem, ...]:
+    """Restore original declarations, including rejected text, from safe snapshots."""
+    restored = restore_snapshot(fixture)
+    if not isinstance(restored, dict):
+        raise ValueError("fixture snapshot must be an object")
+    fixture = restored
     items = []
     for row in fixture["items"]:
         release = row.get("release")
@@ -97,13 +109,17 @@ def validate_envelope(
 
 
 def artifact_payloads(fixture: dict) -> tuple[dict, dict[str, str]]:
+    restored = restore_snapshot(fixture)
+    if not isinstance(restored, dict):
+        raise ValueError("fixture snapshot must be an object")
+    fixture = restored
     items = fixture_items(fixture)
     verdict = read_succession(
         items, evaluated_as_of=fixture["review_date"], subject_id=fixture["subject_id"]
     )
     normalized, _, _ = _prepare(items)
     snapshot_texts = (
-        canonical_json(fixture),
+        canonical_json(snapshot_value(fixture)),
         canonical_source(items),
         canonical_json([item_snapshot(i) for i in normalized]),
         canonical_registry(SILVER_KEEPSAKES),
