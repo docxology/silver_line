@@ -6,11 +6,13 @@
 DECLARED_RELEASE and read the report's schema and qualified scope. Reports
 bind original-source and normalized-declaration digests, subject and item IDs,
 review date or UNDATED, evaluator/registry revisions and coverage counts.
-The native markers are `silver.evaluator/3.1` and `silver.registry/3.0`;
-the distribution release is `0.4.0`, independently versioned from these contracts.
-Evaluator 3.1 adds the malformed-source policy below without changing registry
-content or the verdict field set. Evaluator 3.0 reports retain their original
-producer identity; current report bytes are not historical reproductions.
+The native markers are `silver.evaluator/3.2` and `silver.registry/3.0`;
+the distribution is independently versioned from these contracts.
+Evaluator 3.2 introduces the explicitly versioned `silver.source/1` codec,
+separates source replay from JSON fixture admission, and counts duplicate usable
+declared IDs rather than diagnostic hashes. Registry content and the verdict
+field set do not change. Earlier reports retain their original producer
+identity; current report bytes are not historical reproductions.
 
 ## Historical identities
 
@@ -38,11 +40,17 @@ digests, and the registry snapshot hash equals the report registry digest.
 The fixture loader uses explicit IDs; the public API retains content-derived
 IDs and UNSPECIFIED/UNDATED defaults only for compatibility.
 
-Duplicate IDs are checked across the original SuccessionItem declarations,
-including those whose descriptions are unusable. The whole scan is rejected
-and valid declared IDs remain in rejection notes. Canonical content breaks
-ID ties before digesting, so conflicting duplicate declarations have the
-same rejection identity under list reversal or set input.
+Duplicate usable declared IDs are checked across the original SuccessionItem
+declarations, including those whose descriptions are unusable. A usable declared
+ID is nonempty scalar text with no surrounding whitespace. The whole scan is
+rejected on duplicates, and valid declared IDs remain in rejection notes.
+Diagnostic `input-<hash>` identities for invalid or omitted IDs do not enter this
+check; the prefix is not reserved against a real declared ID. Omitted IDs still
+receive deterministic content-derived identities during evaluator preparation.
+Normalized rows sort by ID and canonical content. Original root succession scans
+also retain order-insensitive multiset identity across single-item, list, tuple,
+set and frozenset syntax. Nested ordered values and container kinds are retained;
+root scan permutation therefore does not change complete report identity.
 
 ## Current release contract
 
@@ -67,14 +75,16 @@ publication. Complete declarations with inconsistent field values remain
 visible as native NEEDS_REWORK findings, never silently absent.
 
 Replay a complete current reading from the retained **original-source** snapshot:
-load `data/snapshots/<source_digest>.json` with `json.loads`, pass that item
-array to `fixture_items({"items": snapshot})`, and call `read_succession` with
-the report's subject, review date and exact registry. Alternatively, decode
-the retained original fixture snapshot and use its subject and review date.
-`fixture_items` decodes native malformed-text markers before constructing
-declarations. Both paths retain rejected declarations and reproduce original
-source identity, rejection counts, notes and complete canonical report bytes.
-Compare both `canonical_verdict` and `verdict_digest`, not only native status.
+load `data/snapshots/<source_digest>.json` with `json.loads`, call the public
+`restore_source(snapshot)`, and pass the restored native scan directly to
+`read_succession` with the report's subject, review date and exact registry.
+Alternatively, call `restore_source` on the retained original fixture snapshot
+and admit the resulting ordinary fixture dictionary with `fixture_items`.
+`fixture_items` is JSON fixture admission: its label arrays become frozensets;
+it never interprets native source nodes or historical malformed-text markers.
+Complete same-policy replay retains rejected declarations and reproduces source
+identity, counts, notes, status and complete canonical report bytes. Compare both
+`canonical_verdict` and `verdict_digest`, not only native status.
 
 Normalized accepted rows are a derivation snapshot, **not** a general replay
 source: they cannot restore rejected declarations or original source spelling.
@@ -83,25 +93,42 @@ of complete rejected-source custody. Release-bearing snapshots retain all five
 declaration fields; cross-subject replay and missing restraint remain
 NEEDS_REWORK, not permission.
 
-## Malformed-text custody policy
+## Versioned native source custody
 
-Native `silver_line.text-code-units/1` is an additive snapshot text codec.
-Only a string containing a surrogate code point becomes an object of the form
-`{"silver_line.text-code-units/1":[55296]}`. The integer array contains `ord`
-values for **every** original Python character, in order, without stripping,
-replacement or surrogate-pair folding. The decoder validates its reserved
-single-key object, integer ranges and presence of a surrogate. This marker is
-reserved for text fields in native snapshots, not an arbitrary JSON-object
-interchange format. Unsupported Python producers remain outside the contract.
-Malformed snapshot markers raise ValueError; they are never silently repaired.
+`canonical_source(raw)` emits `{"codec":"silver.source/1","value":...}` as
+canonical strict-UTF-8 JSON. `restore_source` accepts only that exact envelope
+version, never an unversioned historical array or a guessed upgrade.
+Old issued artifacts, including evaluator 3.1's reserved
+`silver_line.text-code-units/1` markers, require their historical producer.
+Their bytes and identities are not rewritten.
 
-Valid ASCII, accented text, non-BMP scalars, U+FFFD and literal backslash-u
-strings retain their existing canonical UTF-8 bytes. A two-surrogate Python
-string stays distinct from its corresponding non-BMP scalar after JSON decode.
-Source collection sorting remains unchanged; fixture arrays retain their order.
-Original fixture and declaration snapshots both use this encoding, and
-`fixture_items` is the existing decode/replay consumer for both. Digests bind
-the safe canonical representation; surrogatepass is not used as UTF-8 output.
+Supported source values are ordinary None, bool, int, finite float and str,
+the exact SuccessionItem and ReleaseDeclaration records, and recursively nested
+ordinary list, tuple, set, frozenset and dict containers. Records and all
+containers have explicit `kind`/`value` nodes. The root succession scan is a
+canonically sorted `scan` multiset, decoded as a tuple; its input syntax and order
+do not affect identity. Inside declarations and fixture dictionaries, lists and
+tuples preserve order and kind; set/frozenset members sort canonically while
+retaining kind. Dictionaries encode ordered key/value pairs recursively,
+including malformed field values and keys. Literal dictionaries that resemble
+codec envelopes,
+record nodes or old malformed-text markers therefore remain dictionaries.
+No payload-specified class is imported or loaded.
+
+A surrogate-containing string uses a `text-code-units` node containing `ord`
+values for every original Python character, in order, without stripping,
+replacement or surrogate-pair folding. Scalar ASCII, accented text, non-BMP
+characters, U+FFFD and literal backslash-u strings remain distinct. The new
+version changes source snapshot bytes even for valid declarations; it does not
+claim byte continuity with older codecs. Normalized rows remain a derived
+projection; their release field uses the same typed value nodes.
+
+Malformed codec nodes, unsupported kinds, unhashable set members/dictionary keys
+and duplicate encoded keys/members raise ValueError, not silent repair.
+Unsupported Python producers have only a diagnostic type identity and cannot
+be replayed. Recursive, hostile or unbounded objects are outside this contract.
+Original fixture snapshots use this same versioned codec, decoded once before
+fixture admission; they do not reinterpret literal JSON objects as text.
 
 Malformed descriptions and IDs reject their declarations; valid declared IDs
 remain available for whole-scan duplicate checks even on rejected descriptions.

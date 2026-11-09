@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.5.0 — 2026-11-09
+
+- Introduce the versioned `silver.source/1` codec through `SOURCE_CODEC`,
+  `canonical_source`, and `restore_source`. Preserve supported nested native
+  container kinds, dictionary keys, malformed Unicode code points, and literal
+  marker-shaped dictionaries without arbitrary object loading. Root scans keep
+  their order-insensitive multiset semantics.
+- Keep ordinary JSON fixture admission separate from native source restoration;
+  remove implicit historical-marker decoding and migrate replay callers to
+  explicit restoration. Historical snapshots require their historical producer;
+  accepted-only normalized snapshots still cannot replace original-source custody.
+- Detect duplicate nonempty declared scalar IDs, including rejected descriptions,
+  without treating diagnostic hashes or omitted-ID defaults as declared IDs.
+- Stop invariant evaluation at failed runtime registry admission and report its
+  named shape failure rather than running unsafe semantic checks.
+- Advance evaluator policy to `silver.evaluator/3.2`; retain registry revision
+  `silver.registry/3.0`, verdict schema 3.0, and the common envelope schema.
+  New source-codec bytes and dependent identities are not historical relabelings.
+
 ## 0.4.0 — 2026-11-08
 
 - Encode malformed source text with native `silver_line.text-code-units/1`

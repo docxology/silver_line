@@ -26,7 +26,7 @@ from .validation import registry_shape_error, validate_review_date
 from .version import EVALUATOR_REVISION, REGISTRY_REVISION
 
 
-def _item_id(raw: object) -> str:
+def _declared_id(raw: object) -> str | None:
     if (
         isinstance(raw, SuccessionItem)
         and scalar_text(raw.item_id)
@@ -34,6 +34,12 @@ def _item_id(raw: object) -> str:
         and raw.item_id == raw.item_id.strip()
     ):
         return raw.item_id
+    return None
+
+
+def _item_id(raw: object) -> str:
+    if (declared := _declared_id(raw)) is not None:
+        return declared
     return "input-" + digest_text(canonical_source(raw))
 
 
@@ -204,7 +210,7 @@ def _read(
     digest = "" if error else registry_digest(keepsakes)
     scan = (raw_items,) if isinstance(raw_items, SuccessionItem) else raw_items
     id_counts = (
-        Counter(_item_id(raw) for raw in scan if isinstance(raw, SuccessionItem))
+        Counter(declared for raw in scan if (declared := _declared_id(raw)) is not None)
         if isinstance(scan, (list, tuple, set, frozenset))
         else Counter()
     )

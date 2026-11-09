@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "access_right": "open",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "keywords": [
     "memory",
     "succession",
@@ -21,6 +21,8 @@
     "review gaps"
   ],
   "related_identifiers": [
+    {"identifier": "10.5281/zenodo.24069439", "relation": "references", "scheme": "doi"},
+    {"identifier": "10.5281/zenodo.22833486", "relation": "references", "scheme": "doi"},
     {
       "identifier": "https://github.com/docxology/silver_line",
       "relation": "isSupplementTo",
@@ -37,5 +39,5 @@
       "scheme": "url"
     }
   ],
-  "notes": "A custody-and-succession instrument in the current Line Set declaration; its colorless Main reader holds the native instruments apart, and Witness remains outside LINE_SET. Copper records allocation arithmetic; Iron records scenario-bound recovery comparisons; neither replaces Silver custody declarations. Source availability is access-dependent. Last verified DOI, retained as a historical identifier only: 10.5281/zenodo.22833486. No new DOI for 0.4.0 is assigned here. The owner authorized GitHub Releases with existing Zenodo hooks active; verify resulting archives under docs/publication.md without guessing identifiers or amending immutable tags."
+  "notes": "A custody-and-succession instrument in the current Line Set declaration; its colorless Main reader holds the native instruments apart, and Witness remains outside LINE_SET. Copper records allocation arithmetic; Iron records scenario-bound recovery comparisons; neither replaces Silver custody declarations. Source availability is access-dependent. Previously verified source archive: 0.4.0, DOI 10.5281/zenodo.24069439; identifies that source ZIP only, not a standalone manuscript. DOI 10.5281/zenodo.22833486 remains an earlier historical archive reference. This metadata cites later source through its repository until that exact edition/object is independently verified. Any GitHub Release and existing public Zenodo hook use require actual owner authority; verify resulting archives under docs/publication.md without guessing identifiers or amending immutable tags."
 }

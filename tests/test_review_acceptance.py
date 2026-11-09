@@ -27,6 +27,7 @@ from silver_line.serialization import (
     canonical_verdict_v1,
     verdict_digest,
 )
+from silver_line.snapshots import restore_source
 from silver_line.validation import validate_review_date
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -313,9 +314,9 @@ def test_release_snapshot_replays_native_three_identity(subject, evidence, statu
     )
     envelope, files = artifact_payloads(fixture)
     report = json.loads(files[f"data/reports/{envelope['report_ref']}.json"])
-    snapshot = json.loads(files[f"data/snapshots/{report['declaration_digest']}.json"])
+    snapshot = json.loads(files[f"data/snapshots/{report['source_digest']}.json"])
     replay = read_succession(
-        fixture_items({"items": snapshot}),
+        restore_source(snapshot),
         subject_id=subject,
         evaluated_as_of=fixture["review_date"],
     )

@@ -23,7 +23,7 @@ uv tool run ty==0.0.90 check src
 2. Pure standard library at runtime; dev deps are pytest, pytest-cov, ruff.
 3. No mocking framework, anywhere.
 4. Fail closed: empty scan sets and unscorable registries are named outcomes.
-5. Sort before emit: no dict/set iteration order reaches a reading or digest.
+5. Sort before emit: canonicalize sets and root scans; retain ordered nested source values.
 6. Sibling line projects are never modified from here.
 7. Underclaim, first person; `data/claim_ledger.yaml` is the register and
    `docs/claim_boundaries.md` its prose companion.
@@ -40,13 +40,14 @@ the supplied valid review date.
 Subject configuration and registry text must contain Unicode scalar values;
 valid non-ASCII text is allowed. Surrogate code units in declared content are
 classified before scoring or diagnostic echo. The original-source hash uses
-the native `silver_line.text-code-units/1` snapshot representation rather than
-changing valid canonical text bytes.
+the explicitly versioned `silver.source/1` representation. The dedicated
+`restore_source` decoder never interprets literal dictionaries as text.
 
 Use explicit opaque item IDs for ongoing custody records. Omitted IDs receive
 source-content IDs for compatibility, so changing the source changes that ID.
-Duplicate IDs (even on unusable declarations) reject the entire scan before
-records are discarded. Rejected item notes preserve valid supplied IDs.
+Duplicate usable declared IDs (even on unusable descriptions) reject the entire
+scan before records are discarded. Invalid-ID diagnostic hashes do not
+participate in that check. Rejected item notes preserve valid supplied IDs.
 Conflicting declarations sort by ID and canonical content, so rejection
 reports are deterministic too. Input
 containers otherwise have scan-set semantics. Findings sort by item and
@@ -61,13 +62,18 @@ SHA-256 under `data/reports/` and `data/snapshots/`. The builder refuses to
 overwrite different bytes at an existing content address. The check mode
 replays all fixtures and checks exact persisted bytes. Original and normalized
 declarations are distinct snapshots; neither establishes factual custody.
-For complete replay, decode retained original source or fixture snapshots with
-`fixture_items`, not only normalized accepted rows. Rejected declarations,
+For complete replay, call `restore_source` on a JSON-decoded original source
+snapshot, then pass the restored native scan directly to `read_succession`.
+For a retained fixture snapshot, call `restore_source` once, then pass the
+restored fixture dictionary to `fixture_items`. JSON fixture admission never
+decodes native nodes or historical text markers. Rejected declarations,
 duplicate identity, original-source digests, counts and notes are part of the
-comparison. The fixture consumer restores malformed code units exactly without
-coalescing a surrogate pair into a scalar. All emitted text must encode with
-strict UTF-8. See `tests/test_review_unicode.py` for valid byte controls,
-malformed field coverage, finite-scan duplicate ordering and full artifact replay.
+comparison. Source decoding preserves nested container kind/order and rejected
+code units without coalescing a surrogate pair into a scalar. Root scan
+multisets remain order-insensitive. All emitted text must encode with strict
+UTF-8. Historical snapshots require their historical producer, not an implicit
+upgrade. See `tests/test_review_unicode.py` and `tests/test_source_replay.py`
+for text boundaries, literal markers, nested values and complete artifact replay.
 See [schema migration](report-schema.md) and [publication](publication.md).
 
 The project has no declared type-check dependency. The pinned external ty

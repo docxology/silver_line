@@ -1,8 +1,8 @@
 """Offline invariant checks over the Silver Line's own declaration.
 
-Every check takes the keepsake registry as an argument and names no specific
-entry, so the same battery runs over a custom registry unchanged. Each check
-fails closed: a violation is a named result, never silence.
+The battery takes a keepsake registry as an argument and names no specific
+entry. It returns a named structural failure before invoking semantic checks.
+Individual semantic helpers require shape-safe registry fields.
 """
 
 from __future__ import annotations
@@ -44,7 +44,8 @@ def check_unique_keepsake_ids(keepsakes: tuple[Keepsake, ...]) -> CheckResult:
             duplicates.append(keepsake.id)
         seen.add(keepsake.id)
     return _result(
-        "unique_keepsake_ids", [f"duplicate ids: {sorted(duplicates)}"] if duplicates else []
+        "unique_keepsake_ids",
+        [f"duplicate ids: {sorted(duplicates)}"] if duplicates else [],
     )
 
 
@@ -80,10 +81,14 @@ def check_lapse_families_present(keepsakes: tuple[Keepsake, ...]) -> CheckResult
 def all_invariants(
     keepsakes: tuple[Keepsake, ...],
 ) -> tuple[CheckResult, ...]:
-    """Run the whole offline battery over a keepsake registry."""
+    """Stop after a named structural failure; never score unsafe fields."""
 
+    error = registry_shape_error(keepsakes)
+    shape = _result("runtime_registry_shape", [error] if error else [])
+    if error:
+        return (shape,)
     return (
-        _result("runtime_registry_shape", [error] if (error := registry_shape_error(keepsakes)) else []),
+        shape,
         check_nonempty_registry(keepsakes),
         check_unique_keepsake_ids(keepsakes),
         check_tags_in_vocabulary(keepsakes),

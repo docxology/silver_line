@@ -27,6 +27,12 @@ a vocabulary extension requires a reviewed package revision, new evaluator
 version and regenerated reports. Family balance is a separate full-registry
 profile; a small valid custom registry need not cover all families.
 
+`all_invariants` first applies the same runtime registry admission check.
+On failure it returns only the failed `runtime_registry_shape` result with
+reasons; shape-dependent semantic checks are not run or reported as passes.
+An admitted small registry still receives family-balance diagnostics from the
+full battery. Individual semantic helpers require shape-safe registry fields.
+
 After any registry edit, regenerate the formalism ledger and re-derive both
 envelope digests — tests fail until the derived artifacts follow.
 
