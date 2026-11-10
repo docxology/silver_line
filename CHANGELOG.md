@@ -2,6 +2,9 @@
 
 ## 0.5.0 — 2026-11-09
 
+- Remove the uncited empty references-section carrier rather than rendering
+  an orphan heading and blank final page; retain bibliographic metadata and
+  immutable historical publication records.
 - Introduce the versioned `silver.source/1` codec through `SOURCE_CODEC`,
   `canonical_source`, and `restore_source`. Preserve supported nested native
   container kinds, dictionary keys, malformed Unicode code points, and literal
