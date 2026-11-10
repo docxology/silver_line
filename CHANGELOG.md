@@ -5,6 +5,9 @@
 - Remove the uncited empty references-section carrier rather than rendering
   an orphan heading and blank final page; retain bibliographic metadata and
   immutable historical publication records.
+- Stop bundling unversioned current web/PDF build outputs in Source archives.
+  Keep native figure inputs tracked, ignore disposable renderer outputs, and
+  preserve versioned publication packets and their original provenance.
 - Introduce the versioned `silver.source/1` codec through `SOURCE_CODEC`,
   `canonical_source`, and `restore_source`. Preserve supported nested native
   container kinds, dictionary keys, malformed Unicode code points, and literal
