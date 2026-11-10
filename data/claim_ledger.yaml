@@ -63,6 +63,15 @@ claims:
       declarations remain native item-linked gaps.
     tier: executable
     evidence: tests/test_review_acceptance.py
+  - id: fixture-label-arrays
+    statement: >
+      Ordinary JSON fixture tags and evidence must be arrays before conversion
+      to native frozen label sets. Non-array fields are refused before reading
+      or artifact publication; object keys and string characters cannot supply
+      declarations. Malformed scalar labels inside arrays retain native
+      set-aside behavior, and matching release never replaces restraint evidence.
+    tier: executable
+    evidence: tests/test_review_acceptance.py
   - id: malformed-text-custody
     statement: >
       Surrogate-containing descriptions and item IDs are set aside before

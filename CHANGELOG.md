@@ -11,6 +11,10 @@
   remove implicit historical-marker decoding and migrate replay callers to
   explicit restoration. Historical snapshots require their historical producer;
   accepted-only normalized snapshots still cannot replace original-source custody.
+- Require arrays for ordinary JSON fixture `tags` and `evidence` before native
+  label-set conversion. Refuse object keys, string characters and other
+  non-array fields at fixture and artifact admission; retain malformed scalar
+  label set-aside behavior inside arrays and independent release restraint.
 - Detect duplicate nonempty declared scalar IDs, including rejected descriptions,
   without treating diagnostic hashes or omitted-ID defaults as declared IDs.
 - Stop invariant evaluation at failed runtime registry admission and report its

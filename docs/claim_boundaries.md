@@ -41,6 +41,10 @@ dictionaries through `silver.source/1` for exact same-policy replay.
 `restore_source` decodes native snapshots; JSON fixture admission is separate.
 The codec preserves identity; it neither repairs text nor verifies its content.
 Normalized accepted rows alone do not reproduce rejected-source custody.
+Ordinary JSON fixture `tags` and `evidence` must be arrays; non-array fields
+are refused before reading or artifact publication. Object keys and string
+characters are not declarations. Malformed scalar labels inside arrays retain
+the native set-aside behavior, and release never replaces restraint evidence.
 
 ## What a Silver reading never claims
 

@@ -31,6 +31,9 @@ def fixture_items(fixture: dict) -> tuple[SuccessionItem, ...]:
         raise ValueError("fixture must be an object")
     items = []
     for row in fixture["items"]:
+        for field in ("tags", "evidence"):
+            if not isinstance(row[field], list):
+                raise ValueError(f"fixture {field} must be an array of labels")
         release = row.get("release")
         if release is not None:
             if not isinstance(release, dict):

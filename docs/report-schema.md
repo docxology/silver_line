@@ -130,6 +130,16 @@ be replayed. Recursive, hostile or unbounded objects are outside this contract.
 Original fixture snapshots use this same versioned codec, decoded once before
 fixture admission; they do not reinterpret literal JSON objects as text.
 
+Ordinary JSON fixture rows require arrays for both `tags` and `evidence` before
+conversion to native frozen label sets. Objects, strings, null, other scalars
+and non-array Python containers raise ValueError at fixture admission, including
+through `artifact_payloads` and `build_artifacts`; object keys and string
+characters cannot become declared labels. Array elements still follow native
+label policy: malformed scalar labels are dropped with notes, and missing
+restraint evidence remains a gap even with a matching release declaration.
+This fixture boundary does not change native source restoration or its
+supported container kinds.
+
 Malformed descriptions and IDs reject their declarations; valid declared IDs
 remain available for whole-scan duplicate checks even on rejected descriptions.
 Invalid IDs receive deterministic safe source-content diagnostic identities.
