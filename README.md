@@ -101,7 +101,7 @@ co-registers opaque envelopes without aggregation and remains outside `LINE_SET`
 - [Golden Line](https://github.com/docxology/golden_line) — the aspiration and horizon registry
 - [Red Line](https://github.com/docxology/red_line) — the cognitive-security registry of self-assessments
 - [White Line](https://github.com/docxology/white_line) — the absence and omission ledger
-- [Violet Line](https://github.com/docxology/violet_line) — the consent ledger of affected parties
+- [Violet Line](https://github.com/docxology/violet_line) (private; authorized access only) — the consent ledger of affected parties
 - [Blue Line](https://github.com/docxology/blue_line) — the stewardship instrument for maintained commitments
 - [Green Line](https://github.com/docxology/green_line) — the capacity-under-development instrument
 - Copper Line (access-dependent) — allocation arithmetic, not custody or succession
