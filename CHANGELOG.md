@@ -2,12 +2,13 @@
 
 ## 0.5.0 — 2026-11-09
 
-- Remove the uncited empty references-section carrier rather than rendering
-  an orphan heading and blank final page; retain bibliographic metadata and
-  immutable historical publication records.
+- Remove the uncited references carrier and bibliography declaration rather
+  than rendering an orphan heading and blank final page. Preserve the original
+  self-citation bytes in root `CITATION.bib`, outside manuscript discovery.
 - Stop bundling unversioned current web/PDF build outputs in Source archives.
-  Keep native figure inputs tracked, ignore disposable renderer outputs, and
-  preserve versioned publication packets and their original provenance.
+  Use one whole-output packaging ignore, compatible with the native engine's
+  authorized stable-local inventory; keep tracked native figures and immutable
+  versioned publication packets at their original provenance.
 - Introduce the versioned `silver.source/1` codec through `SOURCE_CODEC`,
   `canonical_source`, and `restore_source`. Preserve supported nested native
   container kinds, dictionary keys, malformed Unicode code points, and literal

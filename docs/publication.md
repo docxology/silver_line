@@ -8,16 +8,22 @@ Behavior changes require at least a minor version increment. Synchronize
 pyproject.toml, the package version, CITATION.cff, .zenodo.json and the manuscript
 configuration. Regenerate version-bearing artifacts, update CHANGELOG.md and
 write a dated release packet with current gate results and artifact hashes.
-Commit the final combined PDF, HTML pages and their local assets. Ignore
-TeX intermediates, hydrated markdown, logs and transient validation reports.
-Keep historical release packets and archived metadata at their original versions.
+Keep tracked native figures in Source, but do not commit unversioned current
+PDF/HTML outputs or their generated local assets. One whole-output packaging
+ignore keeps disposable renders out of fresh Source archives while the engine's
+authorized stable-local inventory still validates actual local publications.
+TeX intermediates, hydrated markdown, logs and transient validation reports
+remain outside publication evidence. Preserve historical release packets and
+archived metadata at their original versions. Root `CITATION.cff` and
+`CITATION.bib` retain citation metadata; the uncited manuscript declares no
+bibliography.
 
-Render PDF and HTML with the template origin/main engine in an isolated export
+Render PDF and HTML with a reviewed, pinned template engine in an isolated export
 on GitVault. Link this repository into the engine's working project layout;
-never write into the active template checkout. Record the engine commit, all
-commands, output checksums and visual inspection. Engine failures block release;
-report them without patching the engine. An engine export is a build tool,
-not a runtime or sibling-line dependency.
+never write into the active template checkout. Record the engine version and
+commit, all commands, output checksums and visual inspection. Engine failures
+block release; report them without patching the engine. An engine export is a
+build tool, not a runtime or sibling-line dependency.
 
 For source version 0.5.0, cite the repository until an archive for that exact
 edition is independently verified:

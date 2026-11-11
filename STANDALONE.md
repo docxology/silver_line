@@ -31,9 +31,18 @@ The engine's active checkout is not modified. The source worktree and its
 Git metadata are required for the engine's provenance checks; a plain archive
 can render but cannot satisfy those checks. See docs/publication.md.
 
-Current `output/web/` and `output/pdf/` files are disposable, git-ignored build
-outputs. Generate and qualify them from the current Source before publication;
-do not treat a leftover local render as current evidence. Native figure inputs
-remain tracked. Preserve the original software Source, native generator and
-renderer-derivative identities separately; versioned release packets under
-`docs/releases/` remain historical.
+`output/` has one whole-tree packaging ignore; already tracked native figure
+inputs remain tracked. The engine's authorized standalone `stable-local-output-v1`
+inventory can validate freshly generated local deliverables under that blanket
+ignore. Specific artifact exclusions remain authoritative. This is local
+publication evidence, not a claim that ignored files ship in a source archive.
+
+Current `output/web/` and `output/pdf/` files are disposable build outputs.
+Generate and qualify them from the current Source before publication; never
+treat a leftover local render as current evidence. Preserve software Source,
+native generator and renderer-derivative identities separately. Versioned
+release packets under `docs/releases/` remain historical.
+
+`CITATION.cff` and `CITATION.bib` retain citation metadata outside the rendered
+manuscript. The uncited standalone manuscript declares no bibliography, so the
+engine does not append an empty References page.
