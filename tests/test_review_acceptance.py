@@ -27,6 +27,7 @@ from silver_line.serialization import (
     canonical_verdict_v1,
     verdict_digest,
 )
+from silver_line.snapshots import restore_source
 from silver_line.validation import validate_review_date
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +38,24 @@ def complete():
         (ROOT / "data/fixtures/silver_line_same_subject.json").read_text()
     )
     return fixture_items(fixture)[0]
+
+
+def matching_release_fixture():
+    fixture = json.loads(
+        (ROOT / "data/fixtures/silver_line_same_subject.json").read_text()
+    )
+    row = fixture["items"][0]
+    row["evidence"] = ["drift_acknowledgment"]
+    row["release"] = asdict(
+        ReleaseDeclaration(
+            fixture["subject_id"],
+            row["item_id"],
+            "declared role",
+            "2026-10-19",
+            "synthetic:release-record",
+        )
+    )
+    return fixture
 
 
 def test_explicit_release_preserves_restraint_and_item_scope():
@@ -221,6 +240,104 @@ def test_fixture_loader_rejects_explicit_malformed_release(release):
         artifact_payloads(fixture)
 
 
+@pytest.mark.parametrize("field", ["tags", "evidence"])
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {"record": False, "drift_acknowledgment": False},
+        "drift_acknowledgment",
+        ("record", "drift_acknowledgment"),
+        {"record", "drift_acknowledgment"},
+        frozenset({"record", "drift_acknowledgment"}),
+        b"record",
+        None,
+        False,
+        42,
+    ],
+)
+def test_fixture_label_containers_cannot_manufacture_declarations(field, bad):
+    fixture = matching_release_fixture()
+    fixture["items"][0][field] = bad
+    with pytest.raises(ValueError, match=rf"fixture {field}.*array"):
+        fixture_items(fixture)
+    with pytest.raises(ValueError, match=rf"fixture {field}.*array"):
+        artifact_payloads(fixture)
+
+
+@pytest.mark.parametrize("field", ["tags", "evidence"])
+@pytest.mark.parametrize("check", [False, True])
+def test_artifact_builder_refuses_label_object_keys_before_writing(
+    tmp_path, field, check
+):
+    fixture = matching_release_fixture()
+    row = fixture["items"][0]
+    row[field] = dict.fromkeys(row[field], False)
+    fixtures = tmp_path / "data/fixtures"
+    fixtures.mkdir(parents=True)
+    (fixtures / "release.json").write_text(json.dumps(fixture), encoding="utf-8")
+    historical = next(iter(sorted((ROOT / "data/reports").glob("*.json"))))
+    original = historical.read_bytes()
+    retained = tmp_path / "data/reports" / historical.name
+    retained.parent.mkdir()
+    retained.write_bytes(original)
+
+    with pytest.raises(ValueError, match=rf"fixture {field}.*array"):
+        build_artifacts(tmp_path, check=check)
+
+    assert retained.read_bytes() == original
+    assert set(retained.parent.iterdir()) == {retained}
+    assert not (tmp_path / "data/snapshots").exists()
+    assert not (tmp_path / "data/envelopes").exists()
+
+
+@pytest.mark.parametrize("field", ["tags", "evidence"])
+@pytest.mark.parametrize("malformed", [None, False, 42, "", "\ud800"])
+def test_fixture_arrays_keep_native_malformed_scalar_label_policy(field, malformed):
+    fixture = matching_release_fixture()
+    row = fixture["items"][0]
+    row[field].append(malformed)
+    items = fixture_items(fixture)
+    assert getattr(items[0], field) == frozenset(row[field])
+    verdict = read_succession(
+        items,
+        subject_id=fixture["subject_id"],
+        evaluated_as_of=fixture["review_date"],
+    )
+    assert verdict.status is VerdictStatus.DECLARED_RELEASE
+    assert verdict.intake_notes
+    envelope, files = artifact_payloads(fixture)
+    assert envelope["native_status"] == "DECLARED_RELEASE"
+    assert files[f"data/reports/{envelope['report_ref']}.json"] == canonical_verdict(
+        verdict
+    )
+
+
+@pytest.mark.parametrize(
+    "evidence, status",
+    [
+        (["drift_acknowledgment"], "DECLARED_RELEASE"),
+        ([], "NEEDS_REWORK"),
+        ([None, False, 42, "", "\ud800"], "NEEDS_REWORK"),
+    ],
+)
+def test_fixture_release_arrays_do_not_replace_restraint(evidence, status):
+    fixture = matching_release_fixture()
+    fixture["items"][0]["evidence"] = evidence
+    envelope, files = artifact_payloads(fixture)
+    report = json.loads(files[f"data/reports/{envelope['report_ref']}.json"])
+    assert report["status"] == envelope["native_status"] == status
+    restraint = next(
+        f for f in report["findings"] if f["keepsake_id"] == "no-infallible-archive"
+    )
+    assert restraint["status"] == (
+        "KEPT" if status == "DECLARED_RELEASE" else "NEEDS_REWORK"
+    )
+    assert restraint["missing_fields"] == (
+        [] if status == "DECLARED_RELEASE" else ["drift_acknowledgment"]
+    )
+    assert any(f["status"] == "DECLARED_RELEASE" for f in report["findings"])
+
+
 @pytest.mark.parametrize("present", [False, True])
 def test_fixture_loader_allows_only_absent_or_null_release_as_absent(present):
     fixture = json.loads(
@@ -313,9 +430,9 @@ def test_release_snapshot_replays_native_three_identity(subject, evidence, statu
     )
     envelope, files = artifact_payloads(fixture)
     report = json.loads(files[f"data/reports/{envelope['report_ref']}.json"])
-    snapshot = json.loads(files[f"data/snapshots/{report['declaration_digest']}.json"])
+    snapshot = json.loads(files[f"data/snapshots/{report['source_digest']}.json"])
     replay = read_succession(
-        fixture_items({"items": snapshot}),
+        restore_source(snapshot),
         subject_id=subject,
         evaluated_as_of=fixture["review_date"],
     )

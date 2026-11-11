@@ -39,9 +39,11 @@ print(verdict.registry_digest)   # pins the keepsake set used
 An empty scan set reads `OUTSIDE_SCOPE` with intake notes; a registry that
 cannot be scored fails closed as `NEEDS_REWORK`. Malformed input is set
 aside with notes, never repaired into a fabricated value.
-Malformed Unicode code units are retained in safe original-source snapshots,
-not counted as evidence or echoed into diagnostics. Complete replay uses those
-original snapshots, not only accepted normalized rows.
+Malformed Unicode code units, nested container kinds, ordered values and literal
+dictionaries are retained in versioned `silver.source/1` snapshots. Complete
+same-policy replay uses `restore_source` on original snapshots, not JSON fixture
+admission or accepted normalized rows. Root scan identity remains order-insensitive;
+historical artifacts require their historical producer.
 
 Findings identify their item and missing fields. Registry lapse eligibility
 does not imply a release decision; DECLARED_RELEASE requires a declaration
@@ -95,7 +97,7 @@ This instrument follows the [current Line Set declaration](https://github.com/do
 whose colorless Main reader holds native instruments apart. Witness
 co-registers opaque envelopes without aggregation and remains outside `LINE_SET`:
 
-- [Black Line](https://github.com/docxology/black_line) — the practice registry of realized craft
+- [Black Line](https://github.com/docxology/black_line) — declared practice and evidence-label coverage
 - [Golden Line](https://github.com/docxology/golden_line) — the aspiration and horizon registry
 - [Red Line](https://github.com/docxology/red_line) — the cognitive-security registry of self-assessments
 - [White Line](https://github.com/docxology/white_line) — the absence and omission ledger

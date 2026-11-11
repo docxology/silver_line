@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
+
+import pytest
+
 from silver_line.enums import KeepKind
 from silver_line.invariants import all_invariants, check_unique_keepsake_ids
 from silver_line.records import Keepsake
@@ -15,10 +19,10 @@ def test_all_invariants_pass_on_the_declaration() -> None:
         assert result.passed, (result.name, result.reasons)
 
 
-def test_empty_registry_fails_nonempty_check() -> None:
+def test_empty_registry_stops_at_named_shape_failure() -> None:
     results = all_invariants(())
-    failed = {r.name for r in results if not r.passed}
-    assert "nonempty_registry" in failed
+    assert [(r.name, r.passed) for r in results] == [("runtime_registry_shape", False)]
+    assert results[0].reasons
 
 
 def test_duplicate_ids_fail() -> None:
@@ -27,11 +31,11 @@ def test_duplicate_ids_fail() -> None:
     assert not result.passed
 
 
-def test_unknown_tag_fails_vocabulary_check() -> None:
+def test_unknown_tag_fails_structural_admission() -> None:
     bad = (Keepsake("x", "t", "w", frozenset({"zzz"}), ("a",)),)
     results = all_invariants(bad)
-    failed = {r.name for r in results if not r.passed}
-    assert "tags_in_vocabulary" in failed
+    assert [(r.name, r.passed) for r in results] == [("runtime_registry_shape", False)]
+    assert results[0].reasons
 
 
 def test_lapse_family_missing_fails() -> None:
@@ -41,3 +45,19 @@ def test_lapse_family_missing_fails() -> None:
     results = all_invariants(retention_only)
     failed = {r.name for r in results if not r.passed}
     assert "lapse_families_present" in failed
+
+
+@pytest.mark.parametrize(
+    "registry",
+    [
+        (None,),
+        ({"id": "not-a-record"},),
+        (replace(SILVER_KEEPSAKES[0], tags=None),),
+        (replace(SILVER_KEEPSAKES[0], kind="RETENTION"),),
+        (replace(SILVER_KEEPSAKES[0], required_evidence=None),),
+    ],
+)
+def test_structural_failure_never_runs_shape_dependent_checks(registry):
+    results = all_invariants(registry)
+    assert [(r.name, r.passed) for r in results] == [("runtime_registry_shape", False)]
+    assert results[0].reasons

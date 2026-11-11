@@ -36,9 +36,15 @@ Malformed text is not evidence: descriptions and IDs containing surrogate code
 units are set aside, malformed labels are dropped, and malformed custodians
 surface custody gaps. A malformed release remains a declared release defect,
 not absence or permission. Original source and fixture snapshots retain the
-rejected code units through the native safe text codec for exact replay.
+rejected code units, nested container kinds, ordered values and literal
+dictionaries through `silver.source/1` for exact same-policy replay.
+`restore_source` decodes native snapshots; JSON fixture admission is separate.
 The codec preserves identity; it neither repairs text nor verifies its content.
 Normalized accepted rows alone do not reproduce rejected-source custody.
+Ordinary JSON fixture `tags` and `evidence` must be arrays; non-array fields
+are refused before reading or artifact publication. Object keys and string
+characters are not declarations. Malformed scalar labels inside arrays retain
+the native set-aside behavior, and release never replaces restraint evidence.
 
 ## What a Silver reading never claims
 

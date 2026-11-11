@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.5.0 — 2026-11-09
+
+- Remove the uncited references carrier and bibliography declaration rather
+  than rendering an orphan heading and blank final page. Preserve the original
+  self-citation bytes in root `CITATION.bib`, outside manuscript discovery.
+- Stop bundling unversioned current web/PDF build outputs in Source archives.
+  Use one whole-output packaging ignore, compatible with the native engine's
+  authorized stable-local inventory; keep tracked native figures and immutable
+  versioned publication packets at their original provenance.
+- Introduce the versioned `silver.source/1` codec through `SOURCE_CODEC`,
+  `canonical_source`, and `restore_source`. Preserve supported nested native
+  container kinds, dictionary keys, malformed Unicode code points, and literal
+  marker-shaped dictionaries without arbitrary object loading. Root scans keep
+  their order-insensitive multiset semantics.
+- Keep ordinary JSON fixture admission separate from native source restoration;
+  remove implicit historical-marker decoding and migrate replay callers to
+  explicit restoration. Historical snapshots require their historical producer;
+  accepted-only normalized snapshots still cannot replace original-source custody.
+- Require arrays for ordinary JSON fixture `tags` and `evidence` before native
+  label-set conversion. Refuse object keys, string characters and other
+  non-array fields at fixture and artifact admission; retain malformed scalar
+  label set-aside behavior inside arrays and independent release restraint.
+- Detect duplicate nonempty declared scalar IDs, including rejected descriptions,
+  without treating diagnostic hashes or omitted-ID defaults as declared IDs.
+- Stop invariant evaluation at failed runtime registry admission and report its
+  named shape failure rather than running unsafe semantic checks.
+- Advance evaluator policy to `silver.evaluator/3.2`; retain registry revision
+  `silver.registry/3.0`, verdict schema 3.0, and the common envelope schema.
+  New source-codec bytes and dependent identities are not historical relabelings.
+
 ## 0.4.0 — 2026-11-08
 
 - Encode malformed source text with native `silver_line.text-code-units/1`

@@ -4,14 +4,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 *.egg-info/
-output/pdf/*
-!output/pdf/silver_line_combined.pdf
-output/web/*
-!output/web/*.html
-!output/web/favicon.ico
-!output/web/assets/
-output/reports/
-output/slides/
+output/
 uv.lock
 .DS_Store
 .coverage

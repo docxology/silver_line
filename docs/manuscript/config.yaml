@@ -1,8 +1,8 @@
 paper:
   title: "The Silver Line: A Memory-and-Succession Instrument"
   subtitle: "What is preserved, what is entrusted to whom, what is allowed to lapse"
-  version: "0.4.0"
-  date: "2026-11-08"
+  version: "0.5.0"
+  date: "2026-11-09"
   cover:
     image: "../../output/figures/silver_line_cover.png"
     alt: "Three silver strokes across a cream field: one preserved whole, one entrusting itself downward at a node, one dissolving into dashes before its end."
@@ -13,7 +13,11 @@ authors:
     affiliation: "Active Inference Institute"
     corresponding: true
 publication:
-  doi: "10.5281/zenodo.22833486"
+  previous_version_doi: "10.5281/zenodo.22833486"
+  archived_version: "0.4.0"
+  archived_version_doi: "10.5281/zenodo.24069439"
+  github_repository: "docxology/silver_line"
+  repository_url: "https://github.com/docxology/silver_line"
 keywords:
   - "memory"
   - "succession"
@@ -30,4 +34,4 @@ metadata:
   license: "CC-BY-4.0 (prose); MIT (code)"
   status: "living document — versioned and revisable"
   geometry: "left=0.33in,right=0.33in,top=0.55in,bottom=0.55in"
-  language: "en"
+  language: "en-US"

@@ -3,7 +3,7 @@
   "native_status": "KEPT",
   "registry_digest": "ce808709c7db5a60a7e6b06dac30d1a1326dff3c1973b44b5d36dd28a1e15c31",
   "registry_version": "silver.registry/3.0",
-  "report_ref": "96c16cf877bc1e66c368841d02641c77d17ca8d8b9b469c61809596bc0a4c0b8",
+  "report_ref": "dbc80fd06e3b40c5d32a32fe4989e2c53c422cbe60d7c8fafbea6ccb9cae838c",
   "review_date": "2026-10-20",
   "schema_version": "line.report-envelope/1.0",
   "scope_and_nonclaims": [
@@ -15,9 +15,10 @@
     "reading_scope=COMPLETE; accepted=1; rejected=0; unmatched=0"
   ],
   "source_snapshot_refs": [
-    "sha256:0f57a3b60d56b0e24a886f6875de635f0ada8dc2896df0b87b422ede33fbfb75:data/snapshots/0f57a3b60d56b0e24a886f6875de635f0ada8dc2896df0b87b422ede33fbfb75.json",
+    "sha256:484230ca8b2aa4d9574797c8566d71234ffd090788171ca8ebe5ea7cb66c9f4c:data/snapshots/484230ca8b2aa4d9574797c8566d71234ffd090788171ca8ebe5ea7cb66c9f4c.json",
     "sha256:63e94e22e629bda919853919f4f707e7a676c56a4cfd4b6cde9b2884a5483d4e:data/snapshots/63e94e22e629bda919853919f4f707e7a676c56a4cfd4b6cde9b2884a5483d4e.json",
-    "sha256:ce808709c7db5a60a7e6b06dac30d1a1326dff3c1973b44b5d36dd28a1e15c31:data/snapshots/ce808709c7db5a60a7e6b06dac30d1a1326dff3c1973b44b5d36dd28a1e15c31.json"
+    "sha256:ce808709c7db5a60a7e6b06dac30d1a1326dff3c1973b44b5d36dd28a1e15c31:data/snapshots/ce808709c7db5a60a7e6b06dac30d1a1326dff3c1973b44b5d36dd28a1e15c31.json",
+    "sha256:f38fc6ed66d7439bb8954f7d62880e4ca88e2d9eda5eaeda80351f35a7299140:data/snapshots/f38fc6ed66d7439bb8954f7d62880e4ca88e2d9eda5eaeda80351f35a7299140.json"
   ],
   "subject_id": "witness-register-synthetic-succession"
 }

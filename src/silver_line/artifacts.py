@@ -14,8 +14,6 @@ from .snapshots import (
     canonical_source,
     digest_text,
     item_snapshot,
-    restore_snapshot,
-    snapshot_value,
 )
 
 NONCLAIMS = (
@@ -28,13 +26,14 @@ NONCLAIMS = (
 
 
 def fixture_items(fixture: dict) -> tuple[SuccessionItem, ...]:
-    """Restore original declarations, including rejected text, from safe snapshots."""
-    restored = restore_snapshot(fixture)
-    if not isinstance(restored, dict):
-        raise ValueError("fixture snapshot must be an object")
-    fixture = restored
+    """Admit JSON fixture rows; native snapshots use restore_source instead."""
+    if not isinstance(fixture, dict):
+        raise ValueError("fixture must be an object")
     items = []
     for row in fixture["items"]:
+        for field in ("tags", "evidence"):
+            if not isinstance(row[field], list):
+                raise ValueError(f"fixture {field} must be an array of labels")
         release = row.get("release")
         if release is not None:
             if not isinstance(release, dict):
@@ -109,17 +108,15 @@ def validate_envelope(
 
 
 def artifact_payloads(fixture: dict) -> tuple[dict, dict[str, str]]:
-    restored = restore_snapshot(fixture)
-    if not isinstance(restored, dict):
-        raise ValueError("fixture snapshot must be an object")
-    fixture = restored
+    if not isinstance(fixture, dict):
+        raise ValueError("fixture must be an object")
     items = fixture_items(fixture)
     verdict = read_succession(
         items, evaluated_as_of=fixture["review_date"], subject_id=fixture["subject_id"]
     )
     normalized, _, _ = _prepare(items)
     snapshot_texts = (
-        canonical_json(snapshot_value(fixture)),
+        canonical_source(fixture),
         canonical_source(items),
         canonical_json([item_snapshot(i) for i in normalized]),
         canonical_registry(SILVER_KEEPSAKES),

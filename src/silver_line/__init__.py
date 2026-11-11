@@ -27,6 +27,7 @@ from .serialization import (
     registry_digest,
     verdict_digest,
 )
+from .snapshots import SOURCE_CODEC, canonical_source, restore_source
 from .version import __version__
 
 QUESTION = "What do I keep, and how does it outlive me?"
@@ -50,11 +51,13 @@ __all__ = [
     "ReleaseDeclaration",
     "QUESTION",
     "SILVER_KEEPSAKES",
+    "SOURCE_CODEC",
     "SuccessionItem",
     "SuccessionVerdict",
     "VerdictStatus",
     "__version__",
     "canonical_registry",
+    "canonical_source",
     "canonical_verdict",
     "intake",
     "normalize_item",
@@ -62,5 +65,6 @@ __all__ = [
     "read_succession_with_findings",
     "registry_digest",
     "registry_ids",
+    "restore_source",
     "verdict_digest",
 ]

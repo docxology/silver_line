@@ -11,8 +11,10 @@ from silver_line import (
     ReleaseDeclaration,
     SuccessionItem,
     VerdictStatus,
+    canonical_source,
     read_succession,
     read_succession_with_findings,
+    restore_source,
 )
 from silver_line.artifacts import (
     artifact_payloads,
@@ -115,7 +117,7 @@ def assert_artifact_custody(source):
     } <= {ref.split(":", 2)[1] for ref in refs}
     retained_source = json.loads(files[f"data/snapshots/{verdict.source_digest}.json"])
     source_replay = read_succession(
-        fixture_items({"items": retained_source}),
+        restore_source(retained_source),
         subject_id=source["subject_id"],
         evaluated_as_of=source["review_date"],
     )
@@ -123,24 +125,25 @@ def assert_artifact_custody(source):
     assert verdict_digest(source_replay) == envelope["report_ref"]
 
     # Replay the retained ORIGINAL fixture, never the accepted-only array.
-    retained = [
-        json.loads(text)
-        for name, text in files.items()
-        if name.startswith("data/snapshots/")
-        and isinstance(json.loads(text), dict)
-        and set(json.loads(text)) == set(source)
-    ]
-    assert len(retained) == 1
-    restored_items = fixture_items(retained[0])
+    fixture_text = canonical_source(source)
+    retained = restore_source(
+        json.loads(
+            files[
+                f"data/snapshots/{sha256(fixture_text.encode('utf-8')).hexdigest()}.json"
+            ]
+        )
+    )
+    assert retained == source
+    restored_items = fixture_items(retained)
     assert restored_items == original_items
     replay = read_succession(
         restored_items,
-        subject_id=retained[0]["subject_id"],
-        evaluated_as_of=retained[0]["review_date"],
+        subject_id=retained["subject_id"],
+        evaluated_as_of=retained["review_date"],
     )
     assert canonical_verdict(replay) == report_text
     assert verdict_digest(replay) == envelope["report_ref"]
-    assert artifact_payloads(retained[0]) == (envelope, files)
+    assert artifact_payloads(retained) == (envelope, files)
     return verdict, envelope, files
 
 
@@ -332,14 +335,19 @@ def test_valid_unicode_bytes_and_literal_escapes_remain_distinct():
             "evidence": sorted(row["evidence"]),
             "release": None,
         }
-        expected_source = canonical([expected_row]).encode("utf-8")
-        expected_fixture = canonical(source).encode("utf-8")
+        expected_normalized = canonical([expected_row]).encode("utf-8")
+        expected_source = canonical_source(fixture_items(source)).encode("utf-8")
+        expected_fixture = canonical_source(source).encode("utf-8")
         verdict, _, files = assert_artifact_custody(source)
         assert verdict.status is VerdictStatus.KEPT
         assert (verdict.accepted_count, verdict.rejected_count) == (1, 0)
         assert not verdict.intake_notes
         assert verdict.source_digest == sha256(expected_source).hexdigest()
-        assert verdict.declaration_digest == verdict.source_digest
+        assert verdict.declaration_digest == sha256(expected_normalized).hexdigest()
+        assert (
+            files[f"data/snapshots/{verdict.declaration_digest}.json"].encode("utf-8")
+            == expected_normalized
+        )
         assert files[f"data/snapshots/{verdict.source_digest}.json"].encode(
             "utf-8"
         ) == (expected_source)
@@ -403,7 +411,7 @@ def test_rejected_source_store_writes_utf8_and_replays_without_losing_rejections
 @pytest.mark.parametrize(
     "name", ["silver_line_same_subject.json", "silver_line_worked.json"]
 )
-def test_existing_fixture_and_source_snapshot_bytes_remain_unchanged(name):
+def test_codec_cutover_preserves_issued_fixture_and_source_bytes(name):
     source = json.loads((ROOT / "data/fixtures" / name).read_text(encoding="utf-8"))
     rows = [
         {
@@ -416,9 +424,10 @@ def test_existing_fixture_and_source_snapshot_bytes_remain_unchanged(name):
     ]
     expected_source = canonical(sorted(rows, key=canonical)).encode("utf-8")
     expected_fixture = canonical(source).encode("utf-8")
-    verdict, _, files = assert_artifact_custody(source)
-    assert verdict.source_digest == sha256(expected_source).hexdigest()
     for expected in (expected_source, expected_fixture):
         path = f"data/snapshots/{sha256(expected).hexdigest()}.json"
-        assert files[path].encode("utf-8") == expected
         assert (ROOT / path).read_bytes() == expected
+        with pytest.raises(ValueError, match="versioned"):
+            restore_source(json.loads(expected))
+    verdict, _, files = assert_artifact_custody(source)
+    assert verdict.source_digest != sha256(expected_source).hexdigest()

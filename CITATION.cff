@@ -5,10 +5,28 @@ authors:
   - family-names: Friedman
     given-names: Daniel Ari
     orcid: "https://orcid.org/0000-0001-6232-9096"
-version: 0.4.0
-date-released: "2026-11-08"
+version: 0.5.0
+date-released: "2026-11-09"
 identifiers:
-  - type: doi
-    value: "10.5281/zenodo.22833486"
+  - type: url
+    value: "https://github.com/docxology/silver_line"
 license: MIT
 abstract: "A memory-and-succession line: what is preserved, what is entrusted to whom, what is allowed to lapse."
+repository-code: "https://github.com/docxology/silver_line"
+url: "https://github.com/docxology/silver_line"
+references:
+  - type: software
+    title: "The Silver Line: A Memory-and-Succession Instrument"
+    version: "0.4.0"
+    authors:
+      - family-names: Friedman
+        given-names: Daniel Ari
+    doi: "10.5281/zenodo.24069439"
+    notes: "Previously verified source ZIP only; not a standalone manuscript identifier."
+  - type: software
+    title: silver_line
+    authors:
+      - family-names: Friedman
+        given-names: Daniel Ari
+    doi: "10.5281/zenodo.22833486"
+    notes: "Earlier historical archive; its edition is not established by this metadata."
