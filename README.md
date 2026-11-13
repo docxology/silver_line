@@ -2,6 +2,8 @@
 
 A memory-and-succession line in the docxology line set (admitted 2026-09-01).
 
+![Silver Line cover: what is preserved, what is entrusted, what may lapse](output/figures/silver_line_cover.png)
+
 ## What it is
 
 The Silver Line answers one question: **what do I keep, and how does it
