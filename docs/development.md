@@ -1,21 +1,30 @@
 # Development — silver_line
 
-## Verify commands
+## Set up and verify
 
-`scripts/build_figures.py` rasterizes the cover through `rsvg-convert`, which is
-not a Python dependency: install librsvg (`apt-get install librsvg2-bin` on
-Debian/Ubuntu, `brew install librsvg` on macOS) so that it is on `PATH`.
+Run these commands from the Silver Line repository root. Install
+[uv](https://docs.astral.sh/uv/) and Python 3.11 or later. The source
+repository declares its development requirements in `pyproject.toml`.
+Install librsvg's `rsvg-convert` for figure generation and tests
+(`librsvg2-bin` on Debian or Ubuntu, `librsvg` on macOS).
+`SILVER_LINE_RSVG_CONVERT` can point to an alternate executable.
 
-```
+```bash
 uv sync
-uv run pytest tests/ --cov=src --cov-report=term   # all green, cov >= 90
+uv run pytest tests/ --cov=src --cov-report=term
 uv run ruff check src tests scripts
 uv run python scripts/build_figures.py
-uv run python scripts/gen_formalism_ledger.py       # regenerate the ledger
+uv run python scripts/gen_formalism_ledger.py
 uv run pytest tests/test_formalism_claim_ledger.py
 uv run python -m silver_line.artifacts --check
 uv tool run ty==0.0.90 check src
 ```
+
+The native suite enforces the configured 90% coverage floor. The
+[usage guide](usage.md) gives executable examples. The fixture check compares
+replayed reports, snapshots, and envelope bytes with the current cohort.
+Run generators in a disposable Git checkout when checking reproducibility of
+tracked files.
 
 ## Invariants
 
@@ -80,3 +89,50 @@ The project has no declared type-check dependency. The pinned external ty
 command above checks source without adding runtime or development dependencies.
 Regression controls exercise public readings and real artifact records, not
 implementation text, prose or disposable source mutations.
+
+
+## Render and validate the manuscript
+
+Install Pandoc and XeLaTeX with the
+[pinned template's TeX prerequisites](https://github.com/docxology/template/blob/87704feae0a4490ef7dad9c931d268e8c30273c2/README.md#L565-L574).
+Start from the Silver Line project root with the source revision committed.
+The render copy uses a real Git checkout under the template's working projects
+so provenance checks can read the indexed source.
+
+```bash
+silver_line_root="$(pwd)"
+silver_line_revision="$(git rev-parse HEAD)"
+template_root="$(mktemp -d)/template"
+git clone https://github.com/docxology/template "$template_root"
+git -C "$template_root" checkout --detach 87704feae0a4490ef7dad9c931d268e8c30273c2
+
+render_project="$template_root/projects/working/silver_line"
+mkdir -p "$template_root/projects/working"
+git clone "$silver_line_root" "$render_project"
+git -C "$render_project" checkout --detach "$silver_line_revision"
+
+(
+  cd "$render_project" &&
+  uv sync &&
+  uv run python scripts/build_figures.py
+)
+(
+  cd "$template_root" &&
+  uv sync --locked --no-dev --python 3.14 &&
+  uv run --no-sync python scripts/pipeline/stage_03_render.py --project working/silver_line &&
+  uv run --no-sync python scripts/pipeline/stage_04_validate.py --project working/silver_line
+)
+```
+
+The template discovers [the canonical manuscript](manuscript/README.md).
+[Its configuration](manuscript/config.yaml) selects the cover, page layout,
+PDF, and HTML. Inside the staged Silver Line project, inspect:
+
+- `output/figures/` for the generated native SVG plates, cover PNG, and registry
+- `output/pdf/silver_line_combined.pdf` for the typeset sections and cover
+- `output/web/index.html` for the combined web manuscript
+- `output/reports/validation_report.md` for the validation receipt
+
+Tracked native figure inputs remain part of the Source archive. The ignored
+PDF and web outputs are generated separately. For release evidence, follow
+[the publication procedure](publication.md) and retain the provenance receipt.

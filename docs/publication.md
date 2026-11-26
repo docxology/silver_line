@@ -1,6 +1,6 @@
 # Publication and versioned releases
 
-I release source only after the commands in development.md pass, figures and
+I release source only after the [development checks](development.md) pass, figures and
 formalism ledgers regenerate, reports and envelopes replay, and an independent
 read-only audit checks the complete diff against the review packet.
 
@@ -18,12 +18,11 @@ archived metadata at their original versions. Root `CITATION.cff` and
 `CITATION.bib` retain citation metadata; the uncited manuscript declares no
 bibliography.
 
-Render PDF and HTML with a reviewed, pinned template engine in an isolated export
-on GitVault. Link this repository into the engine's working project layout;
-never write into the active template checkout. Record the engine version and
-commit, all commands, output checksums and visual inspection. Engine failures
-block release; report them without patching the engine. An engine export is a
-build tool, not a runtime or sibling-line dependency.
+Render PDF and HTML from a clean Source checkout registered under a separate
+Git checkout of the [pinned template](development.md#render-and-validate-the-manuscript).
+Record the engine commit, commands, output checksums, validation receipt, and
+visual inspection. Render and validation failures belong in the release
+report. Use the engine as external build tooling.
 
 For source version 0.5.0, cite the repository until an archive for that exact
 edition is independently verified:
