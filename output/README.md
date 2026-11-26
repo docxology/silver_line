@@ -1,6 +1,5 @@
-# output
+# Generated output
 
-Generated render artifacts: `web/` (the rendered manuscript), `pdf/`
-(`silver_line_combined.pdf`) and `figures/` (built by
-`scripts/build_figures.py`). The root `.gitignore` ignores everything under
-`output/` except the web HTML/favicon/assets and the combined PDF.
+See the [development and rendering guide](../docs/development.md#render-and-validate-the-manuscript)
+for producers, output paths, and verification. Native figures are tracked
+source inputs. The PDF and web bundles are generated locally.

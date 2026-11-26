@@ -172,5 +172,6 @@ New vocabulary changes registry and declaration identities. Subject-bound releas
 fields change release-bearing source and declaration identities. The new schema
 and revisions change current report identities. Downstream prepared consumers
 must refresh from this whole cohort rather than mix old and new native records.
-Regenerate current rendered output through the external renderer documented in
-`STANDALONE.md`; keep archived publication receipts and rendered provenance intact.
+Regenerate current rendered output using the
+[pinned template workflow](development.md#render-and-validate-the-manuscript).
+Keep archived publication receipts and rendered provenance intact.

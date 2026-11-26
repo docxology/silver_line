@@ -4,7 +4,7 @@ Per-release records: notes for `v0.1.0` and `v0.2.0`, plus the v0.2.0 gate,
 audit, artifact and rendered-provenance files. These are historical receipts;
 a new release adds its own files rather than rewriting theirs.
 
-`v0.4.0.gates.json` records the current native suite, isolated wheel and source
+`v0.4.0.gates.json` records that edition's native suite, isolated wheel and source
 distribution consumers, and configured PDF/HTML qualification.
 `v0.4.0.artifacts.json` inventories the complete committed publication bundle.
 The actual publication producer is `cbf1c3bae2161babaf77cc8b4b9809af54e42f92`;

@@ -18,7 +18,7 @@ evidence or trustworthy content. Full replay requires retained original
 declarations; normalized accepted rows alone cannot reproduce rejections.
 Native snapshots are not a general serializer for arbitrary Python producers.
 
-The displayed DOI is retained from the prior archived version. It is not an
-assigned identifier for this source revision. Current publication authority
-permits GitHub Releases with existing Zenodo hooks active, subject to the
-archive checks in `docs/publication.md`; no new DOI is inferred here.
+The manuscript configuration records an earlier source archive DOI. Cite this
+source edition by repository and version. The publication guide in
+`docs/publication.md` describes verification for source archives and separately
+rendered manuscripts.
